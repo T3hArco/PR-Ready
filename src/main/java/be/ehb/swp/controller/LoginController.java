@@ -1,10 +1,8 @@
-package be.ehb.swp.Controllers;
+package be.ehb.swp.controller;
 
 /**
  * Created by arnaudcoel on 08/10/15.
  */
-
-import org.springframework.stereotype.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,11 +18,11 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestParam(value="username", required=true) String username, @RequestParam(value="username", required=true) String password, Model model) {
-        model.addAttribute(username, "username");
-        model.addAttribute(password, "password");
-        return "authenticated";
-    }
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login(@RequestParam(value="username", required=true) String username, @RequestParam(value="password", required=true) String password, Model model) {
+        model.addAttribute("username", username);
+        model.addAttribute("password", password);
+        return "login";
+    }
 }

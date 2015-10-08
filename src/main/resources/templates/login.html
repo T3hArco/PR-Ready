@@ -8,10 +8,12 @@
 <!--<p th:text="'Hello, ' + ${username} + '! Wauw dit is leuk!'" />-->
 
 <form method="post">
-    Gebruikersnaam: <input type="text" id="username" default="Gebruikersnaam" /><br />
-    Wachtwoord: <input type="password" id="password" default="Password" /><br />
+    Gebruikersnaam: <input type="text" id="username" name="username" default="Gebruikersnaam" /><br />
+    Wachtwoord: <input type="password" id="password" name="password" default="Password" /><br />
     <input type="submit" />
 </form>
+
+<p th:text="'U heeft als gebruikersnaam ' + ${username} + ' en wachtwoord ' + ${password}"></p>
 
 </body>
 </html>
