@@ -11,18 +11,18 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
-@Configuration
 @ComponentScan({ "be.ehb.swp.*" })
-@Import({ SecurityConfig.class })
+//@Import({ SecurityConfig.class })
+@Configuration
 public class AppConfig {
 
     @Bean(name = "dataSource")
     public DriverManagerDataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/test");
+        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/swp2");
         driverManagerDataSource.setUsername("root");
-        driverManagerDataSource.setPassword("password");
+        driverManagerDataSource.setPassword("root");
         return driverManagerDataSource;
     }
 
@@ -30,7 +30,8 @@ public class AppConfig {
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/pages/");
+        //viewResolver.setPrefix("/WEB-INF/pages/");
+        viewResolver.setPrefix("/templates/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
     }

@@ -14,7 +14,7 @@ public class User {
     @Size(min=2, max=30)
     private String username;
 
-    @Size(min=32, max=32)
+    @Size(min=5, max=32)
     private String password;
 
     /*public User() { }
