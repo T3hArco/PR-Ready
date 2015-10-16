@@ -48,6 +48,8 @@ public class MainController {
             model.addObject("msg", "You've been logged out successfully.");
         }
         model.setViewName("login");
+        System.out.println(model.getModelMap());
+
 
         return model;
 
@@ -67,6 +69,7 @@ public class MainController {
         }
 
         model.setViewName("error-403");
+
         return model;
 
     }
