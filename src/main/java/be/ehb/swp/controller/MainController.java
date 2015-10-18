@@ -74,4 +74,9 @@ public class MainController {
 
     }
 
+    @RequestMapping(value = "/pain", method = RequestMethod.GET)
+    public String painAndAgony() {
+        return "login";
+    }
+
 }

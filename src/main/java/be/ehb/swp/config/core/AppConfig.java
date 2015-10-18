@@ -30,8 +30,9 @@ public class AppConfig {
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/templates/");
-        viewResolver.setSuffix(".jsp");
+        viewResolver.setPrefix("/resources/templates");
+        //viewResolver.setSuffix(".jsp");
+        //viewResolver.setViewNames("*.jsp,*.html");
 
         return viewResolver;
     }
