@@ -7,6 +7,7 @@
     <groupId>be.ehb</groupId>
     <artifactId>swp2</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
