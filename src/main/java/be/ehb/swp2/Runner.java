@@ -21,7 +21,7 @@ public class Runner {
         }
 
         UserManager um = new UserManager(factory);
-        Integer u1 = um.addUser("Arnaud", "password");
+        Integer u1 = um.addUser("Arnaaud", "password");
         Integer u2 = um.addUser("Domien", "wachtwoord");
 
         um.listEmployeesToConsole();

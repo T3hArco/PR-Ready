@@ -13,5 +13,11 @@
         </id>
         <property name="name" column="name" type="string"/>
         <property name="password" column="password" type="string"/>
+        <property name="userRole" column="role">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">be.ehb.swp2.entity.UserRole</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
     </class>
 </hibernate-mapping>
