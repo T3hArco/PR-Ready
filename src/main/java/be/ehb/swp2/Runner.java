@@ -1,6 +1,7 @@
 package be.ehb.swp2;
 
 import be.ehb.swp2.manager.UserManager;
+import be.ehb.swp2.util.Encryptor;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 

@@ -100,6 +100,27 @@ public class UserManager {
         }
     }
 
+    public User getUserById(Integer userId) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+        User user = null;
+
+        try {
+            transaction = session.beginTransaction();
+            user = (User) session.get(User.class, userId); // haal de user op via ID
+            transaction.commit();
+        } catch (HibernateException e) {
+            if(transaction != null)
+                transaction.rollback();
+
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return user;
+    }
+
     /**
      * Deze methode zal doormiddel van de gebruikersiD het wachtwoord van de gebruiker veranderen.
      * @param userId
