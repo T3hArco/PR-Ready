@@ -15,6 +15,10 @@ import java.util.List;
 public class UserManager {
     private SessionFactory factory;
 
+    /**
+     * Constructor voor UserManager
+     * @param factory
+     */
     public UserManager(SessionFactory factory) {
         this.factory = factory;
     }
