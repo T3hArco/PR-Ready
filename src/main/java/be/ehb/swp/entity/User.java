@@ -1,30 +1,16 @@
-
-/**
- * Created by arnaudcoel on 08/10/15.
- */
-
 package be.ehb.swp.entity;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+/**
+ * Created by arnaudcoel on 22/10/15.
+ */
 
 public class User {
-    @NotNull
-    @Size(min=2, max=30)
-    private String username;
-
-    @Size(min=5, max=32)
-    private String password;
-
-    /*public User() { }
+    private String username, password;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-    }*/
-
-    /*testcommit*/
+    }
 
     public String getUsername() {
         return username;
@@ -42,11 +28,5 @@ public class User {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+
 }
