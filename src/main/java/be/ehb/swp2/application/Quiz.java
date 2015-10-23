@@ -16,16 +16,26 @@ import java.util.logging.Logger;
 /**
  * Created by arnaudcoel on 23/10/15.
  */
+
+/**
+ * Class that handles the initialization of our Quiz
+ */
 public class Quiz {
     private SessionFactory factory;
     private Logger logger;
 
+    /**
+     * Default constructor.
+     */
     public Quiz() {
         logger = Logger.getLogger(Quiz.class.getName());
 
         this.initialize();
     }
 
+    /**
+     * Provides initialization of project
+     */
     private void initialize() {
         long start = System.currentTimeMillis();
 
@@ -60,8 +70,10 @@ public class Quiz {
         LoginWindow lw = new LoginWindow();
     }
 
-
-
+    /**
+     * Testing method, inserts three rows in database
+     * @deprecated To be deprecated and never used in production!
+     */
     public void doDbTest() {
         try {
             factory = new Configuration().configure().buildSessionFactory();
