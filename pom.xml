@@ -9,6 +9,7 @@
     <version>1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+
     <dependencies>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -34,4 +35,20 @@
             <version>4.11</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>be.ehb.swp2.Runner</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
