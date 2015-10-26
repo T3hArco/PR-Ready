@@ -2,6 +2,7 @@ package be.ehb.swp2.application;
 
 import javax.swing.*;
 
+import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.ui.LoginWindow;
 import com.mysql.jdbc.log.Log4JLogger;
@@ -85,6 +86,12 @@ public class Quiz {
         UserManager um = new UserManager(factory);
         Integer u1 = um.addUser("Arnaaud", "password");
         Integer u2 = um.addUser("Domien", "wachtwoord");
+
+        QuizManager qm = new QuizManager(factory);
+        Integer q1 = qm.addQuiz("Test", "Test", "Dit is een test quiz!");
+
+        System.out.println(qm.getQuizById(q1).getName());
+
 
         um.listEmployeesToConsole();
     }

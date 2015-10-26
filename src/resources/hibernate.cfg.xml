@@ -23,7 +23,8 @@
         </property>
 
         <!-- List of XML mapping files -->
-        <mapping resource="mappings.hbm.xml"/>
+        <mapping resource="user.hbm.xml"/>
+        <mapping resource="quiz.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>
