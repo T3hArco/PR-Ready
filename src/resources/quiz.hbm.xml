@@ -13,6 +13,9 @@
         </id>
         <property name="name" column="name" type="string"/>
         <property name="logo" column="logo" type="string"/>
+<<<<<<< HEAD
         <property name="description" column="description" type="string"/>
+=======
+>>>>>>> d52d4ff39e01878cde515283f04e836942ccf2f1
     </class>
 </hibernate-mapping>
