@@ -1,15 +1,19 @@
 package be.ehb.swp2.entity;
 
 import be.ehb.swp2.util.Encryptor;
-import org.hibernate.type.EnumType;
-
-import javax.persistence.Enumerated;
 
 
 /**
  * Created by arnaudcoel on 22/10/15.
  */
+
+/**
+ * This class contains all information about an User
+ */
 public class User {
+    /**
+     * This references to the id in the database
+     */
     private int id;
     private String name, password;
     private UserRole userRole;
