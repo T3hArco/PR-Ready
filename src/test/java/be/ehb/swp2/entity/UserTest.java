@@ -30,4 +30,39 @@ public class UserTest {
         assertEquals("Password must be hashed to 932ef14a9b01090c1f78dcaf0c0e5781", "932ef14a9b01090c1f78dcaf0c0e5781", um.getUserById(u1).getPassword());
 
     }
+
+    @Test
+    public void testGetId() throws Exception {
+
+    }
+
+    @Test
+    public void testGetName() throws Exception {
+
+    }
+
+    @Test
+    public void testSetName() throws Exception {
+
+    }
+
+    @Test
+    public void testGetPassword() throws Exception {
+
+    }
+
+    @Test
+    public void testGetUserRole() throws Exception {
+
+    }
+
+    @Test
+    public void testSetUserRole() throws Exception {
+
+    }
+
+    @Test
+    public void testSetPassword() throws Exception {
+
+    }
 }
