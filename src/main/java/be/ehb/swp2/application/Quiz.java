@@ -2,18 +2,13 @@ package be.ehb.swp2.application;
 
 import javax.swing.*;
 
-import be.ehb.swp2.manager.ConfigManager;
+import be.ehb.swp2.util.Configurator;
 import be.ehb.swp2.manager.LoginManager;
-import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.ui.LoginWindow;
-import com.mysql.jdbc.log.Log4JLogger;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -26,7 +21,7 @@ import java.util.logging.Logger;
 public class Quiz {
     private SessionFactory factory;
     private Logger logger;
-    private ConfigManager configManager;
+    private Configurator configurator;
 
     /**
      * Default constructor.
@@ -66,9 +61,9 @@ public class Quiz {
         }
 
         logger.info("Starting configuration manager");
-        configManager = new ConfigManager();
-        configManager.setSession("TEST");
-        configManager.getSession();
+        configurator = new Configurator();
+        /*configurator.setSession("TEST");
+        configurator.getSession();*/
 
         logger.info("Starting database");
         try {
@@ -83,9 +78,6 @@ public class Quiz {
         logger.info("Initialization took " + totalTime + " milliseconds!");
 
         LoginWindow lw = new LoginWindow(factory);
-
-
-
     }
 
     /**

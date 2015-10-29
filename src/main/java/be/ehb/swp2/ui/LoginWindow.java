@@ -66,7 +66,6 @@ public class LoginWindow extends JFrame implements Window {
 
         cancel.addActionListener(new ActionListener() {
 
-            @Override
             public void actionPerformed(ActionEvent e) {
                 UserManager um = new UserManager(factory);
                 um.addUser(username.getText(), password.getText());

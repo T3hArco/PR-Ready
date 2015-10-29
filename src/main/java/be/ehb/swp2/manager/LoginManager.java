@@ -79,6 +79,8 @@ public class LoginManager {
         SecureRandom random = new SecureRandom();
         String token = Encryptor.hashPassword(userId + new BigInteger(130, random).toString(32));
 
+        session.close();
+
         return token;
     }
 }
