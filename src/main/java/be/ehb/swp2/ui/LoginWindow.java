@@ -1,5 +1,9 @@
 package be.ehb.swp2.ui;
 
+import be.ehb.swp2.manager.LoginManager;
+import be.ehb.swp2.manager.UserManager;
+import org.hibernate.SessionFactory;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,24 +17,27 @@ import java.awt.event.ActionListener;
  * The main login window for PR-Ready
  */
 public class LoginWindow extends JFrame implements Window {
+    private SessionFactory factory;
 
-    public LoginWindow() {
+    public LoginWindow(SessionFactory factory) {
+        this.factory = factory;
+
         this.initComponents();
     }
 
     @Override
     public void initComponents() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        JTextField username = new JTextField(10);
+        final JTextField username = new JTextField(10);
         JLabel usernameLabel = new JLabel("Username");
         usernameLabel.setLabelFor(username);
 
-        JPasswordField password = new JPasswordField(10);
+        final JPasswordField password = new JPasswordField(10);
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setLabelFor(password);
 
         JButton ok = new JButton("Ok");
-        JButton cancel = new JButton("Cancel");
+        JButton cancel = new JButton("Cancel aka create");
 
         JPanel parent = new JPanel(new GridLayout(3, 2));
         this.add(parent);
@@ -44,9 +51,14 @@ public class LoginWindow extends JFrame implements Window {
 
         ok.addActionListener(new ActionListener() {
 
-            @Override
             public void actionPerformed(ActionEvent arg0) {
+                LoginManager lm = new LoginManager(factory);
 
+                String token = lm.authenticate(username.getText(), password.getText());
+                if(token != null)
+                    JOptionPane.showMessageDialog(null, "Inloggen is gelukt: " + username.getText() + ", Token: " + token);
+                else
+                    JOptionPane.showMessageDialog(null, "Inloggen mislukt!");
             }
 
         });
@@ -56,7 +68,9 @@ public class LoginWindow extends JFrame implements Window {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(-1);
+                UserManager um = new UserManager(factory);
+                um.addUser(username.getText(), password.getText());
+                //System.exit(-1);
             }
 
         });

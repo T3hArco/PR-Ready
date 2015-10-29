@@ -1,6 +1,7 @@
 package be.ehb.swp2.util;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -24,25 +25,26 @@ public class Encryptor {
      * @param text
      * @return
      */
-    private static String md5(String text)  {
-        String digest = null;
+    private static String md5(String text) {
+        MessageDigest m = null;
+        String output = "";
+
         try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] hash = md.digest(text.getBytes("UTF-8"));
+            m = MessageDigest.getInstance("MD5");
 
-            //converting byte array to Hexadecimal String
-            StringBuilder sb = new StringBuilder(2*hash.length);
-            for(byte b : hash){
-                sb.append(String.format("%02x", b&0xff));
+            m.reset();
+            m.update(text.getBytes());
+            byte[] digest = m.digest();
+            BigInteger bigInt = new BigInteger(1,digest);
+            output = bigInt.toString(16);
+
+            while(output.length() < 32 ){
+                output = "0" + output;
             }
-
-            digest = sb.toString();
-
-        } catch (UnsupportedEncodingException ex) {
-            ex.printStackTrace();
-        } catch (NoSuchAlgorithmException ex) {
-            ex.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
-        return digest;
+
+        return output;
     }
 }
