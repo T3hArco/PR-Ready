@@ -11,7 +11,7 @@
         <id name="id" type="int" column="id">
             <generator class="native"/>
         </id>
-        <property name="name" column="name" type="string"/>
+        <property name="username" column="username" type="string"/>
         <property name="password" column="password" type="string"/>
         <property name="userRole" column="role">
             <type name="org.hibernate.type.EnumType">

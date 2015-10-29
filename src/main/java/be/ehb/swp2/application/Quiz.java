@@ -2,6 +2,7 @@ package be.ehb.swp2.application;
 
 import javax.swing.*;
 
+import be.ehb.swp2.manager.LoginManager;
 import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.ui.LoginWindow;
@@ -94,5 +95,8 @@ public class Quiz {
 
 
         um.listEmployeesToConsole();
+
+        LoginManager lm = new LoginManager(factory);
+        System.out.println(lm.isValidLogin("Arnaaud", "password"));
     }
 }

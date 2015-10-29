@@ -64,7 +64,7 @@ public class UserManager {
 
             for(Iterator iterator = users.iterator(); iterator.hasNext();) {
                 User user = (User) iterator.next();
-                System.out.println("User " + user.getId() + ": " + user.getName());
+                System.out.println("User " + user.getId() + ": " + user.getUsername());
             }
 
             transaction.commit();
@@ -90,7 +90,7 @@ public class UserManager {
         try {
             transaction = session.beginTransaction();
             User user = (User) session.get(User.class, userId); // haal de user op die we proberen te referencen
-            user.setName(name); // zet de nieuwe naam van de gebruiker
+            user.setUsername(name); // zet de nieuwe naam van de gebruiker
             session.update(name); // zet de update klaar
             transaction.commit(); // TaDa
         } catch (HibernateException e) {
