@@ -22,6 +22,11 @@
             root
         </property>
 
+        <!-- Debug properties, remove for production use! -->
+        <property name="show_sql">false</property>
+        <property name="format_sql">false</property>
+        <property name="use_sql_comments">false</property>
+
         <!-- List of XML mapping files -->
         <mapping resource="user.hbm.xml"/>
         <mapping resource="quiz.hbm.xml"/>
