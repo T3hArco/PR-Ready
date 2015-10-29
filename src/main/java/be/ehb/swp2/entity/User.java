@@ -15,7 +15,7 @@ public class User {
      * This references to the id in the database
      */
     private int id;
-    private String name, password;
+    private String username, password;
     private UserRole userRole;
 
     /**
@@ -25,23 +25,23 @@ public class User {
 
     /**
      * Constructor voor User
-     * @param name
+     * @param username
      * @param password
      */
-    public User(String name, String password) {
-        this.name = name;
+    public User(String username, String password) {
+        this.username = username;
         this.setPassword(password);
         this.userRole = UserRole.USER;
     }
 
     /**
      * Constructor voor User met aanpassing van standaard UserRole
-     * @param name
+     * @param username
      * @param password
      * @param userRole
      */
-    public User(String name, String password, UserRole userRole) {
-        this.name = name;
+    public User(String username, String password, UserRole userRole) {
+        this.username = username;
         this.setPassword(password);
         this.userRole = userRole;
     }
@@ -63,19 +63,19 @@ public class User {
     }
 
     /**
-     * Geeft de naam van de gebruiker
-     * @return naam van de gebruiker
+     * Geeft de username van de gebruiker
+     * @return username van de gebruiker
      */
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
     /**
      * Zet de naam van de gebruiker
-     * @param name
+     * @param username
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     /**
