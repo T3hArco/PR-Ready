@@ -68,8 +68,14 @@ public class SessionManager {
         try {
             token = user.generateToken();
             transaction = session.beginTransaction();
-            be.ehb.swp2.entity.Session userSession = new be.ehb.swp2.entity.Session(user, token, null);
-            sessionId = (Integer) session.save(userSession);
+
+            Query query = session.createSQLQuery("INSERT INTO Sessions (userid, token, expires) VALUES(:userid, :token, :expires);")
+                    .setParameter("userid", user.getId())
+                    .setParameter("token", token)
+                    .setParameter("expires", null);
+
+            query.executeUpdate();
+
             transaction.commit();
         } catch(HibernateException e) {
             if(transaction != null)
