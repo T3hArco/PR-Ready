@@ -85,7 +85,7 @@ public class QuizManager {
         try {
             transaction = session.beginTransaction();
             quiz = (Quiz) session.get(Quiz.class, quizId); // haal de quiz op via ID
-            transaction.commit();
+            //transaction.commit();
         } catch (HibernateException e) {
             if(transaction != null)
                 transaction.rollback();

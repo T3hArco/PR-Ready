@@ -5,15 +5,8 @@ package be.ehb.swp2.manager;
  */
 
 import be.ehb.swp2.entity.User;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -62,7 +55,29 @@ public class SessionManager {
         return isValid;
     }
 
-    public Integer createToken(User user, String token) {
-        return 1;
+    public String createToken(User user) {
+        if(user == null)
+            return null;
+
+        Session session = factory.openSession();
+        Transaction transaction = null;
+        LoginManager lm = new LoginManager(factory);
+        Integer sessionId = null;
+        String token = null;
+
+        try {
+            token = user.generateToken();
+            transaction = session.beginTransaction();
+            be.ehb.swp2.entity.Session userSession = new be.ehb.swp2.entity.Session(user, token, null);
+            sessionId = (Integer) session.save(userSession);
+            transaction.commit();
+        } catch(HibernateException e) {
+            if(transaction != null)
+                transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return token;
     }
 }

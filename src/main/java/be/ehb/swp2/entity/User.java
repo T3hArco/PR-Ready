@@ -2,6 +2,9 @@ package be.ehb.swp2.entity;
 
 import be.ehb.swp2.util.Encryptor;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
 
 /**
  * Created by arnaudcoel on 22/10/15.
@@ -15,7 +18,8 @@ public class User {
      * This references to the id in the database
      */
     private int id;
-    private String username, password;
+    private String username;
+    private String password;
     private UserRole userRole;
 
     /**
@@ -108,5 +112,12 @@ public class User {
      */
     public void setPassword(String password) {
         this.password = Encryptor.hashPassword(password);
+    }
+
+    public String generateToken() {
+        SecureRandom random = new SecureRandom();
+        String token = Encryptor.hashPassword(this.getId() + new BigInteger(130, random).toString(32));
+
+        return token;
     }
 }

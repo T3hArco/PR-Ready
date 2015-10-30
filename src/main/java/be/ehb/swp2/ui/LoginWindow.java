@@ -1,6 +1,8 @@
 package be.ehb.swp2.ui;
 
+import be.ehb.swp2.entity.User;
 import be.ehb.swp2.manager.LoginManager;
+import be.ehb.swp2.manager.SessionManager;
 import be.ehb.swp2.manager.UserManager;
 import org.hibernate.SessionFactory;
 
@@ -53,9 +55,12 @@ public class LoginWindow extends JFrame implements Window {
 
             public void actionPerformed(ActionEvent arg0) {
                 LoginManager lm = new LoginManager(factory);
+                SessionManager tm = new SessionManager(factory);
 
-                String token = lm.authenticate(username.getText(), password.getText());
-                if(token != null)
+                User user = lm.authenticate(username.getText(), password.getText());
+                String token = tm.createToken(user);
+
+                if(token != null && user != null)
                     JOptionPane.showMessageDialog(null, "Inloggen is gelukt: " + username.getText() + ", Token: " + token);
                 else
                     JOptionPane.showMessageDialog(null, "Inloggen mislukt!");
