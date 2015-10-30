@@ -1,4 +1,4 @@
-package be.ehb.swp2.manager;
+package be.ehb.swp2.util;
 
 import org.ini4j.Wini;
 
@@ -13,13 +13,13 @@ import java.io.IOException;
 /**
  * The config manager for the project
  */
-public class ConfigManager {
+public class Configurator {
     Wini ini;
 
     /**
      * Default constructor
      */
-    public ConfigManager() {
+    public Configurator() {
         try {
             File cf = new File("config.ini");
             if(!cf.exists())
@@ -31,16 +31,28 @@ public class ConfigManager {
         }
     }
 
+    public void setSetting(String section, String option, String value) {
+        ini.put(section, option, value);
+        this.save();
+    }
+
+    public String getSetting(String section, String option) {
+        return ini.get(section, option);
+    }
+
+    @Deprecated
     public void setSession(String session) {
         ini.put("session", "id", session);
         this.save();
     }
 
+    @Deprecated
     public String getSession() {
         return ini.get("session", "id");
     }
 
     private void save() {
+
         try {
             this.ini.store();
         } catch (IOException e) {

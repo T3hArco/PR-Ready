@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="be.ehb.swp2.entity.Session" table="Sessions">
+        <meta attribute="class-description">
+            Stores a session for a user
+        </meta>
+        <id name="id" type="int" column="id">
+            <generator class="native" />
+        </id>
+        <many-to-one name="user" class="be.ehb.swp2.entity.User"
+                     column="userid" unique="false" not-null="true"
+                     cascade="all" />
+        <property name="token" column="token" unique="true" type="string" />
+        <property name="expires" column="expires" type="timestamp" />
+    </class>
+</hibernate-mapping>

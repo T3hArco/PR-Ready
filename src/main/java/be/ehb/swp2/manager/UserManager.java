@@ -112,7 +112,7 @@ public class UserManager {
         try {
             transaction = session.beginTransaction();
             user = (User) session.get(User.class, userId); // haal de user op via ID
-            transaction.commit();
+            //transaction.commit();
         } catch (HibernateException e) {
             if(transaction != null)
                 transaction.rollback();

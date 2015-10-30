@@ -55,9 +55,9 @@ public class LoginManager {
      * Authenticates the user, returns null if authentication failed.
      * @param username the username
      * @param password the unhashed password of the user which will be hashed inside the method
-     * @return session token
+     * @return User object
      */
-    public String authenticate(String username, String password) {
+    public User authenticate(String username, String password) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
@@ -74,11 +74,9 @@ public class LoginManager {
             return null;
 
         int userId = Integer.parseInt(userList.get(0)[0].toString());
+        session.close();
 
-        // generate the user token here
-        SecureRandom random = new SecureRandom();
-        String token = Encryptor.hashPassword(userId + new BigInteger(130, random).toString(32));
-
-        return token;
+        return new UserManager(factory).getUserById(userId);
     }
+
 }
