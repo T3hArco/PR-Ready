@@ -2,10 +2,8 @@ package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.User;
 import be.ehb.swp2.exception.DuplicateUserException;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.Iterator;
 import java.util.List;
@@ -153,6 +151,25 @@ public class UserManager {
         }
 
         return token;
+    }
+
+    public User getUserByToken(String token) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+        User user = null;
+
+        try {
+            transaction = session.beginTransaction();
+            Criteria criteria = session.createCriteria(User.class);
+            user = (User) criteria.add(Restrictions.eq("token", token)).uniqueResult();
+        } catch(HibernateException e) {
+            if(transaction != null)
+                transaction.rollback();
+
+            e.printStackTrace();
+        }
+
+        return user;
     }
 
     public User getUserById(Integer userId) {
