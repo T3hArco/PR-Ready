@@ -1,6 +1,4 @@
-package be.ehb.swp2.application;
-
-import java.util.StringJoiner;
+package be.ehb.swp2.entity;
 
 /**
  * Created by Thomas on 29/10/2015.

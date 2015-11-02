@@ -1,4 +1,4 @@
-package be.ehb.swp2.application;
+package be.ehb.swp2.entity.question;
 
 /**
  * Created by Thomas on 29/10/2015.

@@ -1,5 +1,6 @@
 package be.ehb.swp2.entity;
 
+import be.ehb.swp2.exception.DuplicateUserException;
 import be.ehb.swp2.manager.UserManager;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -26,7 +27,12 @@ public class UserTest {
         }
 
         UserManager um = new UserManager(factory);
-        Integer u1 = um.addUser("dummyuser", "roflcopters");
+        Integer u1 = null;
+        try {
+            u1 = um.addUser("dummyuser", "roflcopters");
+        } catch (DuplicateUserException e) {
+            e.printStackTrace();
+        }
         assertEquals("Password must be hashed to 932ef14a9b01090c1f78dcaf0c0e5781", "932ef14a9b01090c1f78dcaf0c0e5781", um.getUserById(u1).getPassword());
 
     }
