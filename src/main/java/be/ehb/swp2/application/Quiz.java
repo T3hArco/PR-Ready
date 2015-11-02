@@ -86,18 +86,5 @@ public class Quiz {
      */
     public void doDbTest() {
 
-
-        UserManager um = new UserManager(factory);
-
-        /*QuizManager qm = new QuizManager(factory);
-        Integer q1 = qm.addQuiz("Test", "Test", "Dit is een test quiz!");*/
-
-        //System.out.println(qm.getQuizById(q1).getName());
-
-
-        um.listEmployeesToConsole();
-
-        LoginManager lm = new LoginManager(factory);
-        System.out.println(lm.isValidLogin("a", "a"));
     }
 }
