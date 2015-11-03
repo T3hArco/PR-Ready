@@ -21,8 +21,7 @@ import java.util.logging.Logger;
 public class Quiz {
     private SessionFactory factory;
     private Logger logger;
-    private Configurator configurator;
-
+    private Configurator configurator;// !
     /**
      * Default constructor.
      */
