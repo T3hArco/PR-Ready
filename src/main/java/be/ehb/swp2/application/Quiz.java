@@ -2,17 +2,13 @@ package be.ehb.swp2.application;
 
 import javax.swing.*;
 
+import be.ehb.swp2.util.Configurator;
 import be.ehb.swp2.manager.LoginManager;
-import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.ui.LoginWindow;
-import com.mysql.jdbc.log.Log4JLogger;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -25,6 +21,7 @@ import java.util.logging.Logger;
 public class Quiz {
     private SessionFactory factory;
     private Logger logger;
+    private Configurator configurator;
 
     /**
      * Default constructor.
@@ -63,20 +60,12 @@ public class Quiz {
             e.printStackTrace();
         }
 
-        this.doDbTest();
+        logger.info("Starting configuration manager");
+        configurator = new Configurator();
+        /*configurator.setSession("TEST");
+        configurator.getSession();*/
 
-        long end = System.currentTimeMillis();
-        long totalTime = end - start;
-        logger.info("Initialization took " + totalTime + " milliseconds!");
-
-        LoginWindow lw = new LoginWindow();
-    }
-
-    /**
-     * Testing method, inserts three rows in database
-     * @deprecated To be deprecated and never used in production!
-     */
-    public void doDbTest() {
+        logger.info("Starting database");
         try {
             factory = new Configuration().configure().buildSessionFactory();
         } catch(Throwable e) {
@@ -84,19 +73,18 @@ public class Quiz {
             throw new ExceptionInInitializerError(e);
         }
 
-        UserManager um = new UserManager(factory);
-        Integer u1 = um.addUser("Arnaaud", "password");
-        Integer u2 = um.addUser("Domien", "wachtwoord");
+        long end = System.currentTimeMillis();
+        long totalTime = end - start;
+        logger.info("Initialization took " + totalTime + " milliseconds!");
 
-        QuizManager qm = new QuizManager(factory);
-        Integer q1 = qm.addQuiz("Test", "Test", "Dit is een test quiz!");
+        LoginWindow lw = new LoginWindow(factory);
+    }
 
-        System.out.println(qm.getQuizById(q1).getName());
+    /**
+     * Testing method, inserts three rows in database
+     * @deprecated To be deprecated and never used in production!
+     */
+    public void doDbTest() {
 
-
-        um.listEmployeesToConsole();
-
-        LoginManager lm = new LoginManager(factory);
-        System.out.println(lm.isValidLogin("Arnaaud", "password"));
     }
 }

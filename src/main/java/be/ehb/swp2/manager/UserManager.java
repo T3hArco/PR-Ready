@@ -1,6 +1,7 @@
 package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.User;
+import be.ehb.swp2.exception.DuplicateUserException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -30,7 +31,7 @@ public class UserManager {
      * @param password Het ongeencrypteerde wachtwoord van de gebruiker, dat hier ook geencrypteerd zal worden.
      * @return userId
      */
-    public Integer addUser(String name, String password) {
+    public Integer addUser(String name, String password) throws DuplicateUserException {
         Session session = factory.openSession();
         Transaction transaction = null;
         Integer userId = null;
@@ -47,6 +48,9 @@ public class UserManager {
             session.close(); // we zijn klaar en sluiten onze sessie af
         }
 
+        if(userId == null)
+            throw new DuplicateUserException();
+
         return userId; // geef de aangemaakte Id van de gebruiker
     }
 
@@ -54,7 +58,7 @@ public class UserManager {
      * Deze method zal alle employees in de console afdrukken. Het is de bedoeling dat deze op zijn beurt wordt omgezet
      * naar een functie die gewoon een List terug geeft in plaats van een void.
      */
-    public void listEmployeesToConsole() {
+    public void listUsersToConsole() {
         Session session = factory.openSession();
         Transaction transaction = null;
 
@@ -91,7 +95,7 @@ public class UserManager {
             transaction = session.beginTransaction();
             User user = (User) session.get(User.class, userId); // haal de user op die we proberen te referencen
             user.setUsername(name); // zet de nieuwe naam van de gebruiker
-            session.update(name); // zet de update klaar
+            session.update(user); // zet de update klaar
             transaction.commit(); // TaDa
         } catch (HibernateException e) {
             // TODO implementeer manier om doubles er uit te filteren
@@ -104,6 +108,53 @@ public class UserManager {
         }
     }
 
+    /**
+     * Gaat automatisch een unieke token genereren voor de gegeven gebruiker
+     * @param userId
+     * @return unieke token
+     */
+    public String setToken(Integer userId) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+        String token = null;
+
+        try {
+            transaction = session.beginTransaction();
+            User user = (User) session.get(User.class, userId);
+            token = user.setToken(); // laat de token genereren
+            session.update(user);
+            transaction.commit();
+        } catch(HibernateException e) {
+            if(transaction != null)
+                transaction.rollback();
+
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return token;
+    }
+
+    public String getToken(Integer userId) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+        String token = null;
+
+        try {
+            transaction = session.beginTransaction();
+            User user = (User) session.get(User.class, userId);
+            token = user.getToken();
+        } catch(HibernateException e) {
+            if(transaction != null)
+                transaction.rollback();
+
+            e.printStackTrace();
+        }
+
+        return token;
+    }
+
     public User getUserById(Integer userId) {
         Session session = factory.openSession();
         Transaction transaction = null;
@@ -112,7 +163,6 @@ public class UserManager {
         try {
             transaction = session.beginTransaction();
             user = (User) session.get(User.class, userId); // haal de user op via ID
-            transaction.commit();
         } catch (HibernateException e) {
             if(transaction != null)
                 transaction.rollback();
@@ -138,7 +188,7 @@ public class UserManager {
             transaction = session.beginTransaction();
             User user = (User) session.get(User.class, userId); // haal de user op die we proberen te referencen
             user.setPassword(password); // zet de nieuwe naam van de gebruiker
-            session.update(password); // zet de update klaar
+            session.update(user); // zet de update klaar
             transaction.commit(); // TaDa
         } catch (HibernateException e) {
             // TODO implementeer manier om doubles er uit te filteren

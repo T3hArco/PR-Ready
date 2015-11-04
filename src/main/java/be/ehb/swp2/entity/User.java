@@ -2,6 +2,9 @@ package be.ehb.swp2.entity;
 
 import be.ehb.swp2.util.Encryptor;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
 
 /**
  * Created by arnaudcoel on 22/10/15.
@@ -15,8 +18,14 @@ public class User {
      * This references to the id in the database
      */
     private int id;
-    private String username, password;
+    private String username;
+    private String password;
     private UserRole userRole;
+
+    /**
+     * The authentication token of the user
+     */
+    private String token;
 
     /**
      * Default constructor voor User
@@ -107,6 +116,33 @@ public class User {
      * @param password
      */
     public void setPassword(String password) {
-        this.password = Encryptor.hashPassword(password);
+        if(!Encryptor.isMD5(password))
+            this.password = Encryptor.hashPassword(password);
+        else
+            this.password = password;
+    }
+
+    /**
+     * Haalt de token van de gebruiker op
+     * @return unique token
+     */
+    public String getToken() {
+        return this.token;
+    }
+
+    /**
+     * Methode vereist door Java conventie, private en leeg.
+     * @deprecated gebruik setToken() -> automatisch gegenereerd en secure
+     * @param token
+     */
+    @Deprecated
+    private void setToken(String token) { }
+
+    /**
+     * Zet de token van de gebruiker, dit roept generateToken van de Encryptor class op.
+     */
+    public String setToken() {
+        this.token = Encryptor.generateToken(this);
+        return this.token;
     }
 }

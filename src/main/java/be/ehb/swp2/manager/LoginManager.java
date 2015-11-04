@@ -1,11 +1,12 @@
 package be.ehb.swp2.manager;
 
+import be.ehb.swp2.entity.User;
+import be.ehb.swp2.exception.BadLoginException;
 import be.ehb.swp2.util.Encryptor;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.List;
 
 /**
@@ -23,31 +24,32 @@ public class LoginManager {
     }
 
     /**
-     * Checks for a valid login
+     * Authenticates the user, returns null if authentication failed.
      * @param username the username
      * @param password the unhashed password of the user which will be hashed inside the method
-     * @return
+     * @return User object
      */
-    public boolean isValidLogin(String username, String password) {
+    public User authenticate(String username, String password) throws BadLoginException {
         Session session = factory.openSession();
-        Transaction transaction = null;
 
         password = Encryptor.hashPassword(password); // hash the password
 
-        // make a parametered list for the login query
-        Query fetchUsers = session.createQuery("SELECT username, password FROM User WHERE username = :username AND password = :password");
-        fetchUsers.setParameter("username", username);
-        fetchUsers.setParameter("password", password);
-        List list = fetchUsers.list();
-
-        System.err.println(list.size());
+        List<Object[]> userList = session.createQuery("SELECT id, username, password FROM User WHERE (username = :username AND password = :password)")
+                .setMaxResults(1)
+                .setParameter("username", username)
+                .setParameter("password", password)
+                .list();
 
         // Check whether the list is empty, if so, no users are matched, thus return false
-        if(list.size() == 0)
-            return false;
+        if(userList.size() == 0)
+            throw new BadLoginException();
 
-        System.out.println(list.get(0).getClass());
+        int userId = Integer.parseInt(userList.get(0)[0].toString());
+        session.close();
 
-        return false;
+        User user = new UserManager(factory).getUserById(userId);
+
+        return user;
     }
+
 }
