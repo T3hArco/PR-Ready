@@ -15,7 +15,7 @@ public class TrueFalseQuestion extends Question {
   /*  public TrueFalseQuestion(String name, String description, int time, boolean timeOn)
     {
         super();
-        super(name, description, time, timeOn);;
+        super(name, description, time, timeOn);
         this.answer = false;
     }*/
     /*
