@@ -8,13 +8,13 @@ public class TrueFalseQuestion extends Question {
     private boolean answer;
 
     public TrueFalseQuestion(String name, String description, int time, boolean timeOn, boolean answer) {
-        super();
+
         super(name, description, time, timeOn);
         this.answer = answer;
     }
   /*  public TrueFalseQuestion(String name, String description, int time, boolean timeOn)
     {
-        super();
+
         super(name, description, time, timeOn);
         this.answer = false;
     }*/
