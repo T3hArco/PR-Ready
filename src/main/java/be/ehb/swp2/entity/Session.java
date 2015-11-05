@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 /**
  * Class to create a session for a user
  */
+@Deprecated
 public class Session {
     private int id;
     private User user;

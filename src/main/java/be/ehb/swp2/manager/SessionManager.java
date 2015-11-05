@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * De Hibernate manager voor sessies
  */
+@Deprecated
 public class SessionManager {
     private SessionFactory factory;
 
@@ -56,7 +57,7 @@ public class SessionManager {
     }
 
     public String createToken(User user) {
-        if(user == null)
+        /*if(user == null)
             return null;
 
         Session session = factory.openSession();
@@ -84,6 +85,8 @@ public class SessionManager {
             session.close();
         }
 
-        return token;
+        return token;*/
+
+        return null;
     }
 }

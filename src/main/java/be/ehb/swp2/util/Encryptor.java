@@ -1,9 +1,12 @@
 package be.ehb.swp2.util;
 
+import be.ehb.swp2.entity.User;
+
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.logging.Level;
 
 /**
@@ -18,6 +21,18 @@ public class Encryptor {
      */
     public static String hashPassword(String password) {
         return md5(password);
+    }
+
+    /**
+     * Generates a unique token for this user to be cross references for his authentication
+     * @param user
+     * @return unique token
+     */
+    public static String generateToken(User user) {
+        SecureRandom random = new SecureRandom();
+        String token = Encryptor.hashPassword(user.getId() + new BigInteger(130, random).toString(32));
+
+        return token;
     }
 
     /**
@@ -46,5 +61,9 @@ public class Encryptor {
         }
 
         return output;
+    }
+
+    public static boolean isMD5(String check) {
+        return check.matches("[a-fA-F0-9]{32}");
     }
 }
