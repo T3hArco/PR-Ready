@@ -59,8 +59,4 @@ public abstract class Question {
 
     }
 
-
-    /** solve method */
-
-    public abstract boolean solve();
 }
