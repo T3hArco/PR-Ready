@@ -20,6 +20,9 @@ public class Encryptor {
      * @return MD5 hash
      */
     public static String hashPassword(String password) {
+        if(isMD5(password))
+            return password;
+
         return md5(password);
     }
 
