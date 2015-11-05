@@ -33,7 +33,6 @@ public class LoginWindow extends JFrame implements Window {
         this.initComponents();
     }
 
-    @Override
     public void initComponents() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         final JTextField username = new JTextField(10);
