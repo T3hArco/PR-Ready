@@ -33,15 +33,16 @@ public class TrueFalseQuestion extends Question {
     }
 
 
-    public boolean solve(){
-         solve( answer);
-return false;
+    public boolean solve()
+    {
+            solve( answer);
+            return false;
     }
 
     public boolean solve(boolean userAnswer)
     {
 
-      /*  if (userAnswer == AnswerDAO)
+      /*  if (userAnswer == AnswerDAO) Connectie met database nodig om solve methodes uit te werken
       {
         return true;
       }
@@ -50,7 +51,5 @@ return false;
       }
        */
        return true;
-
-
     }
 }

@@ -13,7 +13,7 @@ public class OpenQuestion extends Question {
         return true;
     }
 
-    @Override
+
     public boolean solve() {
         return false;
     }
