@@ -53,6 +53,8 @@ public abstract class Question {
         this.time = time;
     }
 
+    /** is time on method */
+
     public void setTimeOn(boolean timeOn){
 
     }
