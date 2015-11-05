@@ -2,6 +2,7 @@ package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.User;
 import be.ehb.swp2.exception.BadLoginException;
+import be.ehb.swp2.exception.UserNotFoundException;
 import be.ehb.swp2.util.Encryptor;
 import org.hibernate.*;
 
@@ -47,7 +48,13 @@ public class LoginManager {
         int userId = Integer.parseInt(userList.get(0)[0].toString());
         session.close();
 
-        User user = new UserManager(factory).getUserById(userId);
+        User user = null;
+        try {
+            user = new UserManager(factory).getUserById(userId);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+            throw new BadLoginException();
+        }
 
         return user;
     }
