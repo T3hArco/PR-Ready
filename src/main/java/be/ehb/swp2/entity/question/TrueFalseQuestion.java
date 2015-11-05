@@ -53,3 +53,4 @@ public class TrueFalseQuestion extends Question {
        return true;
     }
 }
+// Solve methode vanaf nu in childklasse, niet in Question interface (superklasse)
