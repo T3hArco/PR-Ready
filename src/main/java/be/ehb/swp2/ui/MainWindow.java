@@ -65,7 +65,7 @@ public class MainWindow extends JFrame implements Window {
                 String token = configurator.getSetting("user", "token");
 
                 try {
-                    user = um.getUserByToken(token);
+                    user = um.getUserByToken(token)
                 } catch (TokenNotFoundException e1) {
                     e1.printStackTrace();
                     status.setText("Token does not exist");
