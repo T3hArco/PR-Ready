@@ -116,10 +116,7 @@ public class User {
      * @param password
      */
     public void setPassword(String password) {
-        if(!Encryptor.isMD5(password))
-            this.password = Encryptor.hashPassword(password);
-        else
-            this.password = password;
+        this.password = Encryptor.hashPassword(password);
     }
 
     /**
@@ -143,6 +140,7 @@ public class User {
      */
     public String setToken() {
         this.token = Encryptor.generateToken(this);
+
         return this.token;
     }
 }

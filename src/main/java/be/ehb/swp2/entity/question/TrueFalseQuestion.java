@@ -1,19 +1,56 @@
 package be.ehb.swp2.entity.question;
 
+import be.ehb.swp2.entity.Question;
+
 /**
- * Created by Thomas on 29/10/2015.
+ * Created by Ibrahim on 03-11-15.
  */
-public class TrueFalseQuestion {
+
+public class TrueFalseQuestion extends Question {
 
     private boolean answer;
 
+    public TrueFalseQuestion(String name, String description, int time, boolean timeOn, boolean answer) {
+        super(name, description, time, timeOn);
+        this.answer = answer;
+    }
+  /*  public TrueFalseQuestion(String name, String description, int time, boolean timeOn)
+    {
+        super();
+        super(name, description, time, timeOn);
+        this.answer = false;
 
-    /** solve method */
-    public boolean solve(boolean answer){
+    }*/
+
+    public void setAnswer(boolean answer)
+    {
+        this.answer = answer;
+    }
+
+    public boolean getAnswer ()
+    {
+        return this.answer;
+    }
 
 
-        /* get correct answer from database and compare with answer */
-        /* if correct answer and answer are equal return true, else return false; */
+    public boolean solve(){
+         solve( answer);
+return false;
+    }
+
+    public boolean solve(boolean userAnswer)
+    {
+
+      /*  if (userAnswer == AnswerDAO)
+      {
         return true;
+      }
+      else {
+        return false;
+      }
+       */
+       return true;
+
+
     }
 }

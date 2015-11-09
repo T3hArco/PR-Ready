@@ -2,6 +2,7 @@ package be.ehb.swp2.application;
 
 import javax.swing.*;
 
+import be.ehb.swp2.ui.MainWindow;
 import be.ehb.swp2.util.Configurator;
 import be.ehb.swp2.manager.LoginManager;
 import be.ehb.swp2.manager.UserManager;
@@ -21,8 +22,7 @@ import java.util.logging.Logger;
 public class Quiz {
     private SessionFactory factory;
     private Logger logger;
-    private Configurator configurator;
-
+    private Configurator configurator;// !
     /**
      * Default constructor.
      */
@@ -78,6 +78,7 @@ public class Quiz {
         logger.info("Initialization took " + totalTime + " milliseconds!");
 
         LoginWindow lw = new LoginWindow(factory);
+        MainWindow mw = new MainWindow(factory);
     }
 
     /**

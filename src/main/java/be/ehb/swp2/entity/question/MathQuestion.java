@@ -7,9 +7,25 @@ import be.ehb.swp2.entity.Question;
  */
 public class MathQuestion extends Question {
 
-    int anwser;
+    private int answer;
 
-    public boolean solve(){
-        return true;
+    public MathQuestion(int answer, String name, String description, int time, boolean timeOn){
+        super(name,description, time, timeOn);
+        this.answer = answer;
+    }
+
+    public void setAnswer(int answer){
+        this.answer = answer;
+    }
+
+    public int getAnswer(){
+        return this.answer;
+    }
+
+    public boolean solve(int userAnswer){
+        if(userAnswer == this.answer) {
+            return true;
+        } else {
+        return false;}
     }
 }
