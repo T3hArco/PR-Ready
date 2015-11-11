@@ -42,15 +42,13 @@ public class TrueFalseQuestion extends Question {
     public boolean solve(boolean userAnswer)
     {
 
-      /*  if (userAnswer == AnswerDAO) Connectie met database nodig om solve methodes uit te werken
+       if (userAnswer == this.answer) // Connectie met database nodig om solve methodes uit te werken
       {
         return true;
       }
       else {
         return false;
       }
-       */
-       return true;
-    }
+}
 }
 // Solve methode vanaf nu in childklasse, niet in Question interface (superklasse).
