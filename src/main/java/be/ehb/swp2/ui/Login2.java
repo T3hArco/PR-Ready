@@ -58,7 +58,7 @@ public class Login2 {
             }
         });
         // Load HTML with dialog's HTML+CSS+JavaScript UI.
-        browser.loadURL("file:///Users/domienhennion/Desktop/SoftwareProjectII/index.html");
+        browser.loadURL("file:///resources/ui-html/domienstinkt.html");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
