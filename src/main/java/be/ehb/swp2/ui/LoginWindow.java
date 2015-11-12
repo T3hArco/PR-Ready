@@ -4,9 +4,8 @@ import be.ehb.swp2.entity.User;
 import be.ehb.swp2.exception.BadLoginException;
 import be.ehb.swp2.exception.DuplicateUserException;
 import be.ehb.swp2.manager.LoginManager;
-import be.ehb.swp2.manager.SessionManager;
 import be.ehb.swp2.manager.UserManager;
-
+import be.ehb.swp2.util.Configurator;
 import org.hibernate.SessionFactory;
 
 import javax.swing.*;
@@ -23,14 +22,15 @@ import java.awt.event.ActionListener;
  */
 public class LoginWindow extends JFrame implements Window {
     private SessionFactory factory;
+    private Configurator configurator;
 
     public LoginWindow(SessionFactory factory) {
         this.factory = factory;
+        this.configurator = new Configurator();
 
         this.initComponents();
     }
 
-    @Override
     public void initComponents() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         final JTextField username = new JTextField(10);
@@ -60,18 +60,10 @@ public class LoginWindow extends JFrame implements Window {
                 LoginManager lm = new LoginManager(factory);
                 UserManager um = new UserManager(factory);
 
-                /*User user = lm.authenticate(username.getText(), password.getText());
-                String token = um.setToken(user.getId());
-
-                if(token != null && user != null)
-                    JOptionPane.showMessageDialog(null, "Inloggen is gelukt: " + username.getText() + ", Token: " + token);
-                else
-                    JOptionPane.showMessageDialog(null, "Inloggen mislukt!");*/
-
                 try {
                     User user = lm.authenticate(username.getText(), password.getText());
-
                     String token = um.setToken(user.getId());
+                    configurator.setSetting("user", "token", token);
 
                     JOptionPane.showMessageDialog(null, "Inloggen is gelukt: " + username.getText() + ", Token: " + token, "PR-Ready", JOptionPane.INFORMATION_MESSAGE);
                 } catch (BadLoginException e) {

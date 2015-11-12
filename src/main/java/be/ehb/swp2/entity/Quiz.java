@@ -4,8 +4,26 @@ package be.ehb.swp2.entity;
  * Created by arnaudcoel on 26/10/15.
  */
 public class Quiz {
+    /**
+     * Het unieke nummer van een Quiz
+     */
     private int id;
-    private String name, logo, description;
+
+    /**
+     * De naam van een Quiz
+     */
+    private String name;
+
+    /**
+     * Het logo van een Quiz
+     * @todo is dit het correcte type waar we achter zoeken? Ik denk niet dat het zo in elkaar mag zitten
+     */
+    private String logo;
+
+    /**
+     * De beschrijving van een Quiz
+     */
+    private String description;
 
     /**
      * Default constructor voor Quiz

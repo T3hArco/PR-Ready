@@ -2,10 +2,9 @@ package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.User;
 import be.ehb.swp2.exception.DuplicateUserException;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.SessionFactory;
+import be.ehb.swp2.exception.TokenNotFoundException;
+import be.ehb.swp2.exception.UserNotFoundException;
+import org.hibernate.*;
 
 import java.util.Iterator;
 import java.util.List;
@@ -136,7 +135,13 @@ public class UserManager {
         return token;
     }
 
-    public String getToken(Integer userId) {
+    /**
+     * Collects the token for the user
+     * @param userId
+     * @return the user's token
+     * @throws TokenNotFoundException
+     */
+    public String getToken(Integer userId) throws TokenNotFoundException {
         Session session = factory.openSession();
         Transaction transaction = null;
         String token = null;
@@ -152,10 +157,45 @@ public class UserManager {
             e.printStackTrace();
         }
 
+        if(token == null)
+            throw new TokenNotFoundException();
+
         return token;
     }
 
-    public User getUserById(Integer userId) {
+    /**
+     * This is a very icky function, Hibernate does not allow us to find an user with their respective token, so we must
+     * do out own socery.
+     * @param token
+     * @return User object that uses the token or an exception
+     * @throws TokenNotFoundException if the user has not been located via token
+     */
+    public User getUserByToken(String token) throws TokenNotFoundException, UserNotFoundException {
+        Session session = factory.openSession();
+
+        List<Object[]> userList = session.createQuery("SELECT id, username, password FROM User WHERE (token = :token)")
+                .setMaxResults(1)
+                .setParameter("token", token)
+                .list();
+
+        // Check whether the list is empty, if so, no users are matched, thus return false
+        if(userList.size() == 0)
+            throw new TokenNotFoundException();
+
+        int userId = Integer.parseInt(userList.get(0)[0].toString());
+
+        session.close();
+
+        User user = new UserManager(factory).getUserById(userId);
+        return user;
+    }
+
+    /**
+     * Deze methode gaat de gebruiker doormiddel van zijn ID ophalen
+     * @param userId
+     * @return
+     */
+    public User getUserById(Integer userId) throws UserNotFoundException {
         Session session = factory.openSession();
         Transaction transaction = null;
         User user = null;
@@ -171,6 +211,9 @@ public class UserManager {
         } finally {
             session.close();
         }
+
+        if(user == null)
+            throw new UserNotFoundException();
 
         return user;
     }
