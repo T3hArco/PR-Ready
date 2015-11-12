@@ -4,8 +4,10 @@ import be.ehb.swp2.entity.User;
 import be.ehb.swp2.exception.BadLoginException;
 import be.ehb.swp2.exception.DuplicateUserException;
 import be.ehb.swp2.manager.LoginManager;
+import be.ehb.swp2.manager.SessionManager;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.util.Configurator;
+import com.sun.codemodel.internal.JOp;
 import org.hibernate.SessionFactory;
 
 import javax.swing.*;
