@@ -58,7 +58,7 @@ public class Login2 {
             }
         });
         // Load HTML with dialog's HTML+CSS+JavaScript UI.
-        browser.loadURL("file:///resources/ui-html/domienstinkt.html");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/index.html");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
