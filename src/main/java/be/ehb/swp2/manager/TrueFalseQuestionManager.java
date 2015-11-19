@@ -1,14 +1,10 @@
 package be.ehb.swp2.manager;
 
-import be.ehb.swp2.entity.question.QuestionType;
 import be.ehb.swp2.entity.question.TrueFalseQuestion;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by Thomas on 12/11/2015.
