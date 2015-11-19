@@ -1,4 +1,4 @@
-package be.ehb.swp2.ui;
+package be.ehb.swp2.ui.swing;
 
 import be.ehb.swp2.entity.User;
 import be.ehb.swp2.exception.BadLoginException;
@@ -7,6 +7,7 @@ import be.ehb.swp2.exception.TokenNotFoundException;
 import be.ehb.swp2.exception.UserNotFoundException;
 import be.ehb.swp2.manager.LoginManager;
 import be.ehb.swp2.manager.UserManager;
+import be.ehb.swp2.ui.*;
 import be.ehb.swp2.util.Configurator;
 import org.hibernate.SessionFactory;
 
@@ -21,11 +22,12 @@ import java.awt.event.ActionListener;
 
 /**
  * The main login window for PR-Ready
+ * @deprecated
  */
-public class MainWindow extends JFrame implements Window {
+public class SwingMainWindow extends JFrame implements be.ehb.swp2.ui.Window {
     private SessionFactory factory;
 
-    public MainWindow(SessionFactory factory) {
+    public SwingMainWindow(SessionFactory factory) {
         this.factory = factory;
 
         this.initComponents();
@@ -85,7 +87,9 @@ public class MainWindow extends JFrame implements Window {
             }
         });
 
+
         this.pack();
         this.setVisible(true);
+        this.setAlwaysOnTop(true);
     }
 }
