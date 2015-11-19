@@ -27,6 +27,7 @@ public class TrueFalseQuestionManager {
     /** deze functie zal een nieuwe true or false question aanmaken
      *
      */
+    /** wtf */
     public Integer addQuestion(String name, String description, int time, boolean timeOn, QuestionType questionType, boolean answer){
         Session session = factory.openSession();
         Transaction transaction = null;
