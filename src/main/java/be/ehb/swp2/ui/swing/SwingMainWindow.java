@@ -1,6 +1,7 @@
 package be.ehb.swp2.ui.swing;
 
 import be.ehb.swp2.entity.User;
+import be.ehb.swp2.entity.UserRole;
 import be.ehb.swp2.exception.BadLoginException;
 import be.ehb.swp2.exception.DuplicateUserException;
 import be.ehb.swp2.exception.TokenNotFoundException;
@@ -47,7 +48,11 @@ public class SwingMainWindow extends JFrame implements be.ehb.swp2.ui.Window {
 
         JPanel bottomPane = new JPanel();
         JButton submit = new JButton("Get Session Info");
+        JButton isUser = new JButton("Check for user rights!");
+        JButton isAdmin = new JButton("Check for admin rights!");
         bottomPane.add(submit);
+        bottomPane.add(isUser);
+        bottomPane.add(isAdmin);
 
         JPanel parent = new JPanel(new GridLayout(3, 1));
         this.add(parent);
@@ -83,10 +88,57 @@ public class SwingMainWindow extends JFrame implements be.ehb.swp2.ui.Window {
                     status.setForeground(new Color(28, 184, 65));
                 }
 
-                session.setText("Username: " + user.getUsername() + ", Token:" + token);
+                session.setText("Username: " + user.getUsername() + ", Token:" + token + ", Role: " + user.getUserRole());
             }
         });
 
+        isAdmin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                UserManager um = new UserManager(factory);
+                User user = null;
+                Configurator configurator = new Configurator(); // moved configurator due to reloading problems
+                String token = configurator.getSetting("user", "token");
+
+                try {
+                    user = um.getUserByToken(token);
+                } catch (TokenNotFoundException e1) {
+                    JOptionPane.showMessageDialog(null, "Token not found", "PR-Ready", JOptionPane.ERROR_MESSAGE);
+                    e1.printStackTrace();
+                } catch (UserNotFoundException e1) {
+                    JOptionPane.showMessageDialog(null, "User not found", "PR-Ready", JOptionPane.ERROR_MESSAGE);
+                    e1.printStackTrace();
+                }
+
+                if(user.hasRole(UserRole.ADMINISTRATOR))
+                    JOptionPane.showMessageDialog(null, "User is an administrator", "PR-Ready", JOptionPane.INFORMATION_MESSAGE);
+                else
+                    JOptionPane.showMessageDialog(null, "User is not an administrator", "PR-Ready", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        isUser.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                UserManager um = new UserManager(factory);
+                User user = null;
+                Configurator configurator = new Configurator(); // moved configurator due to reloading problems
+                String token = configurator.getSetting("user", "token");
+
+                try {
+                    user = um.getUserByToken(token);
+                } catch (TokenNotFoundException e1) {
+                    JOptionPane.showMessageDialog(null, "Token not found", "PR-Ready", JOptionPane.ERROR);
+                    e1.printStackTrace();
+                } catch (UserNotFoundException e1) {
+                    JOptionPane.showMessageDialog(null, "User not found", "PR-Ready", JOptionPane.ERROR_MESSAGE);
+                    e1.printStackTrace();
+                }
+
+                if(user.hasRole(UserRole.USER))
+                    JOptionPane.showMessageDialog(null, "User is a user", "PR-Ready", JOptionPane.INFORMATION_MESSAGE);
+                else
+                    JOptionPane.showMessageDialog(null, "User is a user", "PR-Ready", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
         this.pack();
         this.setVisible(true);
