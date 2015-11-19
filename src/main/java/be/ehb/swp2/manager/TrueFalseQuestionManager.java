@@ -1,6 +1,7 @@
 package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.question.TrueFalseQuestion;
+import be.ehb.swp2.entity.question.QuestionType;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,7 +24,7 @@ public class TrueFalseQuestionManager {
     /** deze functie zal een nieuwe true or false question aanmaken
      *
      */
-    /** wtfjkjk */
+    /**  */
     public Integer addQuestion(String name, String description, int time, boolean timeOn, QuestionType questionType, boolean answer){
         Session session = factory.openSession();
         Transaction transaction = null;

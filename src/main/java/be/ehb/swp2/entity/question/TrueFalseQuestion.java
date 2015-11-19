@@ -2,7 +2,9 @@ package be.ehb.swp2.entity.question;
 
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.manager.TrueFalseQuestionManager;
+
 import org.hibernate.SessionFactory;
+
 /**
  * Created by Ibrahim on 03-11-15.
  */
