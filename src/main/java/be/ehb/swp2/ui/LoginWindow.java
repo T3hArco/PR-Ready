@@ -104,7 +104,9 @@ public class LoginWindow extends JFrame implements Window {
                     e.printStackTrace();
                 }
 
-                dialog.setVisible(false);
+                if(user != null)
+                    dialog.setVisible(false);
+
                 return JSValue.createUndefined();
             }
         });
