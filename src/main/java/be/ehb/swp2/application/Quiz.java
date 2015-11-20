@@ -2,14 +2,14 @@ package be.ehb.swp2.application;
 
 import javax.swing.*;
 
-import be.ehb.swp2.ui.MainWindow;
-import be.ehb.swp2.util.Configurator;
-import be.ehb.swp2.manager.LoginManager;
-import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.ui.LoginWindow;
+import be.ehb.swp2.ui.swing.SwingMainWindow;
+import be.ehb.swp2.util.Configurator;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.logging.Logger;
 
 /**
@@ -62,8 +62,6 @@ public class Quiz {
 
         logger.info("Starting configuration manager");
         configurator = new Configurator();
-        /*configurator.setSession("TEST");
-        configurator.getSession();*/
 
         logger.info("Starting database");
         try {
@@ -77,8 +75,11 @@ public class Quiz {
         long totalTime = end - start;
         logger.info("Initialization took " + totalTime + " milliseconds!");
 
+        /*SwingLoginWindow lw = new SwingLoginWindow(factory);
+        SwingMainWindow mw = new SwingMainWindow(factory);*/
+
+        SwingMainWindow mw = new SwingMainWindow(factory); // deprecated, but for testing purposes.
         LoginWindow lw = new LoginWindow(factory);
-        MainWindow mw = new MainWindow(factory);
     }
 
     /**
