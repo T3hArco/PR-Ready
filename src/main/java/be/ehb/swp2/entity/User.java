@@ -143,4 +143,40 @@ public class User {
 
         return this.token;
     }
+
+    /**
+     * Checks for the correct rights of the user
+     * @return boolean
+     * @deprecated
+     */
+    public boolean isAdmin() {
+        if(this.userRole == UserRole.ADMINISTRATOR)
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Checks for the correct rights of the user
+     * @return boolean
+     * @deprecated
+     */
+    public boolean isUser() {
+        if(this.userRole == UserRole.USER)
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Dynamically checks if user has required role.
+     * @param userRole
+     * @return boolean
+     */
+    public boolean hasRole(UserRole userRole) {
+        if(this.userRole == userRole)
+            return true;
+
+        return false;
+    }
 }

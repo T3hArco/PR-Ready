@@ -1,6 +1,7 @@
 package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.User;
+import be.ehb.swp2.entity.UserRole;
 import be.ehb.swp2.exception.DuplicateUserException;
 import be.ehb.swp2.exception.TokenNotFoundException;
 import be.ehb.swp2.exception.UserNotFoundException;
@@ -188,6 +189,32 @@ public class UserManager {
 
         User user = new UserManager(factory).getUserById(userId);
         return user;
+    }
+
+    /**
+     * Gets the role for a session.
+     * @param token token of the user
+     * @return UserRole
+     * @throws TokenNotFoundException the token was not found in the database
+     * @throws UserNotFoundException the user was not found in the database
+     */
+    public UserRole getRoleByToken(String token) throws TokenNotFoundException, UserNotFoundException {
+        Session session = factory.openSession();
+
+        List<Object[]> userList = session.createQuery("SELECT id, username, userRole FROM User WHERE (token = :token)")
+                .setMaxResults(1)
+                .setParameter("token", token)
+                .list();
+
+        if(userList.size() == 0)
+            throw new TokenNotFoundException();
+
+        int userId = Integer.parseInt(userList.get(0)[0].toString());
+
+        session.close();
+
+        User user = new UserManager(factory).getUserById(userId);
+        return user.getUserRole();
     }
 
     /**
