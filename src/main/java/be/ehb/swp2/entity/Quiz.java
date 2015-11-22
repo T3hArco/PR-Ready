@@ -3,7 +3,7 @@ package be.ehb.swp2.entity;
 /**
  * Created by arnaudcoel on 26/10/15.
  */
-public class Quiz {
+public class Quiz implements Comparable<Quiz> {
     /**
      * Het unieke nummer van een Quiz
      */
@@ -106,5 +106,13 @@ public class Quiz {
         this.description = description;
     }
 
+    /**
+     * compareTo methode voor klasse Quiz
+     */
+    public int compareTo(Quiz q) {
+        int i = this.description.compareTo(q.getDescription());
+        i += this.name.compareTo(q.getName());
+        return i;
+    }
 
 }
