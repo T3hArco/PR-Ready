@@ -7,6 +7,7 @@ import be.ehb.swp2.manager.LoginManager;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.ui.*;
 import be.ehb.swp2.util.Configurator;
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import org.hibernate.SessionFactory;
 
 import javax.swing.*;
@@ -23,9 +24,11 @@ import java.awt.event.ActionListener;
  */
 public class SwingTestMain extends JFrame implements be.ehb.swp2.ui.Window {
     private SessionFactory factory;
+    private Configurator configurator;
 
     public SwingTestMain(SessionFactory factory) {
         this.factory = factory;
+        this.configurator = new Configurator();
 
         this.initComponents();
     }
@@ -47,10 +50,12 @@ public class SwingTestMain extends JFrame implements be.ehb.swp2.ui.Window {
         JButton isUser = new JButton("Check for user rights!");
         JButton isAdmin = new JButton("Check for admin rights!");
         JButton launchAdminInterface = new JButton("Launch admin interface");
+        JButton launchLoginInterface = new JButton("Relogin");
         bottomPane.add(submit);
         bottomPane.add(isUser);
         bottomPane.add(isAdmin);
         bottomPane.add(launchAdminInterface);
+        bottomPane.add(launchLoginInterface);
 
         JPanel parent = new JPanel(new GridLayout(3, 1));
         this.add(parent);
@@ -59,6 +64,13 @@ public class SwingTestMain extends JFrame implements be.ehb.swp2.ui.Window {
         parent.add(centerPane);
         parent.add(topPane);
         parent.add(bottomPane);
+
+        launchLoginInterface.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new LoginWindow(factory);
+                configurator.setSetting("user", "token", "loggedout");
+            }
+        });
 
         launchAdminInterface.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
