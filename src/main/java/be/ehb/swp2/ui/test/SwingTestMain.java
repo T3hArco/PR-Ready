@@ -1,11 +1,8 @@
-package be.ehb.swp2.ui.swing;
+package be.ehb.swp2.ui.test;
 
 import be.ehb.swp2.entity.User;
 import be.ehb.swp2.entity.UserRole;
-import be.ehb.swp2.exception.BadLoginException;
-import be.ehb.swp2.exception.DuplicateUserException;
-import be.ehb.swp2.exception.TokenNotFoundException;
-import be.ehb.swp2.exception.UserNotFoundException;
+import be.ehb.swp2.exception.*;
 import be.ehb.swp2.manager.LoginManager;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.ui.*;
@@ -23,12 +20,11 @@ import java.awt.event.ActionListener;
 
 /**
  * The main login window for PR-Ready
- * @deprecated
  */
-public class SwingMainWindow extends JFrame implements be.ehb.swp2.ui.Window {
+public class SwingTestMain extends JFrame implements be.ehb.swp2.ui.Window {
     private SessionFactory factory;
 
-    public SwingMainWindow(SessionFactory factory) {
+    public SwingTestMain(SessionFactory factory) {
         this.factory = factory;
 
         this.initComponents();
@@ -50,9 +46,11 @@ public class SwingMainWindow extends JFrame implements be.ehb.swp2.ui.Window {
         JButton submit = new JButton("Get Session Info");
         JButton isUser = new JButton("Check for user rights!");
         JButton isAdmin = new JButton("Check for admin rights!");
+        JButton launchAdminInterface = new JButton("Launch admin interface");
         bottomPane.add(submit);
         bottomPane.add(isUser);
         bottomPane.add(isAdmin);
+        bottomPane.add(launchAdminInterface);
 
         JPanel parent = new JPanel(new GridLayout(3, 1));
         this.add(parent);
@@ -61,6 +59,20 @@ public class SwingMainWindow extends JFrame implements be.ehb.swp2.ui.Window {
         parent.add(centerPane);
         parent.add(topPane);
         parent.add(bottomPane);
+
+        launchAdminInterface.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new SwingAdminUI(factory);
+                } catch (UserNotFoundException e1) {
+                    e1.printStackTrace();
+                } catch (UserNoPermissionException e1) {
+                    e1.printStackTrace();
+                } catch (TokenNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
 
         submit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
