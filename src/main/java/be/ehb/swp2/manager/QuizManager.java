@@ -6,6 +6,7 @@ import org.hibernate.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * Created by arnaudcoel on 26/10/15.
