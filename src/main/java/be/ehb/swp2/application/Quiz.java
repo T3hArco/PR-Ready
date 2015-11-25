@@ -3,13 +3,11 @@ package be.ehb.swp2.application;
 import javax.swing.*;
 
 import be.ehb.swp2.ui.LoginWindow;
-import be.ehb.swp2.ui.swing.SwingMainWindow;
+import be.ehb.swp2.ui.test.SwingTestMain;
 import be.ehb.swp2.util.Configurator;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.logging.Logger;
 
 /**
@@ -76,9 +74,9 @@ public class Quiz {
         logger.info("Initialization took " + totalTime + " milliseconds!");
 
         /*SwingLoginWindow lw = new SwingLoginWindow(factory);
-        SwingMainWindow mw = new SwingMainWindow(factory);*/
+        SwingTestMain mw = new SwingTestMain(factory);*/
 
-        SwingMainWindow mw = new SwingMainWindow(factory); // deprecated, but for testing purposes.
+        SwingTestMain mw = new SwingTestMain(factory); // deprecated, but for testing purposes.
         LoginWindow lw = new LoginWindow(factory);
     }
 
