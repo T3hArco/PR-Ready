@@ -6,6 +6,10 @@ import java.util.List;
 /**
  * Created by arnaudcoel on 26/10/15.
  */
+
+/**
+ * The class that contains the data of Quizzes
+ */
 public class Quiz implements Comparable<Quiz> {
     /**
      * Het unieke nummer van een Quiz
@@ -124,18 +128,35 @@ public class Quiz implements Comparable<Quiz> {
         return i;
     }
 
+    /**
+     * Gets the questions in a certain quiz
+     * @return questions
+     */
     public List<Question> getQuestions() {
         return questions;
     }
 
+    /**
+     * Sets the list of questions
+     * @param questions
+     */
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
 
+    /**
+     * Adds a question to the question list. This should not be called on the object self
+     * @param question Question
+     */
     public void addQuestion(Question question) {
         this.questions.add(question);
     }
 
+    /**
+     * Gets a certain question in the DB
+     * @param id identifier
+     * @return question
+     */
     public Question getQuestion(int id) {
         return this.questions.get(id);
     }

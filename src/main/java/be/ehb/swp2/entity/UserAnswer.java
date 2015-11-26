@@ -12,9 +12,23 @@ import java.io.Serializable;
  * This class establishes a userAnswer
  */
 
+/**
+ * This class defines an answer by a user.
+ */
 public class UserAnswer implements Serializable {
+    /**
+     * The id of the corresponding user
+     */
     private Integer userId;
+
+    /**
+     * The id of the corresponding quiz
+     */
     private Integer questionId;
+
+    /**
+     * The given answer
+     */
     private String answer;
 
     /**
@@ -34,48 +48,52 @@ public class UserAnswer implements Serializable {
      */
     public UserAnswer() { }
 
+    /**
+     * Gets the id of the user
+     * @return user id
+     */
     public Integer getUserId() {
         return userId;
     }
 
+    /**
+     * Sets the id of the user
+     * @param userId userid
+     */
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
+    /**
+     * Gets the question identifier
+     * @return question id
+     */
     public Integer getQuestionId() {
         return questionId;
     }
 
+    /**
+     * Sets the question id
+     * @param questionId q
+     */
     public void setQuestionId(Integer questionId) {
         this.questionId = questionId;
     }
 
+    /**
+     * Gets the given answer to the question
+     * @return answser answer
+     */
     public String getAnswer() {
         return answer;
     }
 
+    /**
+     * Sets the answer given to the question
+     * @param answer answer
+     */
     public void setAnswer(String answer) {
         this.answer = answer;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        UserAnswer that = (UserAnswer) o;
-
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-        if (questionId != null ? !questionId.equals(that.questionId) : that.questionId != null) return false;
-        return !(answer != null ? !answer.equals(that.answer) : that.answer != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = userId != null ? userId.hashCode() : 0;
-        result = 31 * result + (questionId != null ? questionId.hashCode() : 0);
-        result = 31 * result + (answer != null ? answer.hashCode() : 0);
-        return result;
-    }
 }
