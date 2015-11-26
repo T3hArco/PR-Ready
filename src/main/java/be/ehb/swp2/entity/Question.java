@@ -1,117 +1,135 @@
 package be.ehb.swp2.entity;
 
 /**
- * Created by Thomas on 29/10/2015.
+ * Created by arnaudcoel on 29/10/2015.
  */
-public abstract class Question {
+
+/**
+ * This class contains all data for a question
+ */
+public class Question {
     /**
-     * De naam van een vraag
+     * The identifier for this question in the database
      */
-    private String name;
+    private int id;
 
     /**
-     * De beschrijving van een vraag
+     * This is the title of the question
      */
-    private String description;
+    private String title;
 
     /**
-     * De tijd voor een vraag
-     * @todo verduidelijk dit concept
+     * This is the body of the question
      */
-    private int time;
+    private String text;
 
     /**
-     * De time on voor een vraag
-     * @todo verduidelijk dit concept
+     * This is the type of the question. This identifier is only used in the database and is used to point to the correct
+     * sub-table
      */
-    private boolean timeOn;
+    private QuestionType questionType;
 
     /**
-     * De default constructor, set naam op 'Naamloos'.
+     * @todo define this
      */
-    @Deprecated
-    public Question() {
-        this.name = "Naamloos";
+    private int questionExtraId;
+
+    /**
+     * The default constructor for Question
+     */
+    public Question() { }
+
+    /**
+     * The constructor for question
+     * @param title The title of the question
+     * @param text The body of the question
+     * @param questionType the type of the question
+     * @param questionExtraId ??? TODO
+     */
+    public Question(String title, String text, QuestionType questionType, int questionExtraId) {
+        this.title = title;
+        this.text = text;
+        this.questionType = questionType;
+        this.questionExtraId = questionExtraId;
     }
 
     /**
-     * De constructor van Question
-     * @param name
-     * @param description
-     * @param time
-     * @param timeOn
+     * Returns the unique identifier of the question
+     * @return integer
      */
-    public Question(String name, String description, int time, boolean timeOn) {
-        this.name = name;
-        this.description = description;
-        this.time = time;
-        this.timeOn = timeOn;
+    public int getId() {
+        return id;
     }
 
     /**
-     * Geeft de naam van een vraag terug weer
-     * @return
+     * Sets the id of the question
+     * @param id identifier
      */
-    public String getName() {
-        return this.name;
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
-     * Geeft de beschrijving weer van een vraag
-     * @return
+     * Returns the title of the question
+     * @return String
      */
-    public String getDescription() {
-        return this.description;
+    public String getTitle() {
+        return this.title;
     }
 
     /**
-     * Geeft de tijd weer van een vraag
-     * @return
+     * Sets the title of the question
+     * @param title title of the question
      */
-    public int getTime() {
-        return this.time;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
-     * Geeft de time on weer van een vraag
-     * @todo verduidelijk dit concept!
-     * @return
+     * Gets the body of the question
+     * @return String
      */
-    public boolean isTimeOn() {
-        return this.timeOn;
+    public String getText() {
+        return text;
     }
 
     /**
-     * Zet de naam van een vraag
-     * @param name
+     * Sets the body of the question
+     * @param text body
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setText(String text) {
+        this.text = text;
     }
 
     /**
-     * Zet de beschrijving van een vraag
-     * @param description
+     * Gets the type of the question
+     * @return type
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public QuestionType getQuestionType() {
+        return questionType;
     }
 
     /**
-     * Zet de tijd van een vraag
-     * @param time
+     * Sets the body of the question
+     * @param questionType type
      */
-    public void setTime(int time) {
-        this.time = time;
+    public void setQuestionType(QuestionType questionType) {
+        this.questionType = questionType;
     }
 
     /**
-     * Zet de time on van een vraag
-     * @todo implementeer dit
-     * @param timeOn
+     * ???
+     * @return ???
      */
-    public void setTimeOn(boolean timeOn) {
-
+    public int getQuestionExtraId() {
+        return questionExtraId;
     }
 
+    /**
+     * `??
+     * @param questionExtraId ???
+     */
+    public void setQuestionExtraId(int questionExtraId) {
+        this.questionExtraId = questionExtraId;
+    }
 }

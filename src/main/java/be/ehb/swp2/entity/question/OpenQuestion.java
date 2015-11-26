@@ -1,6 +1,7 @@
 package be.ehb.swp2.entity.question;
 
 import be.ehb.swp2.entity.Question;
+import be.ehb.swp2.entity.QuestionType;
 
 import java.util.ArrayList;
 
@@ -17,18 +18,12 @@ public class OpenQuestion extends Question {
      * The answer to the question
      */
     private ArrayList<String> answers;
+    private QuestionType questionType;
 
-    /**
-     * Constructor of the OpenQuestion class
-     * @param name
-     * @param description
-     * @param time
-     * @param timeOn
-     * @param answer
-     */
-    public OpenQuestion(String name, String description, int time, boolean timeOn, String answer) {
-        super(name, description, time, timeOn);
-        this.answers = new ArrayList<String>();
+    public OpenQuestion(String title, String text, QuestionType questionType, Integer questionExtraId, ArrayList<String> answers) {
+        super(title, text, questionType, questionExtraId);
+        this.answers = answers;
+        this.questionType = QuestionType.OPEN;
     }
 
     /**
