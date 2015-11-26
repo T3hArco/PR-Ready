@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="be.ehb.swp2.entity.UserSubscription" table="UserSubscriptions">
+        <meta attribute="class-description">
+            This will identify user subscriptions
+        </meta>
+
+        <composite-id>
+            <key-property name="userId" column="userId" type="integer" />
+            <key-property name="quizId" column="quizId" type="integer" />
+        </composite-id>
+
+    </class>
+</hibernate-mapping>
