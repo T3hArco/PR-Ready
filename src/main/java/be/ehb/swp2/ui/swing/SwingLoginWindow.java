@@ -8,7 +8,6 @@ import be.ehb.swp2.manager.SessionManager;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.ui.*;
 import be.ehb.swp2.util.Configurator;
-import com.sun.codemodel.internal.JOp;
 import org.hibernate.SessionFactory;
 
 import javax.swing.*;
