@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="be.ehb.swp2.entity.question.TrueFalseQuestion" table="questions">
+        <id name="id" type="int" column="questionId">
+            <generator class="native"/>
+        </id>
+        <property name="name" column="title" type="string"></property>
+        <property name="description" column="text" type="string"></property>
+        <property name="time" column="time" type="time"></property>
+        <property name="timeOn" column="timeOn" type="boolean"></property>
+        <property name="questioType" column="questionType" type="enum"></property>
+        <many-to-one name="questionId" column="questionId" class="booleanQuestion" not-null="true"></many-to-one>
+
+        <joined-subclass name="be.ehb.swp2.entity.question.TrueFalseQuestion" table="booleanAnswer">
+            <key column="questionId"></key>
+            <property name="answer" type="boolean" column="result"></property>
+        </joined-subclass>
+    </class>
+</hibernate-mapping>
