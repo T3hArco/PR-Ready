@@ -55,7 +55,7 @@ public class OverviewWindow {
             html.println("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>OVERVIEW</title><link rel=\"stylesheet\" href=\"overview.css\"></head><body><div class=\"collection\">");
             int size = quizzen.size();
             for (int i = 0; i< size; i++){
-                html.println("<div class=\"quiz\"><div class=\"titel\"><p>"+ quizzen.first().getName() +"</p></div><div class=\"desc\"><p>" + quizzen.pollFirst().getDescription() +"</p></div><div class=\"button\"><button>option</button></div></div>");
+                html.println("<div class=\"quiz\"><div class=\"titel\"><p>"+ quizzen.first().getTitle() +"</p></div><div class=\"desc\"><p>" + quizzen.pollFirst().getDescription() +"</p></div><div class=\"button\"><button>option</button></div></div>");
             }
             html.println("</div></body></html>");
             html.close();

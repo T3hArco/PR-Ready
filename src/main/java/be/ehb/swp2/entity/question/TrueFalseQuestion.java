@@ -1,6 +1,7 @@
 package be.ehb.swp2.entity.question;
 
 import be.ehb.swp2.entity.Question;
+import be.ehb.swp2.entity.QuestionType;
 import be.ehb.swp2.manager.TrueFalseQuestionManager;
 
 import org.hibernate.SessionFactory;
@@ -19,19 +20,11 @@ public class TrueFalseQuestion extends Question {
     private boolean answer;
     QuestionType questionType;
     private static SessionFactory factory;
-    /**
-     * De constructor voor een true/false svraag
-     * @param name
-     * @param description
-     * @param time
-     * @param timeOn
-     * @param questionType
-     * @param answer
-     */
-    public TrueFalseQuestion(String name, String description, int time, boolean timeOn, QuestionType questionType, boolean answer) {
-        super(name, description, time, timeOn);
+
+    public TrueFalseQuestion(String title, String text, QuestionType questionType, Integer questionExtraId, boolean answer) {
+        super(title, text, questionType, questionExtraId);
         this.answer = answer;
-        this.questionType = QuestionType.trueOrFalse;
+        this.questionType = QuestionType.TRUE_FALSE;
     }
 
     /**
@@ -65,17 +58,6 @@ public class TrueFalseQuestion extends Question {
             return true;
 
         return false;
-    }
-
-    /**
-     *
-     * de addQuestion methode uittesten, kijken of hij iets toevoegd aan de database.
-     * @param args
-     */
-    public static void main(String[] args){
-        TrueFalseQuestionManager T1 = new TrueFalseQuestionManager(factory);
-        QuestionType questionType = null;
-        T1.addQuestion("Q1","test", 10, false, questionType, false);
     }
 
 }

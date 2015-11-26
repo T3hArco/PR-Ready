@@ -12,7 +12,7 @@ public class QuizTestNoDb {
 
     public QuizTestNoDb() {
         q = new Quiz();
-        q.setName("Test quiz!");
+        q.setTitle("Test quiz!");
         q.setDescription("This is a test quiz");
     }
 

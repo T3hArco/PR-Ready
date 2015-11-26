@@ -2,6 +2,7 @@ package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.Quiz;
+import be.ehb.swp2.exception.QuizNotFoundException;
 import org.hibernate.*;
 
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class QuizManager {
         try {
             transaction = session.beginTransaction();
             Quiz quiz = (Quiz) session.get(Quiz.class, quizId); // haal de quiz op die we proberen te referencen
-            quiz.setName(name); // zet de nieuwe naam van de gebruiker
+            quiz.setTitle(name); // zet de nieuwe naam van de gebruiker
             session.update(name); // zet de update klaar
             transaction.commit(); // TaDa
         } catch (HibernateException e) {
@@ -75,7 +76,7 @@ public class QuizManager {
         }
     }
 
-    public Quiz getQuizById(Integer quizId) {
+    public Quiz getQuizById(Integer quizId) throws QuizNotFoundException {
         Session session = factory.openSession();
         Transaction transaction = null;
         Quiz quiz = null;
@@ -92,6 +93,9 @@ public class QuizManager {
         } finally {
             session.close();
         }
+
+        if(quiz == null)
+            throw new QuizNotFoundException();
 
         return quiz;
     }
@@ -151,5 +155,31 @@ public class QuizManager {
         } finally {
             session.close();
         }
+    }
+
+    public void addQuestionToQuiz(Integer quizId, Question question) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            Quiz quiz = (Quiz) session.get(Quiz.class, quizId);
+            quiz.addQuestion(question);
+            transaction.commit();
+        } catch (HibernateException e) {
+            if(transaction != null)
+                transaction.rollback();
+
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    public boolean exists(Integer quizId) throws QuizNotFoundException {
+        if(this.getQuizById(quizId) == null)
+            return false;
+
+        return true;
     }
 }
