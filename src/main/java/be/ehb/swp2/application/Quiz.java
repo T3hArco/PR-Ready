@@ -3,6 +3,7 @@ package be.ehb.swp2.application;
 import javax.swing.*;
 
 import be.ehb.swp2.ui.LoginWindow;
+import be.ehb.swp2.ui.OverviewWindow;
 import be.ehb.swp2.ui.test.SwingTestMain;
 import be.ehb.swp2.util.Configurator;
 import org.hibernate.SessionFactory;
@@ -78,6 +79,8 @@ public class Quiz {
 
         SwingTestMain mw = new SwingTestMain(factory); // deprecated, but for testing purposes.
         LoginWindow lw = new LoginWindow(factory);
+        OverviewWindow ow = new OverviewWindow(factory);
+        ow.printGui();
     }
 
     /**
