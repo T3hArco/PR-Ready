@@ -15,6 +15,7 @@ import be.ehb.swp2.manager.UserAnswerManager;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.manager.UserSubscriptionManager;
 import be.ehb.swp2.ui.LoginWindow;
+import be.ehb.swp2.ui.OverviewWindow;
 import be.ehb.swp2.ui.test.SwingTestMain;
 import be.ehb.swp2.util.Configurator;
 import org.hibernate.SessionFactory;
@@ -132,6 +133,10 @@ public class Quiz {
             e.printStackTrace();
         }
 
+        SwingTestMain mw = new SwingTestMain(factory); // deprecated, but for testing purposes.
+        LoginWindow lw = new LoginWindow(factory);
+        OverviewWindow ow = new OverviewWindow(factory);
+        ow.printGui();
     }
 
     /**
