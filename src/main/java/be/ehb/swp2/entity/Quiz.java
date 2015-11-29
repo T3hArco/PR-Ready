@@ -120,12 +120,13 @@ public class Quiz implements Comparable<Quiz> {
     }
 
     /**
-     * compareTo methode voor klasse Quiz
+     * De compare-to van deze class
+     * @rewrite (Arnaud Coel) -> BUG, method gaf een null pointer
+     * @param q other quiz
+     * @return compare
      */
     public int compareTo(Quiz q) {
-        int i = this.description.compareTo(q.getDescription());
-        i += this.title.compareTo(q.getTitle());
-        return i;
+        return this.description.compareTo(q.getDescription());
     }
 
     /**
