@@ -293,4 +293,11 @@ public class UserManager {
             session.close();
         }
     }
+
+    public boolean exists(Integer userId) throws UserNotFoundException {
+        if(this.getUserById(userId) == null)
+            return false;
+
+        return true;
+    }
 }

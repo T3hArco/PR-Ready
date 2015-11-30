@@ -1,6 +1,7 @@
 package be.ehb.swp2.entity.question;
 
 import be.ehb.swp2.entity.Question;
+import be.ehb.swp2.entity.QuestionType;
 
 /**
  * Created by Thomas on 29/10/2015.
@@ -14,19 +15,15 @@ public class MathQuestion extends Question {
      * Contains the answer in the form of a double
      */
     private double answer;
+    private QuestionType questionType;
 
-    /**
-     * Constructor of MathQuestion
-     * @param answer the answer of the question
-     * @param name name of the question, inherited from Question
-     * @param description description of the question, inherited from Question
-     * @param time time of the question, inherited from Question
-     * @param timeOn time on a question, inherited from Question
-     */
-    public MathQuestion(double answer, String name, String description, int time, boolean timeOn) {
-        super(name, description, time, timeOn);
+    public MathQuestion(String title, String text, QuestionType questionType, Integer questionExtraId, double answer) {
+        super(title, text, questionType, questionExtraId);
         this.answer = answer;
+        this.questionType = QuestionType.MATH;
     }
+
+    public MathQuestion(double answer) { }
 
     /**
      * sets the answer of a question

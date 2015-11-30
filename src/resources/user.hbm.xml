@@ -11,14 +11,14 @@
         <id name="id" type="int" column="id">
             <generator class="native"/>
         </id>
-        <property name="username" column="username" type="string"/>
-        <property name="password" column="password" type="string"/>
-        <property name="userRole" column="role">
+        <property name="username" column="username" type="string" not-null="true" unique="true" />
+        <property name="password" column="password" type="string" length="32" not-null="true"/>
+        <property name="userRole" column="role" not-null="true">
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">be.ehb.swp2.entity.UserRole</param>
                 <param name="useNamed">true</param>
             </type>
         </property>
-        <property name="token" column="token" type="string"/>
+        <property name="token" column="token" type="string" unique="true"/>
     </class>
 </hibernate-mapping>
