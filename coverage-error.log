@@ -1,0 +1,9 @@
+[2015.11.12 16:49:55] (Coverage): Error writing file /Users/arnaudcoel/Library/Caches/IntelliJIdea14/coverage/Software Project II$Runner.coverage
+java.io.FileNotFoundException: /Users/arnaudcoel/Library/Caches/IntelliJIdea14/coverage/Software Project II$Runner.coverage (No such file or directory)
+	at java.io.FileOutputStream.open(Native Method)
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:213)
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:162)
+	at com.intellij.rt.coverage.util.CoverageIOUtil.openFile(CoverageIOUtil.java:196)
+	at com.intellij.rt.coverage.instrumentation.SaveHook.save(SaveHook.java:63)
+	at com.intellij.rt.coverage.instrumentation.SaveHook.run(SaveHook.java:51)
+	at java.lang.Thread.run(Thread.java:745)

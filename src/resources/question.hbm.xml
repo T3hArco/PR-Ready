@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="be.ehb.swp2.entity.Question" table="Questions">
+        <meta attribute="class-description">
+            This class contains all data for questions
+        </meta>
+        <id name="id" type="int" column="questionId">
+            <generator class="native"/>
+        </id>
+        <property name="title" column="title" not-null="true" />
+        <property name="text" column="text" not-null="true"/>
+        <property name="questionType" column="questionType">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">be.ehb.swp2.entity.QuestionType</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+        <property name="questionExtraId" column="questionExtraId"/>
+    </class>
+</hibernate-mapping>
