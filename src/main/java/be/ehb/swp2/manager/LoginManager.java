@@ -35,7 +35,7 @@ public class LoginManager {
 
         password = Encryptor.hashPassword(password); // hash the password
 
-        List<Object[]> userList = session.createQuery("SELECT id, username, password FROM User WHERE (username = :username AND password = :password)")
+        List<Object[]> userList = session.createQuery("SELECT id, username, password FROM User WHERE (username = :username AND password = :password AND deleted = false)")
                 .setMaxResults(1)
                 .setParameter("username", username)
                 .setParameter("password", password)
