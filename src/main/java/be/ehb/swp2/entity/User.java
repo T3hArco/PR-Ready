@@ -21,6 +21,7 @@ public class User {
     private String username;
     private String password;
     private UserRole userRole;
+    private boolean deleted;
 
     /**
      * The authentication token of the user
@@ -41,6 +42,7 @@ public class User {
         this.username = username;
         this.setPassword(password);
         this.userRole = UserRole.USER;
+        this.deleted = false;
     }
 
     /**
@@ -116,10 +118,7 @@ public class User {
      * @param password
      */
     public void setPassword(String password) {
-        if(!Encryptor.isMD5(password))
-            this.password = Encryptor.hashPassword(password);
-        else
-            this.password = password;
+        this.password = Encryptor.hashPassword(password);
     }
 
     /**
@@ -143,6 +142,69 @@ public class User {
      */
     public String setToken() {
         this.token = Encryptor.generateToken(this);
+
         return this.token;
+    }
+
+    /**
+     * Checks for the correct rights of the user
+     * @return boolean
+     * @deprecated
+     */
+    public boolean isAdmin() {
+        if(this.userRole == UserRole.ADMINISTRATOR)
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Checks for the correct rights of the user
+     * @return boolean
+     * @deprecated
+     */
+    public boolean isUser() {
+        if(this.userRole == UserRole.USER)
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Dynamically checks if user has required role.
+     * @param userRole
+     * @return boolean
+     */
+    public boolean hasRole(UserRole userRole) {
+        if(this.userRole == userRole)
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Returns whether the user has been deleted
+     * @return boolean
+     */
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    /**
+     * Sets the deletion of the user
+     * @param deleted boolean
+     */
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", userRole=" + userRole +
+                ", deleted=" + deleted +
+                '}';
     }
 }
