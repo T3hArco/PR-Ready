@@ -1,6 +1,8 @@
 package be.ehb.swp2.ui;
 
 import be.ehb.swp2.entity.Quiz;
+import be.ehb.swp2.exception.DuplicateQuizException;
+import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.manager.QuizManager;
 
 import java.awt.*;
@@ -31,31 +33,43 @@ public class OverviewWindow {
     private SessionFactory factory;
     private QuizManager quizManager;
 
+    /**
+     * Constructor voor Overviewwindow
+     * @param factory de SQL sessie
+     */
     public OverviewWindow(SessionFactory factory) {
         this.factory = factory;
         this.quizSet = new TreeSet<Quiz>();
         this.quizManager = new QuizManager(factory);
     }
 
-    //een quiz toevoegen
-    public Boolean addQuiz(Quiz q){
-        if (quizSet.contains(q)){
-            return false;
-        } else {
-            quizSet.add(q);
-            return true;
-        }
+    /**
+     * Adds a quiz to the list
+     * @param q quiz in question
+     * @throws DuplicateQuizException if a duplicate was made
+     */
+    public void addQuiz(Quiz q) throws DuplicateQuizException {
+        if (quizSet.contains(q))
+            throw new DuplicateQuizException();
+
+        quizSet.add(q);
     }
-    //een quiz verwijderen
-    //voor de implementatie van deze methode is een comparteTo methode in de klasse quiz vereist
-    public Boolean removeQuiz(Quiz q){
-        if (quizSet.contains(q)){
-            quizSet.remove(q);
-            return true;
-        } else {
-            return false;
-        }
+
+    /**
+     * Removes a quiz from the list
+     * @param q quiz in question
+     * @throws QuizNotFoundException if the quiz was not found in the list
+     */
+    public void removeQuiz(Quiz q) throws QuizNotFoundException {
+        if (!quizSet.contains(q))
+            throw new QuizNotFoundException();
+
+        quizSet.remove(q);
     }
+
+    /**
+     * @todo standardize this crap
+     */
     public void printGui(){
         quizSet.addAll(quizManager.getQuizzes());
         final File temp;
