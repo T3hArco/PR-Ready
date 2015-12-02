@@ -24,6 +24,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Het logo van een Quiz
+     *
      * @todo is dit het correcte type waar we achter zoeken? Ik denk niet dat het zo in elkaar mag zitten
      */
     private String logo;
@@ -41,10 +42,12 @@ public class Quiz implements Comparable<Quiz> {
     /**
      * Default constructor voor Quiz
      */
-    public Quiz() {}
+    public Quiz() {
+    }
 
     /**
      * Constructor voor quiz
+     *
      * @param logo
      * @param title
      * @param description
@@ -58,6 +61,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Getter voor id
+     *
      * @return Id van de Quiz
      */
     public int getId() {
@@ -66,6 +70,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Setter voor id
+     *
      * @param id de nieuwe id
      */
     public void setId(int id) {
@@ -74,6 +79,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Getter voor logo URI
+     *
      * @return logo URI
      */
     public String getLogo() {
@@ -82,6 +88,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * setter voor logo URI
+     *
      * @param logo logo URI
      */
     public void setLogo(String logo) {
@@ -90,6 +97,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * getter voor name
+     *
      * @return
      */
     public String getTitle() {
@@ -98,6 +106,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * setter voor name
+     *
      * @param name
      */
     public void setTitle(String name) {
@@ -106,6 +115,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * getter voor description
+     *
      * @return
      */
     public String getDescription() {
@@ -114,6 +124,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * setter voor description
+     *
      * @param description
      */
     public void setDescription(String description) {
@@ -131,6 +142,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Gets the questions in a certain quiz
+     *
      * @return questions
      */
     public List<Question> getQuestions() {
@@ -139,6 +151,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Sets the list of questions
+     *
      * @param questions
      */
     public void setQuestions(List<Question> questions) {
@@ -147,6 +160,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Adds a question to the question list. This should not be called on the object self
+     *
      * @param question Question
      */
     public void addQuestion(Question question) {
@@ -155,6 +169,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Gets a certain question in the DB
+     *
      * @param id identifier
      * @return question
      */
@@ -162,12 +177,12 @@ public class Quiz implements Comparable<Quiz> {
         return this.questions.get(id);
     }
 
-	public Blob getLogoImg() {
-		return logoImg;
-	}
+    public Blob getLogoImg() {
+        return logoImg;
+    }
 
-	public void setLogoImg(Blob logoImg) {
-		this.logoImg = logoImg;
-	}
+    public void setLogoImg(Blob logoImg) {
+        this.logoImg = logoImg;
+    }
 
-}
+} // Ibrahim --> setLogoImg
