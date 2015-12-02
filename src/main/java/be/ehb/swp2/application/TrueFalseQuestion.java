@@ -1,4 +1,4 @@
-
+/*
 public class TrueFalseQuestion implements Question {
 	
 private boolean answer;
@@ -19,3 +19,4 @@ private boolean answer;
 		
 	}
 }
+*/

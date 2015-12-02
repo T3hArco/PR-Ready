@@ -1,5 +1,6 @@
 package be.ehb.swp2.entity;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class Quiz implements Comparable<Quiz> {
      * @todo is dit het correcte type waar we achter zoeken? Ik denk niet dat het zo in elkaar mag zitten
      */
     private String logo;
-
+    private Blob logoImg;
     /**
      * De beschrijving van een Quiz
      */
@@ -120,13 +121,12 @@ public class Quiz implements Comparable<Quiz> {
     }
 
     /**
-     * De compare-to van deze class
-     * @rewrite (Arnaud Coel) -> BUG, method gaf een null pointer
-     * @param q other quiz
-     * @return compare
+     * compareTo methode voor klasse Quiz
      */
     public int compareTo(Quiz q) {
-        return this.description.compareTo(q.getDescription());
+        int i = this.description.compareTo(q.getDescription());
+        i += this.title.compareTo(q.getTitle());
+        return i;
     }
 
     /**
@@ -161,5 +161,13 @@ public class Quiz implements Comparable<Quiz> {
     public Question getQuestion(int id) {
         return this.questions.get(id);
     }
+
+	public Blob getLogoImg() {
+		return logoImg;
+	}
+
+	public void setLogoImg(Blob logoImg) {
+		this.logoImg = logoImg;
+	}
 
 }
