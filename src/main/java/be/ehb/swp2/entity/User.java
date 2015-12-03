@@ -21,7 +21,6 @@ public class User {
     private String username;
     private String password;
     private UserRole userRole;
-    private boolean deleted;
 
     /**
      * The authentication token of the user
@@ -42,7 +41,6 @@ public class User {
         this.username = username;
         this.setPassword(password);
         this.userRole = UserRole.USER;
-        this.deleted = false;
     }
 
     /**
@@ -180,31 +178,5 @@ public class User {
             return true;
 
         return false;
-    }
-
-    /**
-     * Returns whether the user has been deleted
-     * @return boolean
-     */
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    /**
-     * Sets the deletion of the user
-     * @param deleted boolean
-     */
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", userRole=" + userRole +
-                ", deleted=" + deleted +
-                '}';
     }
 }
