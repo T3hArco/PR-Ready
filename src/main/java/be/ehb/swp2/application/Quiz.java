@@ -164,11 +164,8 @@ public class Quiz {
             e.printStackTrace();
         }
 
-        for(int i = 0; i < 20; i++)
-            System.out.println(Quiz.class.getResource("../images/unknown.png"));
-
         try {
-            quiz.setLogo(ImageHandler.toByteArray(null));
+            quiz.setLogo(ImageHandler.toByteArray(Quiz.class.getResource("/images/unknown.png")));
         } catch (IOException e) {
             logger.log(Level.SEVERE, "\"Fout tijdens het aanmaken van de afbeelding\"");
             e.printStackTrace();
