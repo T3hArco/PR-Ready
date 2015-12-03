@@ -16,8 +16,6 @@ import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.manager.UserSubscriptionManager;
 import be.ehb.swp2.ui.LoginWindow;
 import be.ehb.swp2.ui.OverviewWindow;
-import be.ehb.swp2.ui.swing.SwingAdminWindow;
-import be.ehb.swp2.ui.swing.SwingLoginWindow;
 import be.ehb.swp2.ui.test.SwingTestMain;
 import be.ehb.swp2.util.Configurator;
 import org.hibernate.SessionFactory;
@@ -96,7 +94,7 @@ public class Quiz {
         /*SwingTestMain mw = new SwingTestMain(factory); // deprecated, but for testing purposes.
         LoginWindow lw = new LoginWindow(factory);*/
 
-        /*UserManager um = new UserManager(factory);
+        UserManager um = new UserManager(factory);
         try {
             um.addUser("test", "test");
         } catch (DuplicateUserException e) {
@@ -133,14 +131,12 @@ public class Quiz {
             e.printStackTrace();
         } catch (UserNotFoundException e) {
             e.printStackTrace();
-        }*/
+        }
 
         SwingTestMain mw = new SwingTestMain(factory); // deprecated, but for testing purposes.
-        SwingAdminWindow aw = new SwingAdminWindow(factory);
-        SwingLoginWindow sw = new SwingLoginWindow(factory);
-        /*LoginWindow lw = new LoginWindow(factory);
+        LoginWindow lw = new LoginWindow(factory);
         OverviewWindow ow = new OverviewWindow(factory);
-        ow.printGui();*/
+        ow.printGui();
     }
 
     /**
