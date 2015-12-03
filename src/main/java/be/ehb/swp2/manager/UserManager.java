@@ -3,7 +3,6 @@ package be.ehb.swp2.manager;
 import be.ehb.swp2.entity.User;
 import be.ehb.swp2.entity.UserRole;
 import be.ehb.swp2.exception.DuplicateUserException;
-import be.ehb.swp2.exception.InternalErrorException;
 import be.ehb.swp2.exception.TokenNotFoundException;
 import be.ehb.swp2.exception.UserNotFoundException;
 import org.hibernate.*;
@@ -81,35 +80,6 @@ public class UserManager {
         } finally {
             session.close();
         }
-    }
-
-    /**
-     * Lists all users to list
-     * @return
-     * @throws InternalErrorException
-     */
-    public Object[] listUsers() throws InternalErrorException {
-        Session session = factory.openSession();
-        Transaction transaction = null;
-        List users = null;
-
-        try {
-            transaction = session.beginTransaction();
-            users = session.createQuery("FROM User").list();
-            transaction.commit();
-        } catch (HibernateException e) {
-            if(transaction != null)
-                transaction.rollback();
-
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-
-        if(users == null)
-            throw new InternalErrorException();
-
-        return users.toArray(new Object[users.size()]);
     }
 
     /**
@@ -302,36 +272,8 @@ public class UserManager {
     }
 
     /**
-     * Sets the state of the user in the database. If set to false the user will not be able to log in
-     * @param userId the user
-     * @param state the state of the user
-     */
-    public void setUserState(Integer userId, boolean state) {
-        Session session = factory.openSession();
-        Transaction transaction = null;
-
-        state ^= true;
-
-        try {
-            transaction = session.beginTransaction();
-            User user = (User) session.get(User.class, userId);
-            user.setDeleted(state);
-            session.update(user);
-            transaction.commit();
-        } catch (HibernateException e) {
-            if(transaction != null)
-                transaction.rollback();
-
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-    }
-
-    /**
      * Deze methode zal doormiddel van de userId de gebruiker uit de database verwijderen.
      * @param userId
-     * @deprecated Use soft deletion options!
      */
     public void deleteUser(Integer userId) {
         Session session = factory.openSession();
@@ -352,12 +294,6 @@ public class UserManager {
         }
     }
 
-    /**
-     * Checks whether the user exits
-     * @param userId userId
-     * @return boolean
-     * @throws UserNotFoundException
-     */
     public boolean exists(Integer userId) throws UserNotFoundException {
         if(this.getUserById(userId) == null)
             return false;
