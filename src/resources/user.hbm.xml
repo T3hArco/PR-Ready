@@ -11,7 +11,7 @@
         <id name="id" type="int" column="id">
             <generator class="native"/>
         </id>
-        <property name="username" column="username" type="string"/>
+        <property name="username" column="username" type="string" unique="true"/>
         <property name="password" column="password" type="string" length="32"/>
         <property name="userRole" column="role">
             <type name="org.hibernate.type.EnumType">
@@ -20,5 +20,6 @@
             </type>
         </property>
         <property name="token" column="token" type="string"/>
+        <property name="deleted" column="deleted" type="yes_no" not-null="true" />
     </class>
 </hibernate-mapping>
