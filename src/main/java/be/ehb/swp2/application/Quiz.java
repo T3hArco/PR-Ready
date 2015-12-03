@@ -2,27 +2,24 @@ package be.ehb.swp2.application;
 
 import javax.swing.*;
 
-import be.ehb.swp2.entity.Question;
-import be.ehb.swp2.entity.QuestionType;
 import be.ehb.swp2.entity.User;
-import be.ehb.swp2.entity.UserSubscription;
-import be.ehb.swp2.exception.DuplicateAnswerException;
 import be.ehb.swp2.exception.DuplicateUserException;
 import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.exception.UserNotFoundException;
 import be.ehb.swp2.manager.QuizManager;
-import be.ehb.swp2.manager.UserAnswerManager;
 import be.ehb.swp2.manager.UserManager;
-import be.ehb.swp2.manager.UserSubscriptionManager;
 import be.ehb.swp2.ui.LoginWindow;
-import be.ehb.swp2.ui.OverviewWindow;
 import be.ehb.swp2.ui.swing.SwingAdminWindow;
 import be.ehb.swp2.ui.swing.SwingLoginWindow;
 import be.ehb.swp2.ui.test.SwingTestMain;
 import be.ehb.swp2.util.Configurator;
+import be.ehb.swp2.util.ImageHandler;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.io.IOException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -90,6 +87,8 @@ public class Quiz {
         long totalTime = end - start;
         logger.info("Initialization took " + totalTime + " milliseconds!");
 
+        imageSaveTest();
+
         /*SwingLoginWindow lw = new SwingLoginWindow(factory);
         SwingTestMain mw = new SwingTestMain(factory);*/
 
@@ -135,9 +134,9 @@ public class Quiz {
             e.printStackTrace();
         }*/
 
-        SwingTestMain mw = new SwingTestMain(factory); // deprecated, but for testing purposes.
-        SwingAdminWindow aw = new SwingAdminWindow(factory);
-        SwingLoginWindow sw = new SwingLoginWindow(factory);
+        //SwingTestMain mw = new SwingTestMain(factory); // deprecated, but for testing purposes.
+        //SwingAdminWindow aw = new SwingAdminWindow(factory);
+        //SwingLoginWindow sw = new SwingLoginWindow(factory);
         LoginWindow lw = new LoginWindow(factory);
         /*OverviewWindow ow = new OverviewWindow(factory);
         ow.printGui();*/
@@ -149,5 +148,30 @@ public class Quiz {
      */
     public void doDbTest() {
 
+    }
+
+    public void imageSaveTest() {
+        QuizManager quizManager = new QuizManager(factory);
+        SecureRandom random = new SecureRandom();
+        Integer quizId = null;
+        be.ehb.swp2.entity.Quiz quiz = null;
+
+        try {
+            quizId = quizManager.addQuiz(new BigInteger(130, random).toString(32), "test");
+            quiz = quizManager.getQuizById(quizId);
+        } catch (QuizNotFoundException e) {
+            logger.log(Level.SEVERE, "\"Fout tijdens het aanmaken van de quiz\"");
+            e.printStackTrace();
+        }
+
+        for(int i = 0; i < 20; i++)
+            System.out.println(Quiz.class.getResource("../images/unknown.png"));
+
+        try {
+            quiz.setLogo(ImageHandler.toByteArray(null));
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "\"Fout tijdens het aanmaken van de afbeelding\"");
+            e.printStackTrace();
+        }
     }
 }
