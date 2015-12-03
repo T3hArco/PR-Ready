@@ -40,6 +40,7 @@ public class UserManager {
         try {
             transaction = session.beginTransaction(); // start een transactie op
             User user = new User(name, password);
+            user.setDeleted(false);
             userId = (Integer) session.save(user); // geef de ID van de gebruiker weer
             transaction.commit(); // persist in de database
         } catch(HibernateException e) {

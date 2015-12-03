@@ -1,5 +1,6 @@
 package be.ehb.swp2.entity;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +24,10 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Het logo van een Quiz
+     *
      * @todo is dit het correcte type waar we achter zoeken? Ik denk niet dat het zo in elkaar mag zitten
      */
-    private String logo;
+    private byte[] logo;
 
     /**
      * De beschrijving van een Quiz
@@ -40,16 +42,15 @@ public class Quiz implements Comparable<Quiz> {
     /**
      * Default constructor voor Quiz
      */
-    public Quiz() {}
+    public Quiz() {
+    }
 
     /**
-     * Constructor voor quiz
-     * @param logo
+     * Constructor voor Quiz
      * @param title
      * @param description
      */
-    public Quiz(String title, String logo, String description) {
-        this.logo = logo;
+    public Quiz(String title, String description) {
         this.title = title;
         this.description = description;
         this.questions = new ArrayList<Question>();
@@ -57,6 +58,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Getter voor id
+     *
      * @return Id van de Quiz
      */
     public int getId() {
@@ -65,6 +67,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Setter voor id
+     *
      * @param id de nieuwe id
      */
     public void setId(int id) {
@@ -72,10 +75,11 @@ public class Quiz implements Comparable<Quiz> {
     }
 
     /**
-     * Getter voor logo URI
+     * Geeft een byte array terug van het object
+     * Niet gebruiken zonder manager!
      * @return logo URI
      */
-    public String getLogo() {
+    public byte[] getLogo() {
         return logo;
     }
 
@@ -83,7 +87,7 @@ public class Quiz implements Comparable<Quiz> {
      * setter voor logo URI
      * @param logo logo URI
      */
-    public void setLogo(String logo) {
+    public void setLogo(byte[] logo) {
         this.logo = logo;
     }
 
@@ -120,13 +124,12 @@ public class Quiz implements Comparable<Quiz> {
     }
 
     /**
-     * De compare-to van deze class
-     * @rewrite (Arnaud Coel) -> BUG, method gaf een null pointer
-     * @param q other quiz
-     * @return compare
+     * compareTo methode voor klasse Quiz
      */
     public int compareTo(Quiz q) {
-        return this.description.compareTo(q.getDescription());
+        int i = this.description.compareTo(q.getDescription());
+        i += this.title.compareTo(q.getTitle());
+        return i;
     }
 
     /**
@@ -161,5 +164,4 @@ public class Quiz implements Comparable<Quiz> {
     public Question getQuestion(int id) {
         return this.questions.get(id);
     }
-
 }

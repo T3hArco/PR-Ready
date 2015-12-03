@@ -13,8 +13,6 @@ package be.ehb.swp2.ui;
         import javax.swing.SpringLayout;
 
 public class QuestionCreateButtonListener implements ActionListener {
-
-
     private Editor parentPanel;
     private JPanel panelInsideScrollPane;
     private JButton buttonTest;
@@ -26,7 +24,6 @@ public class QuestionCreateButtonListener implements ActionListener {
         this.buttonTest = parentPanel.getButtonTest();
     }
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("klik");
 

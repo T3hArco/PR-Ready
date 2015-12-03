@@ -11,9 +11,9 @@
         <id name="id" type="int" column="id">
             <generator class="native"/>
         </id>
-        <property name="title" column="title" type="string" not-null="true"/>
-        <property name="logo" column="logo" type="string" not-null="false"/>
-        <property name="description" column="description" type="string" not-null="true" />
+        <property name="title" column="title" type="string"/>
+        <property name="logo" column="logo" type="blob"/>
+        <property name="description" column="description" type="string"/>
         <list name="questions" cascade="all">
             <key column="quizId"/>
             <list-index column="idx"/>
@@ -21,3 +21,6 @@
         </list>
     </class>
 </hibernate-mapping>
+
+
+

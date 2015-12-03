@@ -10,6 +10,7 @@ import be.ehb.swp2.entity.Question;
  * @Todo implement this class
  */
 public class MultipleChoice extends Question {
+
     public boolean solve() {
         return false;
     }
