@@ -116,10 +116,7 @@ public class User {
      * @param password
      */
     public void setPassword(String password) {
-        if(!Encryptor.isMD5(password))
-            this.password = Encryptor.hashPassword(password);
-        else
-            this.password = password;
+        this.password = Encryptor.hashPassword(password);
     }
 
     /**
@@ -143,6 +140,43 @@ public class User {
      */
     public String setToken() {
         this.token = Encryptor.generateToken(this);
+
         return this.token;
+    }
+
+    /**
+     * Checks for the correct rights of the user
+     * @return boolean
+     * @deprecated
+     */
+    public boolean isAdmin() {
+        if(this.userRole == UserRole.ADMINISTRATOR)
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Checks for the correct rights of the user
+     * @return boolean
+     * @deprecated
+     */
+    public boolean isUser() {
+        if(this.userRole == UserRole.USER)
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Dynamically checks if user has required role.
+     * @param userRole
+     * @return boolean
+     */
+    public boolean hasRole(UserRole userRole) {
+        if(this.userRole == userRole)
+            return true;
+
+        return false;
     }
 }

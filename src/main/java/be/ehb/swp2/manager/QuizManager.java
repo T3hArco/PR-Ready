@@ -1,13 +1,12 @@
 package be.ehb.swp2.manager;
 
+import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.Quiz;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * Created by arnaudcoel on 26/10/15.
@@ -96,6 +95,40 @@ public class QuizManager {
         }
 
         return quiz;
+    }
+
+    /**
+     * Gets all quizzes in the database
+     * @return quizzes
+     */
+    public List<Quiz> getQuizzes() {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+        List quizzes = null;
+
+        try {
+            transaction = session.beginTransaction();
+            Query fetchQuizzes = session.createQuery("From Quiz");
+            quizzes = fetchQuizzes.list();
+        } catch (HibernateException e) {
+            if(transaction != null)
+                transaction.rollback();
+
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return quizzes;
+    }
+
+    /**
+     * @todo implement
+     * @param quiz
+     * @return
+     */
+    public Question getQuestionsForQuiz(Integer quiz) {
+        return null;
     }
 
     /**
