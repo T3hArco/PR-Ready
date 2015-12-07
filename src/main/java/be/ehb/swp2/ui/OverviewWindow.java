@@ -118,7 +118,7 @@ public class OverviewWindow {
          */
         final Browser browser = new Browser();
 
-        browser.loadURL("file:///var/folders/p5/68g32mc56q14jsztlmf_kzvr0000gn/T/overview.html");
+        browser.loadURL("file://" + tempFilePath + "/overview.html");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
