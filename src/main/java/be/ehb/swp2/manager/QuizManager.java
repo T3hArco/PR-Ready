@@ -3,7 +3,9 @@ package be.ehb.swp2.manager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -34,28 +36,20 @@ public class QuizManager {
 		this.factory = factory;
 	}
 
-	/**
-	 * Deze functie zal trachten een quiz toe te voegen aan de databank. Na
-	 * afloop van de functie wordt er een foutmelding weergegeven of een quizId
-	 * (Integer)
-	 * 
-	 * @param name
-	 *            De naam van de quiz
-	 * @param logo
-	 *            Een URL naar het logo van de quiz
-	 * @param description
-	 *            Een beschrijving van de quiz
-	 * @return quizId
-	 */
-	public Integer addQuiz(String name, String logo, String description) {
+    /**
+     * Deze functie gaat een quiz invoegen in de databank
+     * @param name
+     * @param description
+     * @return
+     */
+	public Integer addQuiz(String name, String description) {
 		Session session = factory.openSession();
 		Transaction transaction = null;
 		Integer quizId = null;
 
 		try {
 			transaction = session.beginTransaction(); // start een transactie op
-			Quiz quiz = new Quiz(name, logo, description);
-			quiz.setLogoImg(getImageFromPath(logo, session));
+			Quiz quiz = new Quiz(name, description);
 			quizId = (Integer) session.save(quiz); // geef de ID van de quiz
 													// weer
 			transaction.commit(); // persist in de database
@@ -63,8 +57,6 @@ public class QuizManager {
 			if (transaction != null)
 				transaction.rollback(); // maak de transactie ongedaan indien er
 										// een fout is
-		} catch (FileNotFoundException e) {
-			LOGGER.error("The file could not be found", e);
 		} finally {
 			session.close(); // we zijn klaar en sluiten onze sessie af
 		}
@@ -72,28 +64,35 @@ public class QuizManager {
 		return quizId; // geef de aangemaakte Id van de gebruiker
 	}
 
-	/***
-	 * create a blob from file path
-	 * 
-	 * @param filePath
-	 *            file path
-	 * @param session
-	 *            hibernate session
-	 * @return blob
-	 * @throws FileNotFoundException
-	 *             file not found
-	 */
+    /**
+     * Method will attempt to save an image to the database added to a quiz.
+     * @param quizId
+     * @param blob
+     * @throws IOException
+     */
+    private void saveLogo(Integer quizId, Blob blob) throws IOException {
+        Session session = factory.openSession();
+        Transaction transaction = null;
 
-	// private Blob --> Ibrahim
+        try {
+            transaction = session.beginTransaction();
+            Quiz quiz = (Quiz) session.get(Quiz.class, quizId);
+            byte[] logoBytes = blob.getBytes(1, (int) blob.length());
+            quiz.setLogo(logoBytes);
 
-	private Blob getImageFromPath(String filePath, Session session) throws FileNotFoundException {
-		File file = new File(filePath);
-		FileInputStream inputStream = new FileInputStream(file);
-		Blob blob = Hibernate.getLobCreator(session).createBlob(inputStream, file.length());
-		return blob;
-	}
-// Blob methode door Ibrahim voor Db
-	/**
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+
+    /**
 	 * Deze method zal de naam van een quiz updaten doormiddel van de quizId
 	 * 
 	 * @param quizId
