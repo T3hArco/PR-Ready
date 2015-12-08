@@ -1,12 +1,4 @@
 package be.ehb.swp2.ui;
-import java.awt.BorderLayout;
-import java.awt.GraphicsEnvironment;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
 
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.dom.By;
@@ -16,16 +8,30 @@ import com.teamdev.jxbrowser.chromium.dom.DOMNode;
 import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 /**
  * Created by Thomas on 3/12/2015.
  */
 public class ImageWindow {
     final private String url;
 
-    ImageWindow(final String url){
+    ImageWindow(final String url) {
         this.url = url;
     }
-    public void printGui(){
+
+    static public void main(String[] arsg) {
+        //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
+        //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
+        ImageWindow i = new ImageWindow("u1I9ITfzqFs");
+        i.printGui();
+    }
+
+    public void printGui() {
         final Browser browser = new Browser();
         BrowserView browserView = new BrowserView(browser);
         JFrame parent = new JFrame();
@@ -41,7 +47,7 @@ public class ImageWindow {
                     DOMDocument document = event.getBrowser().getDocument();
                     DOMNode root = document.findElement(By.id("question_field"));
                     DOMElement img = document.createElement("div");
-                    img.setAttribute("class","question_img");
+                    img.setAttribute("class", "question_img");
                     root.appendChild(img);
 
                 }
@@ -66,12 +72,5 @@ public class ImageWindow {
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
 
-    }
-
-    static public void main(String[] arsg){
-        //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
-        //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
-        ImageWindow i = new ImageWindow("u1I9ITfzqFs");
-        i.printGui();
     }
 }

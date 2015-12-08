@@ -3,14 +3,12 @@ package be.ehb.swp2.ui;
 /**
  * Created by Christophe on 3/11/2015.
  */
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 
 import javax.swing.plaf.basic.BasicTextAreaUI;
-import javax.swing.plaf.basic.BasicTextFieldUI;
 import javax.swing.text.JTextComponent;
+import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 /**
  * @Todo insert comments
@@ -33,7 +31,27 @@ public class HintTextAreaUI extends BasicTextAreaUI implements FocusListener {
     private Color color;
 
     /**
+     * Hint
+     *
+     * @param hint hint
+     */
+    public HintTextAreaUI(String hint) {
+        this(hint, false);
+    }
+
+    public HintTextAreaUI(String hint, boolean hideOnFocus) {
+        this(hint, hideOnFocus, null);
+    }
+
+    public HintTextAreaUI(String hint, boolean hideOnFocus, Color color) {
+        this.hint = hint;
+        this.hideOnFocus = hideOnFocus;
+        this.color = color;
+    }
+
+    /**
      * Geeft de kleur terug
+     *
      * @return Color color
      */
     public Color getColor() {
@@ -42,6 +60,7 @@ public class HintTextAreaUI extends BasicTextAreaUI implements FocusListener {
 
     /**
      * Zet de kleur
+     *
      * @param color Color
      */
     public void setColor(Color color) {
@@ -53,13 +72,14 @@ public class HintTextAreaUI extends BasicTextAreaUI implements FocusListener {
      * Repaint window
      */
     private void repaint() {
-        if(getComponent() != null) {
-            getComponent().repaint();           
+        if (getComponent() != null) {
+            getComponent().repaint();
         }
     }
 
     /**
      * Getter voor hide on focus
+     *
      * @return boolean
      */
     public boolean isHideOnFocus() {
@@ -67,7 +87,6 @@ public class HintTextAreaUI extends BasicTextAreaUI implements FocusListener {
     }
 
     /**
-     *
      * @param hideOnFocus
      */
     public void setHideOnFocus(boolean hideOnFocus) {
@@ -77,6 +96,7 @@ public class HintTextAreaUI extends BasicTextAreaUI implements FocusListener {
 
     /**
      * Geeft een hint weer
+     *
      * @return String
      */
     public String getHint() {
@@ -85,6 +105,7 @@ public class HintTextAreaUI extends BasicTextAreaUI implements FocusListener {
 
     /**
      * Zet de hint
+     *
      * @param hint String
      */
     public void setHint(String hint) {
@@ -92,46 +113,28 @@ public class HintTextAreaUI extends BasicTextAreaUI implements FocusListener {
         repaint();
     }
 
-    /**
-     * Hint
-     * @param hint hint
-     */
-    public HintTextAreaUI(String hint) {
-        this(hint, false);
-    }
-
-    public HintTextAreaUI(String hint, boolean hideOnFocus) {
-        this(hint,hideOnFocus, null);
-    }
-
-    public HintTextAreaUI(String hint, boolean hideOnFocus, Color color) {
-        this.hint = hint;
-        this.hideOnFocus = hideOnFocus;
-        this.color = color;
-    }
-
     @Override
     protected void paintSafely(Graphics g) {
         super.paintSafely(g);
         JTextComponent comp = getComponent();
-        if(hint!=null && comp.getText().length() == 0 && (!(hideOnFocus && comp.hasFocus()))){
-            if(color != null) {
+        if (hint != null && comp.getText().length() == 0 && (!(hideOnFocus && comp.hasFocus()))) {
+            if (color != null) {
                 g.setColor(color);
             } else {
-                g.setColor(comp.getForeground().brighter().brighter().brighter());              
+                g.setColor(comp.getForeground().brighter().brighter().brighter());
             }
-            int padding = (comp.getHeight() - comp.getFont().getSize())/2;
-            g.drawString(hint, 2, comp.getHeight()-padding-1);          
+            int padding = (comp.getHeight() - comp.getFont().getSize()) / 2;
+            g.drawString(hint, 2, comp.getHeight() - padding - 1);
         }
     }
 
     public void focusGained(FocusEvent e) {
-        if(hideOnFocus) repaint();
+        if (hideOnFocus) repaint();
 
     }
 
     public void focusLost(FocusEvent e) {
-        if(hideOnFocus) repaint();
+        if (hideOnFocus) repaint();
     }
 
 

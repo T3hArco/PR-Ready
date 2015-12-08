@@ -19,14 +19,21 @@ import java.awt.event.WindowEvent;
  */
 
 
-
-public class VideoWindow implements Window{
+public class VideoWindow implements Window {
     final private String url;
 
-    VideoWindow(final String url){
+    VideoWindow(final String url) {
         this.url = url;
     }
-    public void printGui(){
+
+    static public void main(String[] arsg) {
+        //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
+        //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
+        VideoWindow v = new VideoWindow("u1I9ITfzqFs");
+        v.printGui();
+    }
+
+    public void printGui() {
         final Browser browser = new Browser();
         BrowserView browserView = new BrowserView(browser);
         JFrame parent = new JFrame();
@@ -67,12 +74,5 @@ public class VideoWindow implements Window{
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
 
-    }
-
-    static public void main(String[] arsg){
-        //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
-        //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
-        VideoWindow v = new VideoWindow("u1I9ITfzqFs");
-        v.printGui();
     }
 }
