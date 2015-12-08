@@ -37,13 +37,15 @@ public class Question {
     /**
      * The default constructor for Question
      */
-    public Question() { }
+    public Question() {
+    }
 
     /**
      * The constructor for question
-     * @param title The title of the question
-     * @param text The body of the question
-     * @param questionType the type of the question
+     *
+     * @param title           The title of the question
+     * @param text            The body of the question
+     * @param questionType    the type of the question
      * @param questionExtraId ??? TODO
      */
     public Question(String title, String text, QuestionType questionType, int questionExtraId) {
@@ -55,6 +57,7 @@ public class Question {
 
     /**
      * Returns the unique identifier of the question
+     *
      * @return integer
      */
     public int getId() {
@@ -63,6 +66,7 @@ public class Question {
 
     /**
      * Sets the id of the question
+     *
      * @param id identifier
      */
     public void setId(int id) {
@@ -71,6 +75,7 @@ public class Question {
 
     /**
      * Returns the title of the question
+     *
      * @return String
      */
     public String getTitle() {
@@ -79,6 +84,7 @@ public class Question {
 
     /**
      * Sets the title of the question
+     *
      * @param title title of the question
      */
     public void setTitle(String title) {
@@ -87,6 +93,7 @@ public class Question {
 
     /**
      * Gets the body of the question
+     *
      * @return String
      */
     public String getText() {
@@ -95,6 +102,7 @@ public class Question {
 
     /**
      * Sets the body of the question
+     *
      * @param text body
      */
     public void setText(String text) {
@@ -103,6 +111,7 @@ public class Question {
 
     /**
      * Gets the type of the question
+     *
      * @return type
      */
     public QuestionType getQuestionType() {
@@ -111,6 +120,7 @@ public class Question {
 
     /**
      * Sets the body of the question
+     *
      * @param questionType type
      */
     public void setQuestionType(QuestionType questionType) {
@@ -119,6 +129,7 @@ public class Question {
 
     /**
      * ???
+     *
      * @return ???
      */
     public int getQuestionExtraId() {
@@ -127,6 +138,7 @@ public class Question {
 
     /**
      * `??
+     *
      * @param questionExtraId ???
      */
     public void setQuestionExtraId(int questionExtraId) {
