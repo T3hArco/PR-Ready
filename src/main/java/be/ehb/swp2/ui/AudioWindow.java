@@ -17,7 +17,7 @@ import java.awt.event.WindowEvent;
 /**
  * Created by domienhennion on 3/12/15.
  */
-public class AudioWindow implements Window {
+public class AudioWindow implements questionWindow{
     final private String url;
 
     AudioWindow(final String url) {

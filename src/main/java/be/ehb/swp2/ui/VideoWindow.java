@@ -19,7 +19,7 @@ import java.awt.event.WindowEvent;
  */
 
 
-public class VideoWindow implements Window {
+public class VideoWindow implements questionWindow{
     final private String url;
 
     VideoWindow(final String url) {
