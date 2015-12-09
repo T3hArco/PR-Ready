@@ -39,7 +39,7 @@ public class ImageWindow {
                 if (event.isMainFrame()) {
 
                     String imageURL = url;
-
+/* fsfds*/
                     DOMDocument document = event.getBrowser().getDocument();
                     DOMNode root = document.findElement(By.id("img"));
                     DOMElement img = document.createElement("img");
