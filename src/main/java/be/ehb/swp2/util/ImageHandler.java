@@ -1,5 +1,9 @@
 package be.ehb.swp2.util;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
 
@@ -8,7 +12,18 @@ import java.net.URL;
  */
 public class ImageHandler {
     public static byte[] toByteArray(URL path) throws IOException {
-        // TODO IMPLEMENT
-        return null;
+        BufferedImage source = ImageIO.read(path);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] converted;
+
+        ImageIO.write(source, "png", out);
+        out.flush();
+        converted = out.toByteArray();
+
+        return converted;
+    }
+
+    public static ByteArrayInputStream toBlobType(byte[] bytes) {
+        return new ByteArrayInputStream(bytes);
     }
 }
