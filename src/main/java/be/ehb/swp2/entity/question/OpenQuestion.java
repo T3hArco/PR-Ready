@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 /**
  * Class for an open question which allows any form of response in a string
+ *
  * @Todo implement this further
  */
 public class OpenQuestion extends Question {
@@ -28,6 +29,7 @@ public class OpenQuestion extends Question {
 
     /**
      * Adds an answer to the allowed answers.
+     *
      * @param answer
      */
     public void addAnswer(String answer) {
@@ -36,14 +38,13 @@ public class OpenQuestion extends Question {
 
     /**
      * Checks whether the answer is correct.
-     * @todo implement a better way to do this.
+     *
      * @param answer
      * @return vailidity
+     * @todo implement a better way to do this.
      */
     public boolean solve(String answer) {
-        if(answers.contains(answer))
-            return true;
+        return answers.contains(answer);
 
-        return false;
     }
 }

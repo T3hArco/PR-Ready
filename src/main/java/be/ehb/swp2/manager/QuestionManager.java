@@ -2,8 +2,6 @@ package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.QuestionType;
-import be.ehb.swp2.entity.UserAnswer;
-import be.ehb.swp2.exception.DuplicateAnswerException;
 import be.ehb.swp2.exception.DuplicateQuestionException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -23,6 +21,7 @@ public class QuestionManager {
 
     /**
      * This method will add a question to the database
+     *
      * @param title
      * @param text
      * @param questionType
@@ -40,14 +39,14 @@ public class QuestionManager {
             Question question = new Question(title, text, questionType, questionExtraId);
             questionId = (Integer) session.save(question); // geef de ID van de gebruiker weer
             transaction.commit(); // persist in de database
-        } catch(HibernateException e) {
-            if(transaction != null)
+        } catch (HibernateException e) {
+            if (transaction != null)
                 transaction.rollback(); // maak de transactie ongedaan indien er een fout is
         } finally {
             session.close(); // we zijn klaar en sluiten onze sessie af
         }
 
-        if(questionId == null)
+        if (questionId == null)
             throw new DuplicateQuestionException();
 
         return questionId; // geeft de aangemaakte userAnswer weer

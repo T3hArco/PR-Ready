@@ -23,18 +23,12 @@ public class MathQuestion extends Question {
         this.questionType = QuestionType.MATH;
     }
 
-    public MathQuestion(double answer) { }
-
-    /**
-     * sets the answer of a question
-     * @param answer
-     */
-    private void setAnswer(double answer) {
-        this.answer = answer;
+    public MathQuestion(double answer) {
     }
 
     /**
      * Gets the answer of this question
+     *
      * @return
      */
     public double getAnswer() {
@@ -42,14 +36,22 @@ public class MathQuestion extends Question {
     }
 
     /**
+     * sets the answer of a question
+     *
+     * @param answer
+     */
+    private void setAnswer(double answer) {
+        this.answer = answer;
+    }
+
+    /**
      * Solves the question and then returns its vailidity.
+     *
      * @param userAnswer
      * @return whether the question was correct.
      */
     public boolean solve(int userAnswer) {
-        if(userAnswer == this.answer)
-            return true;
+        return userAnswer == this.answer;
 
-        return false;
     }
 }

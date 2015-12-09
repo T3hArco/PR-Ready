@@ -1,6 +1,5 @@
 package be.ehb.swp2.entity;
 
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +46,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Constructor voor Quiz
+     *
      * @param title
      * @param description
      */
@@ -77,6 +77,7 @@ public class Quiz implements Comparable<Quiz> {
     /**
      * Geeft een byte array terug van het object
      * Niet gebruiken zonder manager!
+     *
      * @return logo URI
      */
     public byte[] getLogo() {
@@ -85,6 +86,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * setter voor logo URI
+     *
      * @param logo logo URI
      */
     public void setLogo(byte[] logo) {
@@ -93,6 +95,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * getter voor name
+     *
      * @return
      */
     public String getTitle() {
@@ -101,6 +104,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * setter voor name
+     *
      * @param name
      */
     public void setTitle(String name) {
@@ -109,6 +113,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * getter voor description
+     *
      * @return
      */
     public String getDescription() {
@@ -117,6 +122,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * setter voor description
+     *
      * @param description
      */
     public void setDescription(String description) {
@@ -127,13 +133,12 @@ public class Quiz implements Comparable<Quiz> {
      * compareTo methode voor klasse Quiz
      */
     public int compareTo(Quiz q) {
-        int i = this.description.compareTo(q.getDescription());
-        i += this.title.compareTo(q.getTitle());
-        return i;
+        return this.description.compareTo(q.getDescription());
     }
 
     /**
      * Gets the questions in a certain quiz
+     *
      * @return questions
      */
     public List<Question> getQuestions() {
@@ -142,6 +147,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Sets the list of questions
+     *
      * @param questions
      */
     public void setQuestions(List<Question> questions) {
@@ -150,6 +156,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Adds a question to the question list. This should not be called on the object self
+     *
      * @param question Question
      */
     public void addQuestion(Question question) {
@@ -158,6 +165,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Gets a certain question in the DB
+     *
      * @param id identifier
      * @return question
      */
