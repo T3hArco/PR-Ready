@@ -3,12 +3,12 @@ package be.ehb.swp2.manager;
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.Quiz;
 import be.ehb.swp2.exception.QuizNotFoundException;
+import be.ehb.swp2.util.ImageHandler;
 import org.hibernate.*;
 import org.jboss.logging.Logger;
 
 import java.io.IOException;
-import java.sql.Blob;
-import java.sql.SQLException;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -59,26 +59,25 @@ public class QuizManager {
     /**
      * Method will attempt to save an image to the database added to a quiz.
 	 *
-	 * @param quizId
-     * @param blob
-     * @throws IOException
+	 * @param quizId the url
+	 * @param path path
+	 * @throws IOException
      */
-    private void saveLogo(Integer quizId, Blob blob) throws IOException {
-        Session session = factory.openSession();
+	public void saveLogo(Integer quizId, URL path) throws IOException {
+		Session session = factory.openSession();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
 			Quiz quiz = session.get(Quiz.class, quizId);
-			byte[] logoBytes = blob.getBytes(1, (int) blob.length());
-            quiz.setLogo(logoBytes);
+			byte[] logoBytes = ImageHandler.toByteArray(path);
+			quiz.setLogo(logoBytes);
 
-            transaction.commit();
+			session.update(quiz);
+			transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
-        } catch (SQLException e) {
-            e.printStackTrace();
         } finally {
             session.close();
         }
@@ -97,12 +96,9 @@ public class QuizManager {
 
 		try {
 			transaction = session.beginTransaction();
-			Quiz quiz = session.get(Quiz.class, quizId); // haal de quiz
-			// op die we
-			// proberen te
-			// referencen
+			Quiz quiz = session.get(Quiz.class, quizId); // haal de quiz op die we proberen te referencen
 			quiz.setTitle(name); // zet de nieuwe naam van de gebruiker
-			session.update(name); // zet de update klaar
+			session.update(quiz); // zet de update klaar
 			transaction.commit(); // TaDa
 		} catch (HibernateException e) {
 			// TODO implementeer manier om doubles er uit te filteren
