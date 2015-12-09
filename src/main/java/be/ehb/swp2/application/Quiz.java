@@ -5,13 +5,13 @@ import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.ui.LoginWindow;
 import be.ehb.swp2.ui.OverviewWindow;
 import be.ehb.swp2.util.Configurator;
-import be.ehb.swp2.util.ImageHandler;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.net.URL;
 import java.security.SecureRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -112,7 +112,8 @@ public class Quiz {
         }
 
         try {
-            quiz.setLogo(ImageHandler.toByteArray(Quiz.class.getResource("/images/unknown.png")));
+            URL url = new URL("file:///Users/arnaudcoel/Desktop/icons/water.png");
+            quizManager.saveLogo(quizId, url);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "\"Fout tijdens het aanmaken van de afbeelding\"");
             e.printStackTrace();
