@@ -19,10 +19,12 @@ public class Session {
     /**
      * Default constructor for Session
      */
-    public Session() {}
+    public Session() {
+    }
 
     /**
      * Constructor for Session
+     *
      * @param user
      * @param token
      * @param expires

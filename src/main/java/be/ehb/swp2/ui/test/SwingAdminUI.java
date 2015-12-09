@@ -82,7 +82,7 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
                     status.setForeground(Color.RED);
                 }
 
-                if(user != null && token != null) {
+                if (user != null && token != null) {
                     status.setText("Authenticated");
                     status.setForeground(new Color(28, 184, 65));
                 }
@@ -108,7 +108,7 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
                     e1.printStackTrace();
                 }
 
-                if(user.hasRole(UserRole.ADMINISTRATOR))
+                if (user.hasRole(UserRole.ADMINISTRATOR))
                     JOptionPane.showMessageDialog(null, "User is an administrator", "PR-Ready", JOptionPane.INFORMATION_MESSAGE);
                 else
                     JOptionPane.showMessageDialog(null, "User is not an administrator", "PR-Ready", JOptionPane.ERROR_MESSAGE);
@@ -132,7 +132,7 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
                     e1.printStackTrace();
                 }
 
-                if(user.hasRole(UserRole.USER))
+                if (user.hasRole(UserRole.USER))
                     JOptionPane.showMessageDialog(null, "User is a user", "PR-Ready", JOptionPane.INFORMATION_MESSAGE);
                 else
                     JOptionPane.showMessageDialog(null, "User is a user", "PR-Ready", JOptionPane.ERROR_MESSAGE);
@@ -152,7 +152,7 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
 
         user = um.getUserByToken(token);
 
-        if(!user.hasRole(this.requiredRole))
+        if (!user.hasRole(this.requiredRole))
             throw new UserNoPermissionException();
 
         return true;
