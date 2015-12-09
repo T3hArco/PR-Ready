@@ -4,8 +4,6 @@ package be.ehb.swp2.entity;
  * Created by arnaudcoel on 26/11/15.
  */
 
-import org.hibernate.annotations.Entity;
-
 import java.io.Serializable;
 
 /**
@@ -33,6 +31,7 @@ public class UserAnswer implements Serializable {
 
     /**
      * Default constructor for UserAnswer
+     *
      * @param userId
      * @param questionId
      * @param answer
@@ -46,10 +45,12 @@ public class UserAnswer implements Serializable {
     /**
      * Default constructor
      */
-    public UserAnswer() { }
+    public UserAnswer() {
+    }
 
     /**
      * Gets the id of the user
+     *
      * @return user id
      */
     public Integer getUserId() {
@@ -58,6 +59,7 @@ public class UserAnswer implements Serializable {
 
     /**
      * Sets the id of the user
+     *
      * @param userId userid
      */
     public void setUserId(Integer userId) {
@@ -66,6 +68,7 @@ public class UserAnswer implements Serializable {
 
     /**
      * Gets the question identifier
+     *
      * @return question id
      */
     public Integer getQuestionId() {
@@ -74,6 +77,7 @@ public class UserAnswer implements Serializable {
 
     /**
      * Sets the question id
+     *
      * @param questionId q
      */
     public void setQuestionId(Integer questionId) {
@@ -82,6 +86,7 @@ public class UserAnswer implements Serializable {
 
     /**
      * Gets the given answer to the question
+     *
      * @return answser answer
      */
     public String getAnswer() {
@@ -90,6 +95,7 @@ public class UserAnswer implements Serializable {
 
     /**
      * Sets the answer given to the question
+     *
      * @param answer answer
      */
     public void setAnswer(String answer) {
