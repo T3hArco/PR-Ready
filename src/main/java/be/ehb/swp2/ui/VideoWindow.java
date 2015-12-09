@@ -8,6 +8,8 @@ import com.teamdev.jxbrowser.chromium.dom.DOMNode;
 import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import com.teamdev.jxbrowser.chromium.JSValue;
+import com.teamdev.jxbrowser.chromium.BrowserFunction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,10 +21,10 @@ import java.awt.event.WindowEvent;
  */
 
 
-public class VideoWindow implements Window {
+public class VideoWindow implements questionWindow {
     final private String url;
 
-    VideoWindow(final String url) {
+    public VideoWindow(final String url) {
         this.url = url;
     }
 
@@ -73,6 +75,20 @@ public class VideoWindow implements Window {
         dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
+
+
+        browser.registerFunction("nextQuestion", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                return null;
+            }
+
+
+
+        });
 
     }
 }
