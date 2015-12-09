@@ -12,6 +12,7 @@
         <generator class="native"/>
     </id>
     <property name="link" column="link" type="string" length="300"/>
+
 </class>
 </hibernate-mapping>
 

@@ -33,5 +33,8 @@
                 <param name="useNamed">true</param>
             </type>
         </property>
+        <one-to-one name="answer" class="be.ehb.swp2.entity.answer"/>
+        <many-to-one name="video" class="be.ehb.swp2.entity.video"/>
+        
     </class>
 </hibernate-mapping>
