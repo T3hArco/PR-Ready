@@ -21,9 +21,11 @@ import com.teamdev.jxbrowser.chromium.swing.BrowserView;
  */
 public class ImageWindow {
     final private String url;
+    final private String question;
 
-    ImageWindow(final String url){
+    ImageWindow(final String url, final String question){
         this.url = url;
+        this.question = question;
     }
     public void printGui(){
         final Browser browser = new Browser();
@@ -36,19 +38,25 @@ public class ImageWindow {
             public void onFinishLoadingFrame(FinishLoadingEvent event) {
                 if (event.isMainFrame()) {
 
-                    String imageURL = "here comes imge url";
+                    String imageURL = url;
 
                     DOMDocument document = event.getBrowser().getDocument();
-                    DOMNode root = document.findElement(By.id("question_field"));
-                    DOMElement img = document.createElement("div");
-                    img.setAttribute("class","question_img");
+                    DOMNode root = document.findElement(By.id("img"));
+                    DOMElement img = document.createElement("img");
+                    img.setAttribute("src", imageURL);
                     root.appendChild(img);
+                    DOMNode root2 = document.findElement(By.id("text"));
+                    DOMElement p = document.createElement("p");
+                    p.setAttribute("class", "text");
+                    DOMNode n = document.createTextNode(question);
+                    root2.appendChild(p);
+                    p.appendChild(n);
 
                 }
             }
         });
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/videoFrame.html");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/ImageFrame.html");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -71,7 +79,7 @@ public class ImageWindow {
     static public void main(String[] arsg){
         //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
         //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
-        ImageWindow i = new ImageWindow("u1I9ITfzqFs");
+        ImageWindow i = new ImageWindow("http://s3.standaardcdn.be/Assets/Images_Upload/2011/10/03/fktwitter2.jpg?scale=both&format=jpg","wie ben ik");
         i.printGui();
     }
 }

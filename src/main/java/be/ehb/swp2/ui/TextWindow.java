@@ -44,15 +44,16 @@ public class TextWindow {
 
 
                     DOMDocument document = event.getBrowser().getDocument();
-                    DOMNode root = document.findElement(By.id("question_frame"));
-                    DOMElement question_field = document.createElement("div");
-                    root.appendChild(question_field);
+                    DOMNode root = document.findElement(By.id("text"));
+                    DOMNode n = document.createTextNode(question);
+                    root.appendChild(n);
+
 
                 }
             }
         });
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/videoFrame.html");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/TextFrame.html");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
