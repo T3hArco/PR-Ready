@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+
+
+<hibernate-mapping>
+    <class name="be.ehb.swp2.entity.Answer" table="Answers">
+        <meta attribute="class-description">
+            This class contains all the users
+        </meta>
+        <id name="id" type="int" column="Id">
+            <generator class="native"/>
+        </id>
+        <property name="answerID" column="answerID" type="int"/>
+    </class>
+</hibernate-mapping>
