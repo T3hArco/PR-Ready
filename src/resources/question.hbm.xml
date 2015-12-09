@@ -4,21 +4,34 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="be.ehb.swp2.entity.Question" table="Questions">
+    <class name="be.ehb.swp2.entity.Question" table="question">
         <meta attribute="class-description">
             This class contains all data for questions
         </meta>
-        <id name="id" type="int" column="questionId">
+        <id name="id" type="int" column="questionID">
             <generator class="native"/>
         </id>
-        <property name="title" column="title" not-null="true" />
-        <property name="text" column="text" not-null="true"/>
-        <property name="questionType" column="questionType">
+        <property name="parrentQuizID" type="int" column="parrentQuizID"/>
+        <property name="title" type="string" column="title" not-null="true" />
+        <property name="questionText" type="string" column="questionText" not-null="true"/>
+     <!--  <property name="questionType" column="questionType">
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">be.ehb.swp2.entity.QuestionType</param>
                 <param name="useNamed">true</param>
             </type>
+        </property>-->
+        <property name="answerType" column="answerType">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">be.ehb.swp2.entity.Question</param>
+                <param name="useNamed">true</param>
+            </type>
         </property>
-        <property name="questionExtraId" column="questionExtraId"/>
+        <property name="idQuestionExtra" type="int" column="idQuestionExtra"/>
+        <property name="questionMedia" column="questionMedia">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">be.ehb.swp2.entity.Question</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
     </class>
 </hibernate-mapping>
