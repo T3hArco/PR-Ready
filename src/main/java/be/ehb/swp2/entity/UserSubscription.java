@@ -28,10 +28,12 @@ public class UserSubscription implements Serializable {
     /**
      * Default constructor for usersubscription
      */
-    public UserSubscription() { }
+    public UserSubscription() {
+    }
 
     /**
      * The constructor of the UserSubscription
+     *
      * @param quizId identifier of corresponsing quiz
      * @param userId identifier of the corresponding user
      */
@@ -42,6 +44,7 @@ public class UserSubscription implements Serializable {
 
     /**
      * Gets unique identifier
+     *
      * @return id unique identifier
      */
     public int getSubscriptionId() {
@@ -50,6 +53,7 @@ public class UserSubscription implements Serializable {
 
     /**
      * Sets the subscription ID
+     *
      * @param subscriptionId id
      */
     public void setSubscriptionId(int subscriptionId) {
@@ -58,6 +62,7 @@ public class UserSubscription implements Serializable {
 
     /**
      * Gets the unique identifier for a quiz
+     *
      * @return unique identifier
      */
     public int getQuizId() {
@@ -66,6 +71,7 @@ public class UserSubscription implements Serializable {
 
     /**
      * Sets the unique identifier for a quiz
+     *
      * @param quizId
      */
     public void setQuizId(int quizId) {
@@ -74,6 +80,7 @@ public class UserSubscription implements Serializable {
 
     /**
      * Gets the unique identifier for the user
+     *
      * @return unique user identifier
      */
     public int getUserId() {
@@ -82,6 +89,7 @@ public class UserSubscription implements Serializable {
 
     /**
      * Sets the unique identifier for a user
+     *
      * @param userId user identifier
      */
     public void setUserId(int userId) {

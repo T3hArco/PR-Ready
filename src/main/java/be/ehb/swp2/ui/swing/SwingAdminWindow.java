@@ -1,10 +1,7 @@
 package be.ehb.swp2.ui.swing;
 
 import be.ehb.swp2.entity.User;
-import be.ehb.swp2.exception.BadLoginException;
-import be.ehb.swp2.exception.DuplicateUserException;
 import be.ehb.swp2.exception.InternalErrorException;
-import be.ehb.swp2.manager.LoginManager;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.ui.Window;
 import be.ehb.swp2.util.Configurator;
@@ -47,7 +44,7 @@ public class SwingAdminWindow extends JFrame implements Window {
         final JList finalUserList = userList;
         userList.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
-                if(finalUserList.getSelectedIndex() == -1)
+                if (finalUserList.getSelectedIndex() == -1)
                     deleteButton.setEnabled(false);
                 else
                     deleteButton.setEnabled(true);

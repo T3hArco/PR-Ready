@@ -36,7 +36,7 @@ public class UserSubscriptionManager {
             session.save(userSubscription);
             transaction.commit();
         } catch (HibernateException e) {
-            if(transaction != null)
+            if (transaction != null)
                 transaction.rollback();
 
             e.printStackTrace();
@@ -61,10 +61,10 @@ public class UserSubscriptionManager {
             um.exists(userId);
 
             UserSubscription other = new UserSubscription(quizId, userId);
-            subscription = (UserSubscription) session.get(UserSubscription.class, other);
+            subscription = session.get(UserSubscription.class, other);
             transaction.commit();
         } catch (HibernateException e) {
-            if(transaction != null)
+            if (transaction != null)
                 transaction.rollback();
 
             e.printStackTrace();
@@ -72,8 +72,8 @@ public class UserSubscriptionManager {
             session.close();
         }
 
-        if(subscription == null) {
-            if(register)
+        if (subscription == null) {
+            if (register)
                 this.register(userId, quizId);
 
             return false;

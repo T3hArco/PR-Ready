@@ -8,17 +8,10 @@ package be.ehb.swp2.ui;
 // From 'Thinking in Java, 3rd ed.' (c) Bruce Eckel 2002
 // www.BruceEckel.com. See copyright notice in CopyRight.txt.
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.GridLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public class FileChooserTest extends JFrame {
     private JTextField filename = new JTextField(), dir = new JTextField();
@@ -40,6 +33,16 @@ public class FileChooserTest extends JFrame {
         p.add(filename);
         p.add(dir);
         cp.add(p, BorderLayout.NORTH);
+    }
+
+    public static void main(String[] args) {
+        run(new FileChooserTest(), 250, 110);
+    }
+
+    public static void run(JFrame frame, int width, int height) {
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(width, height);
+        frame.setVisible(true);
     }
 
     class OpenL implements ActionListener {
@@ -72,16 +75,6 @@ public class FileChooserTest extends JFrame {
                 dir.setText("");
             }
         }
-    }
-
-    public static void main(String[] args) {
-        run(new FileChooserTest(), 250, 110);
-    }
-
-    public static void run(JFrame frame, int width, int height) {
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(width, height);
-        frame.setVisible(true);
     }
 } ///:~
 

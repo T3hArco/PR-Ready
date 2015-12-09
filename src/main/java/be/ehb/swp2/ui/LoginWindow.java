@@ -7,10 +7,11 @@ import be.ehb.swp2.exception.UserNotFoundException;
 import be.ehb.swp2.manager.LoginManager;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.util.Configurator;
-import com.teamdev.jxbrowser.chromium.*;
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserFunction;
+import com.teamdev.jxbrowser.chromium.JSValue;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.hibernate.SessionFactory;
-
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,6 +28,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * This class provides the implementation of the Login UI using JxBrowser
+ *
  * @implements Window
  * @extends JFrame
  */
@@ -43,6 +45,7 @@ public class LoginWindow extends JFrame implements Window {
 
     /**
      * Main constructor of the login window. Initializes the variables and then initializes the form
+     *
      * @param factory SQL session
      */
     public LoginWindow(SessionFactory factory) {
@@ -61,9 +64,10 @@ public class LoginWindow extends JFrame implements Window {
 
     /**
      * The action listener for this form. This will listen to login and registration requests.
-     * @todo the error messages are currently shown with messagedialogs, please put this inside of the HTML
+     *
      * @param parent the parent frame in order to get the data required
      * @return User object that has been signed in or created.
+     * @todo the error messages are currently shown with messagedialogs, please put this inside of the HTML
      */
     private User action(JFrame parent) {
         /**
@@ -104,7 +108,7 @@ public class LoginWindow extends JFrame implements Window {
                     e.printStackTrace();
                 }
 
-                if(user != null)
+                if (user != null)
                     dialog.setVisible(false);
 
                 return JSValue.createUndefined();

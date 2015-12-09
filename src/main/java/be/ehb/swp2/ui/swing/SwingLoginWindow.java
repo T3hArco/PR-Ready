@@ -4,9 +4,7 @@ import be.ehb.swp2.entity.User;
 import be.ehb.swp2.exception.BadLoginException;
 import be.ehb.swp2.exception.DuplicateUserException;
 import be.ehb.swp2.manager.LoginManager;
-import be.ehb.swp2.manager.SessionManager;
 import be.ehb.swp2.manager.UserManager;
-import be.ehb.swp2.ui.*;
 import be.ehb.swp2.util.Configurator;
 import org.hibernate.SessionFactory;
 
@@ -21,6 +19,7 @@ import java.awt.event.ActionListener;
 
 /**
  * The main login window for PR-Ready
+ *
  * @deprecated
  */
 public class SwingLoginWindow extends JFrame implements be.ehb.swp2.ui.Window {
