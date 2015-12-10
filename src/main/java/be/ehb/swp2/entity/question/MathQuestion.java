@@ -17,8 +17,8 @@ public class MathQuestion extends Question {
     private double answer;
     private QuestionType questionType;
 
-    public MathQuestion(String title, String text, QuestionType questionType, Integer questionExtraId, double answer) {
-        super(title, text, questionType, questionExtraId);
+    public MathQuestion(String title, String text, QuestionType questionType, double answer) {
+        super(title, text, questionType);
         this.answer = answer;
         this.questionType = QuestionType.MATH;
     }

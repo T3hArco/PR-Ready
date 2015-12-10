@@ -35,6 +35,12 @@
         <mapping resource="question.hbm.xml"/>
         <mapping resource="userAnswer.hbm.xml"/>
         <mapping resource="userSubscription.hbm.xml"/>
+        <mapping resource="questionAnswer.hbm.xml"/>
+        <mapping resource="answer.hbm.xml"/>
+        <mapping resource="audioQuestion.hbm.xml"/>
+        <mapping resource="videoQuestion.hbm.xml"/>
+        <mapping resource="imageQuestion.hbm.xml"/>
+
 
     </session-factory>
 </hibernate-configuration>
