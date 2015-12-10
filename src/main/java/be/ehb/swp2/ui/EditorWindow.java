@@ -17,7 +17,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * Created by domienhennion on 10/12/15
+ * Created by domienhennion on 10/12/15.
  */
 public class EditorWindow {
     public void printGui(){
