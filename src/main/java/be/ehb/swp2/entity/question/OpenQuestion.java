@@ -21,8 +21,8 @@ public class OpenQuestion extends Question {
     private ArrayList<String> answers;
     private QuestionType questionType;
 
-    public OpenQuestion(String title, String text, QuestionType questionType, Integer questionExtraId, ArrayList<String> answers) {
-        super(title, text, questionType, questionExtraId);
+    public OpenQuestion(String title, String text, QuestionType questionType, ArrayList<String> answers) {
+        super(title, text, questionType);
         this.answers = answers;
         this.questionType = QuestionType.OPEN;
     }

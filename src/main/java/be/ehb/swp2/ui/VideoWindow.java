@@ -1,6 +1,8 @@
 package be.ehb.swp2.ui;
 
 import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserFunction;
+import com.teamdev.jxbrowser.chromium.JSValue;
 import com.teamdev.jxbrowser.chromium.dom.By;
 import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
 import com.teamdev.jxbrowser.chromium.dom.DOMElement;
@@ -19,10 +21,10 @@ import java.awt.event.WindowEvent;
  */
 
 
-public class VideoWindow implements Window {
+public class VideoWindow implements questionWindow {
     final private String url;
 
-    VideoWindow(final String url) {
+    public VideoWindow(final String url) {
         this.url = url;
     }
 
@@ -44,7 +46,8 @@ public class VideoWindow implements Window {
             public void onFinishLoadingFrame(FinishLoadingEvent event) {
                 if (event.isMainFrame()) {
 
-                    String videoUrl = "https://www.youtube.com/embed/" + url + "?rel=0&amp;controls=0&amp;showinfo=0";
+                    //String videoUrl = "https://www.youtube.com/embed/" + url + "?rel=0&amp;controls=0&amp;showinfo=0";
+                    String videoUrl = "htttp://www.youtube.com/v/" + url;
 
                     DOMDocument document = event.getBrowser().getDocument();
                     DOMNode root = document.findElement(By.id("video"));
@@ -66,6 +69,19 @@ public class VideoWindow implements Window {
             }
         });
 
+        browser.registerFunction("nextQuestion", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                return  JSValue.createUndefined();
+            }
+
+
+
+        });
+
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
         dialog.setResizable(false);
@@ -73,6 +89,7 @@ public class VideoWindow implements Window {
         dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
+
 
     }
 }

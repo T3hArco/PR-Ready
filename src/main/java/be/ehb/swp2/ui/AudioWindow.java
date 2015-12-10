@@ -8,6 +8,8 @@ import com.teamdev.jxbrowser.chromium.dom.DOMNode;
 import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import com.teamdev.jxbrowser.chromium.JSValue;
+import com.teamdev.jxbrowser.chromium.BrowserFunction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,10 +19,10 @@ import java.awt.event.WindowEvent;
 /**
  * Created by domienhennion on 3/12/15.
  */
-public class AudioWindow implements Window {
+public class AudioWindow implements questionWindow {
     final private String url;
 
-    AudioWindow(final String url) {
+    public AudioWindow(final String url) {
         this.url = url;
     }
 
@@ -65,6 +67,19 @@ public class AudioWindow implements Window {
                 dialog.setVisible(false);
                 dialog.dispose();
             }
+        });
+
+        browser.registerFunction("nextQuestion", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                return  JSValue.createUndefined();
+            }
+
+
+
         });
 
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
