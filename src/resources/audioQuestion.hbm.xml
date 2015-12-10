@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="be.ehb.swp2.entity.question.AudioQuestion" table="AudioQuestion">
+        <meta attribute="class-description">
+            This class contains all the users
+        </meta>
+
+        <id name="id" type="int" column="Id">
+            <generator class="native"/>
+        </id>
+
+        <property name="link" column="link" type="string" length="300"/>
+
+        <many-to-one name="parentQuestion" column="parentQuestion" class="be.ehb.swp2.entity.Question"/>
+    </class>
+</hibernate-mapping>

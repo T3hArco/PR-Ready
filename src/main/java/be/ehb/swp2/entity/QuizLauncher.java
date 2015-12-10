@@ -20,11 +20,11 @@ public class QuizLauncher {
         antwoorden.add("kraai");
         antwoorden.add("twitter");
         antwoorden.add("duif");
-        MultipleChoice mc = new MultipleChoice("title", "text", AnswerType.MULTIPLE_CHOICE, 0, antwoorden.get(1));
+        MultipleChoice mc = new MultipleChoice("title", "text", QuestionType.MULTIPLE_CHOICE, antwoorden.get(1));
         questions.add(mc);
         windows.add(new TextWindow("Wat is ..... ?"));
         windows.add(new ImageWindow("https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png", "Wat zijn dit?"));
-        windows.add(new VideoWindow("u1I9ITfzqFs"));
+        windows.add(new VideoWindow("ovU1xUT4vRk"));
         windows.add(new AudioWindow("u1I9ITfzqFs"));
 
 
