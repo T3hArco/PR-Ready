@@ -22,7 +22,7 @@ import java.io.PrintWriter;
 import java.util.TreeSet;
 
 /**
- * Created by domienhennion on 22/11/15..
+ * Created by domienhennion on 22/11/15.
  * Bijgewerkt door arnaudcoel 22/11/15
  */
 
