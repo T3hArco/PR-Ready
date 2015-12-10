@@ -11,8 +11,8 @@ import be.ehb.swp2.entity.QuestionType;
  * @Todo implement this class
  */
 public class MultipleChoice extends Question {
-    public MultipleChoice(String title, String text, QuestionType questionType, int questionExtraId, String answer) {
-        super(title, text, questionType, questionExtraId);
+    public MultipleChoice(String title, String text, QuestionType questionType, String answer) {
+        super(title, text, questionType);
     }
 
     public boolean solve() {

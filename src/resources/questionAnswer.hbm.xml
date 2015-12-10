@@ -4,14 +4,14 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="be.ehb.swp2.entity.UserAnswer" table="UserAnswers">
+    <class name="be.ehb.swp2.entity.question.QuestionAnswer" table="questionAnswer">
         <meta attribute="class-description">
             This class contains all the users
         </meta>
         <composite-id>
-           <key-property name="userId" column="userId" type="int"  />
-            <key-property name="questionId" column="questionId" type="int" />
+            <key-property name="questionId" column="questionId" type="int"  />
+            <key-property name="answerId" column="answerId" type="int" />
         </composite-id>
-        <property name="answer" column="answer" type="string"/>
+        <property name="correct" column="correct" type="yes_no"/>
     </class>
 </hibernate-mapping>
