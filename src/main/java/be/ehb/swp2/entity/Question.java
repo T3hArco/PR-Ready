@@ -4,10 +4,6 @@ package be.ehb.swp2.entity;
  * Created by arnaudcoel on 29/10/2015.
  */
 
-import be.ehb.swp2.ui.questionWindow;
-
-import java.util.ArrayList;
-
 /**
  * This class contains all data for a question
  */
@@ -31,7 +27,7 @@ public class Question {
      * This is the type of the question. This identifier is only used in the database and is used to point to the correct
      * sub-table
      */
-    private QuestionType questionType;
+    private AnswerType answerType;
 
     /**
      * @todo define this
@@ -49,13 +45,13 @@ public class Question {
      *
      * @param title           The title of the question
      * @param text            The body of the question
-     * @param questionType    the type of the question
+     * @param answerType    the type of the question
      * @param questionExtraId ??? TODO
      */
-    public Question(String title, String text, QuestionType questionType, int questionExtraId) {
+    public Question(String title, String text, AnswerType answerType, int questionExtraId) {
         this.title = title;
         this.text = text;
-        this.questionType = questionType;
+        this.answerType = answerType;
         this.questionExtraId = questionExtraId;
     }
 
@@ -118,17 +114,17 @@ public class Question {
      *
      * @return type
      */
-    public QuestionType getQuestionType() {
-        return questionType;
+    public AnswerType getAnswerType() {
+        return answerType;
     }
 
     /**
      * Sets the body of the question
      *
-     * @param questionType type
+     * @param answerType type
      */
-    public void setQuestionType(QuestionType questionType) {
-        this.questionType = questionType;
+    public void setAnswerType(AnswerType answerType) {
+        this.answerType = answerType;
     }
 
     /**

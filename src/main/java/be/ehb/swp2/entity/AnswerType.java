@@ -7,6 +7,6 @@ package be.ehb.swp2.entity;
 /**
  * Defines the type of a question
  */
-public enum QuestionType {
+public enum AnswerType {
     TRUE_FALSE, KEYWORD, MULTIPLE_CHOICE, MATH, OPEN
 }

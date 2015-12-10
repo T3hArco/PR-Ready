@@ -1,7 +1,7 @@
 package be.ehb.swp2.entity.question;
 
 import be.ehb.swp2.entity.Question;
-import be.ehb.swp2.entity.QuestionType;
+import be.ehb.swp2.entity.AnswerType;
 import org.hibernate.SessionFactory;
 
 /**
@@ -13,7 +13,7 @@ import org.hibernate.SessionFactory;
  */
 public class TrueFalseQuestion extends Question {
     private static SessionFactory factory;
-    QuestionType questionType;
+    AnswerType answerType;
     /**
      * Het uiteindelijke antwoord, true of false.
      */
@@ -22,7 +22,7 @@ public class TrueFalseQuestion extends Question {
     public TrueFalseQuestion(String title, String text, Integer questionExtraId, boolean answer) {
         super(title, text, null, questionExtraId);
         this.answer = answer;
-        this.questionType = QuestionType.TRUE_FALSE;
+        this.answerType = AnswerType.TRUE_FALSE;
     }
 
     /**
@@ -43,8 +43,8 @@ public class TrueFalseQuestion extends Question {
         this.answer = answer;
     }
 
-    public QuestionType getQuestionType() {
-        return questionType;
+    public AnswerType getAnswerType() {
+        return answerType;
     }
 
 

@@ -1,7 +1,7 @@
 package be.ehb.swp2.manager;
 
+import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
-import be.ehb.swp2.entity.QuestionType;
 import be.ehb.swp2.exception.DuplicateQuestionException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -24,19 +24,19 @@ public class QuestionManager {
      *
      * @param title
      * @param text
-     * @param questionType
+     * @param answerType
      * @param questionExtraId
      * @return
      * @throws DuplicateQuestionException
      */
-    public Integer addQuestion(String title, String text, QuestionType questionType, Integer questionExtraId) throws DuplicateQuestionException {
+    public Integer addQuestion(String title, String text, AnswerType answerType, Integer questionExtraId) throws DuplicateQuestionException {
         Session session = factory.openSession();
         Transaction transaction = null;
         Integer questionId = null;
 
         try {
             transaction = session.beginTransaction(); // start een transactie op
-            Question question = new Question(title, text, questionType, questionExtraId);
+            Question question = new Question(title, text, answerType, questionExtraId);
             questionId = (Integer) session.save(question); // geef de ID van de gebruiker weer
             transaction.commit(); // persist in de database
         } catch (HibernateException e) {

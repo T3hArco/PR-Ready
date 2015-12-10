@@ -1,11 +1,7 @@
 package be.ehb.swp2.entity;
 
 import be.ehb.swp2.entity.question.MultipleChoice;
-import be.ehb.swp2.entity.question.TrueFalseQuestion;
 import be.ehb.swp2.ui.*;
-import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.BrowserFunction;
-import com.teamdev.jxbrowser.chromium.JSValue;
 
 import java.util.ArrayList;
 
@@ -24,7 +20,7 @@ public class QuizLauncher {
         antwoorden.add("kraai");
         antwoorden.add("twitter");
         antwoorden.add("duif");
-        MultipleChoice mc = new MultipleChoice("title", "text", QuestionType.MULTIPLE_CHOICE, 0, antwoorden.get(1));
+        MultipleChoice mc = new MultipleChoice("title", "text", AnswerType.MULTIPLE_CHOICE, 0, antwoorden.get(1));
         questions.add(mc);
         windows.add(new TextWindow("Wat is ..... ?"));
         windows.add(new ImageWindow("https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png", "Wat zijn dit?"));
