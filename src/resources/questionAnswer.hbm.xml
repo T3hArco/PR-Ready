@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="be.ehb.swp2.entity.question.QuestionAnswer" table="questionAnswer">
+    <class name="be.ehb.swp2.entity.question.QuestionAnswer" table="QuestionAnswer">
         <meta attribute="class-description">
             This class contains all the users
         </meta>

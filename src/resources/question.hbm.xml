@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="be.ehb.swp2.entity.Question" table="question">
+    <class name="be.ehb.swp2.entity.Question" table="Question">
         <meta attribute="class-description">
             This class contains all data for questions
         </meta>
