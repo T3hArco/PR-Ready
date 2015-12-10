@@ -37,7 +37,7 @@
         <mapping resource="userSubscription.hbm.xml"/>
         <mapping resource="questionAnswer.hbm.xml"/>
         <mapping resource="answer.hbm.xml"/>
-        <mapping resource="audio.hbm.xml"/>
+        <mapping resource="audioo.hbm.xml"/>
         <mapping resource="video.hbm.xml"/>
         <mapping resource="image.hbm.xml"/>
 
