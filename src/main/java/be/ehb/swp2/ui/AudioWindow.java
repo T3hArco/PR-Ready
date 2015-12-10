@@ -1,5 +1,6 @@
 package be.ehb.swp2.ui;
 
+import be.ehb.swp2.entity.Question;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.dom.By;
 import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
@@ -20,17 +21,29 @@ import java.awt.event.WindowEvent;
  * Created by domienhennion on 3/12/15.
  */
 public class AudioWindow implements questionWindow {
+    private Question question;
     final private String url;
-
-    public AudioWindow(final String url) {
+    private int choice = 1;
+    public AudioWindow(final String url, Question question) {
         this.url = url;
+        this.question = question;
     }
+
+
 
     static public void main(String[] arsg) {
         //AudioWindow a = new AudioWindow("mTG2ZBzAZq0");
         //AudioWindow a = new AudioWindow("pk-5aS9G9I4");
-        AudioWindow a = new AudioWindow("u1I9ITfzqFs");
-        a.printGui();
+        //AudioWindow a = new AudioWindow("u1I9ITfzqFs");
+       //a.printGui();
+    }
+
+    public int getChoice() {
+        return choice;
+    }
+
+    public void setChoice(int choice) {
+        this.choice = choice;
     }
 
     public void printGui() {
@@ -54,6 +67,12 @@ public class AudioWindow implements questionWindow {
                     iframe.setAttribute("src", audioUrl);
                     iframe.setAttribute("onload", "gaf210codes_qTnZ2=new YT.Player(this)");
                     root.appendChild(iframe);
+                    DOMNode root2 = document.findElement(By.id("text"));
+                    DOMElement p = document.createElement("p");
+                    p.setAttribute("class", "text");
+                    DOMNode n = document.createTextNode(question.getText());
+                    root2.appendChild(p);
+                    p.appendChild(n);
 
                 }
             }
@@ -72,12 +91,25 @@ public class AudioWindow implements questionWindow {
         browser.registerFunction("nextQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
+                setChoice(1);
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
-                return  JSValue.createUndefined();
+                return JSValue.createUndefined();
             }
 
+
+        });
+
+        browser.registerFunction("previousQuestion", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                setChoice(2);
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                return JSValue.createUndefined();
+            }
 
 
         });

@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import be.ehb.swp2.entity.Question;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.dom.By;
 import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
@@ -23,17 +24,28 @@ import com.teamdev.jxbrowser.chromium.BrowserFunction;
  */
 public class ImageWindow implements questionWindow{
     final private String url;
-    final private String question;
+    private Question question;
+    private int choice = 1;
 
-    public ImageWindow(final String url, final String question){
+    public ImageWindow(final String url, Question question){
         this.url = url;
         this.question = question;
     }
+
+    public int getChoice() {
+        return choice;
+    }
+
+    public void setChoice(int choice) {
+        this.choice = choice;
+    }
+
     public void printGui(){
         final Browser browser = new Browser();
         BrowserView browserView = new BrowserView(browser);
         JFrame parent = new JFrame();
         final JDialog dialog = new JDialog(parent, "QUIZ", true);
+
 
         browser.addLoadListener(new LoadAdapter() {
             @Override
@@ -50,7 +62,7 @@ public class ImageWindow implements questionWindow{
                     DOMNode root2 = document.findElement(By.id("text"));
                     DOMElement p = document.createElement("p");
                     p.setAttribute("class", "text");
-                    DOMNode n = document.createTextNode(question);
+                    DOMNode n = document.createTextNode(question.getText());
                     root2.appendChild(p);
                      p.appendChild(n);
 
@@ -58,7 +70,7 @@ public class ImageWindow implements questionWindow{
             }
         });
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/ImageFrame.html");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/ImageFrame.html?851951951951951");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -71,15 +83,30 @@ public class ImageWindow implements questionWindow{
         browser.registerFunction("nextQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
+                setChoice(1);
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
-                return  JSValue.createUndefined();
+
+                return JSValue.createUndefined();
             }
 
 
+        });
+        browser.registerFunction("previousQuestion", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                setChoice(2);
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+
+                return JSValue.createUndefined();
+            }
+
 
         });
+
 
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
@@ -94,7 +121,7 @@ public class ImageWindow implements questionWindow{
     static public void main(String[] args){
         //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
         //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
-        ImageWindow i = new ImageWindow("http://s3.standaardcdn.be/Assets/Images_Upload/2011/10/03/fktwitter2.jpg?scale=both&format=jpg","wie ben ik");
-        i.printGui();
+        //ImageWindow i = new ImageWindow("http://s3.standaardcdn.be/Assets/Images_Upload/2011/10/03/fktwitter2.jpg?scale=both&format=jpg","wie ben ik");
+        //i.printGui();
     }
 }

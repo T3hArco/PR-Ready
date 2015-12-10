@@ -1,5 +1,7 @@
 package be.ehb.swp2.ui;
 
+import be.ehb.swp2.entity.*;
+import be.ehb.swp2.entity.Question;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
@@ -22,17 +24,28 @@ import java.awt.event.WindowEvent;
 
 
 public class VideoWindow implements questionWindow {
+    private Question question;
     final private String url;
+    private int choice = 1;
 
-    public VideoWindow(final String url) {
+    public VideoWindow(final String url,  Question question) {
         this.url = url;
+        this.question = question;
+    }
+
+    public int getChoice() {
+        return choice;
+    }
+
+    public void setChoice(int choice) {
+        this.choice = choice;
     }
 
     static public void main(String[] arsg) {
         //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
         //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
-        VideoWindow v = new VideoWindow("u1I9ITfzqFs");
-        v.printGui();
+       // VideoWindow v = new VideoWindow("u1I9ITfzqFs");
+       // v.printGui();
     }
 
     public void printGui() {
@@ -55,6 +68,12 @@ public class VideoWindow implements questionWindow {
                     iframe.setAttribute("src", videoUrl);
                     iframe.setAttribute("frameborder", "0");
                     root.appendChild(iframe);
+                    DOMNode root2 = document.findElement(By.id("text"));
+                    DOMElement p = document.createElement("p");
+                    p.setAttribute("class", "text");
+                    DOMNode n = document.createTextNode(question.getText());
+                    root2.appendChild(p);
+                    p.appendChild(n);
                 }
             }
         });
@@ -72,14 +91,23 @@ public class VideoWindow implements questionWindow {
         browser.registerFunction("nextQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
+                setChoice(1);
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
                 return  JSValue.createUndefined();
             }
+        });
 
+        browser.registerFunction("previousQuestion", new BrowserFunction() {
 
-
+            public JSValue invoke(JSValue... jsValues) {
+                setChoice(2);
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                return  JSValue.createUndefined();
+            }
         });
 
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
