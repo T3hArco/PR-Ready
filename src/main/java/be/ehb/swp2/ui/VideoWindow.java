@@ -59,8 +59,8 @@ public class VideoWindow implements questionWindow {
             public void onFinishLoadingFrame(FinishLoadingEvent event) {
                 if (event.isMainFrame()) {
 
-                    //String videoUrl = "https://www.youtube.com/embed/" + url + "?rel=0&amp;controls=0&amp;showinfo=0";
-                    String videoUrl = "htttp://www.youtube.com/v/" + url;
+                    String videoUrl = "https://www.youtube.com/embed/" + url + "?rel=0&amp;controls=0&amp;showinfo=0";
+                    //String videoUrl = "htttp://www.youtube.com/v/" + url;
 
                     DOMDocument document = event.getBrowser().getDocument();
                     DOMNode root = document.findElement(By.id("video"));
