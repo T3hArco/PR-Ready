@@ -23,9 +23,10 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Het logo van een Quiz
+     *
      * @todo is dit het correcte type waar we achter zoeken? Ik denk niet dat het zo in elkaar mag zitten
      */
-    private String logo;
+    private byte[] logo;
 
     /**
      * De beschrijving van een Quiz
@@ -40,16 +41,16 @@ public class Quiz implements Comparable<Quiz> {
     /**
      * Default constructor voor Quiz
      */
-    public Quiz() {}
+    public Quiz() {
+    }
 
     /**
-     * Constructor voor quiz
-     * @param logo
+     * Constructor voor Quiz
+     *
      * @param title
      * @param description
      */
-    public Quiz(String title, String logo, String description) {
-        this.logo = logo;
+    public Quiz(String title, String description) {
         this.title = title;
         this.description = description;
         this.questions = new ArrayList<Question>();
@@ -57,6 +58,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Getter voor id
+     *
      * @return Id van de Quiz
      */
     public int getId() {
@@ -65,6 +67,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Setter voor id
+     *
      * @param id de nieuwe id
      */
     public void setId(int id) {
@@ -72,23 +75,27 @@ public class Quiz implements Comparable<Quiz> {
     }
 
     /**
-     * Getter voor logo URI
+     * Geeft een byte array terug van het object
+     * Niet gebruiken zonder manager!
+     *
      * @return logo URI
      */
-    public String getLogo() {
+    public byte[] getLogo() {
         return logo;
     }
 
     /**
      * setter voor logo URI
+     *
      * @param logo logo URI
      */
-    public void setLogo(String logo) {
+    public void setLogo(byte[] logo) {
         this.logo = logo;
     }
 
     /**
      * getter voor name
+     *
      * @return
      */
     public String getTitle() {
@@ -97,6 +104,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * setter voor name
+     *
      * @param name
      */
     public void setTitle(String name) {
@@ -105,6 +113,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * getter voor description
+     *
      * @return
      */
     public String getDescription() {
@@ -113,6 +122,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * setter voor description
+     *
      * @param description
      */
     public void setDescription(String description) {
@@ -120,10 +130,7 @@ public class Quiz implements Comparable<Quiz> {
     }
 
     /**
-     * De compare-to van deze class
-     * @rewrite (Arnaud Coel) -> BUG, method gaf een null pointer
-     * @param q other quiz
-     * @return compare
+     * compareTo methode voor klasse Quiz
      */
     public int compareTo(Quiz q) {
         return this.description.compareTo(q.getDescription());
@@ -131,6 +138,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Gets the questions in a certain quiz
+     *
      * @return questions
      */
     public List<Question> getQuestions() {
@@ -139,6 +147,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Sets the list of questions
+     *
      * @param questions
      */
     public void setQuestions(List<Question> questions) {
@@ -147,6 +156,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Adds a question to the question list. This should not be called on the object self
+     *
      * @param question Question
      */
     public void addQuestion(Question question) {
@@ -155,11 +165,11 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Gets a certain question in the DB
+     *
      * @param id identifier
      * @return question
      */
     public Question getQuestion(int id) {
         return this.questions.get(id);
     }
-
 }

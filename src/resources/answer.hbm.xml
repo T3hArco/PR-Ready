@@ -3,15 +3,16 @@
         "-//Hibernate/Hibernate Mapping DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
+
+
 <hibernate-mapping>
-    <class name="be.ehb.swp2.entity.UserAnswer" table="UserAnswers">
+    <class name="be.ehb.swp2.entity.Answer" table="Answers">
         <meta attribute="class-description">
             This class contains all the users
         </meta>
-        <composite-id>
-           <key-property name="userId" column="userId" type="int"  />
-            <key-property name="questionId" column="questionId" type="int" />
-        </composite-id>
-        <property name="answer" column="answer" type="string"/>
+        <id name="id" type="int" column="Id">
+            <generator class="native"/>
+        </id>
+        <property name="answerID" column="answerID" type="int"/>
     </class>
 </hibernate-mapping>

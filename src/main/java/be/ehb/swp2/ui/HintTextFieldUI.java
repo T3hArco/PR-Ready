@@ -4,13 +4,11 @@ package be.ehb.swp2.ui;
  * Created by Christophe on 3/11/2015.
  */
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-
 import javax.swing.plaf.basic.BasicTextFieldUI;
 import javax.swing.text.JTextComponent;
+import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 
 public class HintTextFieldUI extends BasicTextFieldUI implements FocusListener {
@@ -18,6 +16,20 @@ public class HintTextFieldUI extends BasicTextFieldUI implements FocusListener {
     private String hint;
     private boolean hideOnFocus;
     private Color color;
+
+    public HintTextFieldUI(String hint) {
+        this(hint, false);
+    }
+
+    public HintTextFieldUI(String hint, boolean hideOnFocus) {
+        this(hint, hideOnFocus, null);
+    }
+
+    public HintTextFieldUI(String hint, boolean hideOnFocus, Color color) {
+        this.hint = hint;
+        this.hideOnFocus = hideOnFocus;
+        this.color = color;
+    }
 
     public Color getColor() {
         return color;
@@ -29,8 +41,8 @@ public class HintTextFieldUI extends BasicTextFieldUI implements FocusListener {
     }
 
     private void repaint() {
-        if(getComponent() != null) {
-            getComponent().repaint();           
+        if (getComponent() != null) {
+            getComponent().repaint();
         }
     }
 
@@ -51,50 +63,39 @@ public class HintTextFieldUI extends BasicTextFieldUI implements FocusListener {
         this.hint = hint;
         repaint();
     }
-    public HintTextFieldUI(String hint) {
-        this(hint,false);
-    }
-
-    public HintTextFieldUI(String hint, boolean hideOnFocus) {
-        this(hint,hideOnFocus, null);
-    }
-
-    public HintTextFieldUI(String hint, boolean hideOnFocus, Color color) {
-        this.hint = hint;
-        this.hideOnFocus = hideOnFocus;
-        this.color = color;
-    }
 
     @Override
     protected void paintSafely(Graphics g) {
         super.paintSafely(g);
         JTextComponent comp = getComponent();
-        if(hint!=null && comp.getText().length() == 0 && (!(hideOnFocus && comp.hasFocus()))){
-            if(color != null) {
+        if (hint != null && comp.getText().length() == 0 && (!(hideOnFocus && comp.hasFocus()))) {
+            if (color != null) {
                 g.setColor(color);
             } else {
-                g.setColor(comp.getForeground().brighter().brighter().brighter());              
+                g.setColor(comp.getForeground().brighter().brighter().brighter());
             }
-            int padding = (comp.getHeight() - comp.getFont().getSize())/2;
-            g.drawString(hint, 2, comp.getHeight()-padding-1);          
+            int padding = (comp.getHeight() - comp.getFont().getSize()) / 2;
+            g.drawString(hint, 2, comp.getHeight() - padding - 1);
         }
     }
 
-    @Override
+
     public void focusGained(FocusEvent e) {
-        if(hideOnFocus) repaint();
+        if (hideOnFocus) repaint();
 
     }
 
-    @Override
+
     public void focusLost(FocusEvent e) {
-        if(hideOnFocus) repaint();
+        if (hideOnFocus) repaint();
     }
+
     @Override
     protected void installListeners() {
         super.installListeners();
         getComponent().addFocusListener(this);
     }
+
     @Override
     protected void uninstallListeners() {
         super.uninstallListeners();

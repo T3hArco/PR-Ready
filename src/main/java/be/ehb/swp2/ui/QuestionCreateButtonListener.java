@@ -3,18 +3,13 @@ package be.ehb.swp2.ui;
 /**
  * Created by Christophe on 3/11/2015.
  */
-        import java.awt.Color;
-        import java.awt.Dimension;
-        import java.awt.event.ActionEvent;
-        import java.awt.event.ActionListener;
 
-        import javax.swing.JButton;
-        import javax.swing.JPanel;
-        import javax.swing.SpringLayout;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class QuestionCreateButtonListener implements ActionListener {
-
-
     private Editor parentPanel;
     private JPanel panelInsideScrollPane;
     private JButton buttonTest;
@@ -26,23 +21,18 @@ public class QuestionCreateButtonListener implements ActionListener {
         this.buttonTest = parentPanel.getButtonTest();
     }
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("klik");
 
         //change color
-        colorCounter ++;
+        colorCounter++;
         colorCounter = (colorCounter < parentPanel.getColors().length) ? colorCounter : 0;
         parentPanel.setCurrentColor(parentPanel.getColors()[colorCounter]);
 
         //Create Question panel
-        Question newElement = new Question((int)panelInsideScrollPane.getPreferredSize().getWidth(), parentPanel.getCurrentColor());
-        parentPanel.getLayout().putConstraint(SpringLayout.NORTH, newElement,parentPanel.getVerticalMargin(),SpringLayout.SOUTH, parentPanel.CalculateNextOffsetFromThisComponent);
+        Question newElement = new Question((int) panelInsideScrollPane.getPreferredSize().getWidth(), parentPanel.getCurrentColor());
+        parentPanel.getLayout().putConstraint(SpringLayout.NORTH, newElement, parentPanel.getVerticalMargin(), SpringLayout.SOUTH, parentPanel.CalculateNextOffsetFromThisComponent);
         parentPanel.CalculateNextOffsetFromThisComponent = newElement;
-
-
-
-
 
 
         //Add Question Panel to the inner pannel (pannel within the scrollpane)
@@ -55,14 +45,13 @@ public class QuestionCreateButtonListener implements ActionListener {
 
 
         //If next elements is outside preferred bounds --> grow pannel
-        if((newElement.getLocation().y + (newElement.getHeight() )) >= (buttonTest.getLocation().y - 60))
-        {
-            panelInsideScrollPane.setPreferredSize(new Dimension(x,y + newElement.getHeight() + parentPanel.getVerticalMargin()));
+        if ((newElement.getLocation().y + (newElement.getHeight())) >= (buttonTest.getLocation().y - 60)) {
+            panelInsideScrollPane.setPreferredSize(new Dimension(x, y + newElement.getHeight() + parentPanel.getVerticalMargin()));
         }
 
 
         parentPanel.getFrame().pack();
-        parentPanel.getVerticalScrollBar().setValue( parentPanel.getVerticalScrollBar().getMaximum() );
+        parentPanel.getVerticalScrollBar().setValue(parentPanel.getVerticalScrollBar().getMaximum());
 
 
     }

@@ -1,26 +1,24 @@
 package be.ehb.swp2.ui;
 
 import be.ehb.swp2.entity.Quiz;
+import be.ehb.swp2.entity.QuizLauncher;
 import be.ehb.swp2.exception.DuplicateQuizException;
 import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.manager.QuizManager;
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserFunction;
+import com.teamdev.jxbrowser.chromium.JSValue;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import org.hibernate.SessionFactory;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
-
-import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.swing.BrowserView;
-import org.hibernate.SessionFactory;
-
-import javax.swing.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigInteger;
-import java.security.SecureRandom;
-import java.util.List;
 import java.util.TreeSet;
 
 /**
@@ -35,6 +33,7 @@ public class OverviewWindow {
 
     /**
      * Constructor voor Overviewwindow
+     *
      * @param factory de SQL sessie
      */
     public OverviewWindow(SessionFactory factory) {
@@ -45,6 +44,7 @@ public class OverviewWindow {
 
     /**
      * Adds a quiz to the list
+     *
      * @param q quiz in question
      * @throws DuplicateQuizException if a duplicate was made
      */
@@ -57,6 +57,7 @@ public class OverviewWindow {
 
     /**
      * Removes a quiz from the list
+     *
      * @param q quiz in question
      * @throws QuizNotFoundException if the quiz was not found in the list
      */
@@ -70,7 +71,7 @@ public class OverviewWindow {
     /**
      * @todo standardize this crap
      */
-    public void printGui(){
+    public void printGui() {
         quizSet.addAll(quizManager.getQuizzes());
         final File temp;
         String absolutePath = null;
@@ -78,7 +79,7 @@ public class OverviewWindow {
         try {
             temp = File.createTempFile("temp", Long.toString(System.nanoTime()));
             absolutePath = temp.getAbsolutePath();
-            tempFilePath = absolutePath.substring(0,absolutePath.lastIndexOf(File.separator));
+            tempFilePath = absolutePath.substring(0, absolutePath.lastIndexOf(File.separator));
             System.out.println("Temp file path : " + tempFilePath);
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -88,10 +89,10 @@ public class OverviewWindow {
             PrintWriter html = new PrintWriter(tempFilePath + "/overview.html");
             html.println("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>OVERVIEW</title><link rel=\"stylesheet\" href=\"overview.css\"></head><body><div class=\"collection\">");
             int size = quizSet.size();
-            for (int i = 0; i< size; i++){
-                html.println("<div class=\"quiz\"><div class=\"titel\"><p>"+ quizSet.first().getTitle() +"</p></div><div class=\"desc\"><p>" + quizSet.pollFirst().getDescription() +"</p></div><div class=\"button\"><button>option</button></div></div>");
+            for (int i = 0; i < size; i++) {
+                html.println("<div class=\"quiz\"><div class=\"titel\"><p>" + quizSet.first().getTitle() + "</p></div><div class=\"desc\"><p>" + quizSet.pollFirst().getDescription() + "</p></div><div class=\"button\"><button onclick=\"launch();\">launch</button></div></div>");
             }
-            html.println("</div><button class=\"add\">add</button></body></html>");
+            html.println("</div><button class=\"add\">add</button> <script>function launch(){ launchQuiz(); } </script></body></html>");
             html.close();
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
@@ -118,7 +119,7 @@ public class OverviewWindow {
          */
         final Browser browser = new Browser();
 
-        browser.loadURL("file:///var/folders/p5/68g32mc56q14jsztlmf_kzvr0000gn/T/overview.html");
+        browser.loadURL("file://" + tempFilePath + "/overview.html");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -127,6 +128,19 @@ public class OverviewWindow {
                 dialog.dispose();
             }
         });
+
+        browser.registerFunction("launchQuiz", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                QuizLauncher ql = new QuizLauncher();
+                ql.launch();
+                return  JSValue.createUndefined();
+            }
+
+
+
+        });
+
 
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
@@ -138,18 +152,5 @@ public class OverviewWindow {
 
     }
 
-    /*static public void main(String [] args){
-        Quiz q = new Quiz("test1", "logo", "Dit is een test");
-        Quiz q1 = new Quiz("test2", "logo", "Dit is een test");
-        Quiz q2 = new Quiz("test4", "logo", "Dit is een test");
-        Quiz q3 = new Quiz("test3", "logo", "Dit is een test");
-        TreeSet <Quiz> t = new TreeSet<Quiz>();
-        t.add(q);
-        t.add(q1);
-        t.add(q2);
-        t.add(q3);
-        OverviewWindow o = new OverviewWindow(t);
-        o.printGui();
-    }*/
 
 }

@@ -4,6 +4,10 @@ package be.ehb.swp2.entity;
  * Created by arnaudcoel on 29/10/2015.
  */
 
+import be.ehb.swp2.ui.questionWindow;
+
+import java.util.ArrayList;
+
 /**
  * This class contains all data for a question
  */
@@ -29,6 +33,8 @@ public class Question {
      */
     private QuestionType questionType;
 
+
+
     /**
      * @todo define this
      */
@@ -37,13 +43,29 @@ public class Question {
     /**
      * The default constructor for Question
      */
-    public Question() { }
+
+
+    /* enum type voor de answerType */
+
+    public enum AnswerType {
+        MULCHOICE, KEYWORD, BOOLEAN
+    }
+
+    public enum QuestionMedia {
+        AUDIO, VIDEO, IMAGE, EMPTY
+    }
+
+
+
+    public Question() {
+    }
 
     /**
      * The constructor for question
-     * @param title The title of the question
-     * @param text The body of the question
-     * @param questionType the type of the question
+     *
+     * @param title           The title of the question
+     * @param text            The body of the question
+     * @param questionType    the type of the question
      * @param questionExtraId ??? TODO
      */
     public Question(String title, String text, QuestionType questionType, int questionExtraId) {
@@ -55,6 +77,7 @@ public class Question {
 
     /**
      * Returns the unique identifier of the question
+     *
      * @return integer
      */
     public int getId() {
@@ -63,6 +86,7 @@ public class Question {
 
     /**
      * Sets the id of the question
+     *
      * @param id identifier
      */
     public void setId(int id) {
@@ -71,6 +95,7 @@ public class Question {
 
     /**
      * Returns the title of the question
+     *
      * @return String
      */
     public String getTitle() {
@@ -79,6 +104,7 @@ public class Question {
 
     /**
      * Sets the title of the question
+     *
      * @param title title of the question
      */
     public void setTitle(String title) {
@@ -87,6 +113,7 @@ public class Question {
 
     /**
      * Gets the body of the question
+     *
      * @return String
      */
     public String getText() {
@@ -95,6 +122,7 @@ public class Question {
 
     /**
      * Sets the body of the question
+     *
      * @param text body
      */
     public void setText(String text) {
@@ -103,6 +131,7 @@ public class Question {
 
     /**
      * Gets the type of the question
+     *
      * @return type
      */
     public QuestionType getQuestionType() {
@@ -111,6 +140,7 @@ public class Question {
 
     /**
      * Sets the body of the question
+     *
      * @param questionType type
      */
     public void setQuestionType(QuestionType questionType) {
@@ -119,6 +149,7 @@ public class Question {
 
     /**
      * ???
+     *
      * @return ???
      */
     public int getQuestionExtraId() {
@@ -127,6 +158,7 @@ public class Question {
 
     /**
      * `??
+     *
      * @param questionExtraId ???
      */
     public void setQuestionExtraId(int questionExtraId) {

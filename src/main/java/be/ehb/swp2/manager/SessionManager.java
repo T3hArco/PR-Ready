@@ -5,7 +5,10 @@ package be.ehb.swp2.manager;
  */
 
 import be.ehb.swp2.entity.User;
-import org.hibernate.*;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
@@ -18,6 +21,7 @@ public class SessionManager {
 
     /**
      * Constructor voor SessionManager
+     *
      * @param factory
      */
     public SessionManager(SessionFactory factory) {
@@ -26,6 +30,7 @@ public class SessionManager {
 
     /**
      * Gaat op basis van een gegeven token de geldigheid er van controleren.
+     *
      * @param token
      * @return true/false
      */
@@ -42,12 +47,10 @@ public class SessionManager {
                     .setParameter("token", token)
                     .list();
 
-            if(tokenList.size() == 0)
-                return false; // no tokens were found, so it must be fake
+            return tokenList.size() != 0;
 
-            return true;
-        } catch(HibernateException e) {
-            if(transaction != null)
+        } catch (HibernateException e) {
+            if (transaction != null)
                 transaction.rollback();
         } finally {
             session.close();
