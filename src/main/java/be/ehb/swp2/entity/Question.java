@@ -45,7 +45,7 @@ public class Question {
      *
      * @param title           The title of the question
      * @param text            The body of the question
-     * @param answerType    the type of the question
+     * @param answerType    the type of the question.
      * @param questionExtraId ??? TODO
      */
     public Question(String title, String text, AnswerType answerType, int questionExtraId) {
