@@ -12,8 +12,8 @@
             <generator class="native"/>
         </id>
         <property name="title" column="title" type="string"/>
-        <property name="logo" column="logo" type="string"/>
         <property name="description" column="description" type="string"/>
+        <property name="logo" column="logo" type="text"/>
         <list name="questions" cascade="all">
             <key column="QuizId"/> <!-- In wijziging Christophe zou dit parrentQuizID moeten zijn -->
             <list-index column="idx"/>
