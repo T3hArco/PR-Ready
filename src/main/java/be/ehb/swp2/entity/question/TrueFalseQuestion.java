@@ -19,8 +19,8 @@ public class TrueFalseQuestion extends Question {
      */
     private boolean answer;
 
-    public TrueFalseQuestion(String title, String text, QuestionType questionType, int questionExtraId, boolean answer) {
-        super(title, text, null);
+    public TrueFalseQuestion(String title, String text, AnswerType answerType, int questionExtraId, boolean answer) {
+        super(title, text, answerType, 1);
         this.answer = answer;
         this.answerType = AnswerType.TRUE_FALSE;
     }

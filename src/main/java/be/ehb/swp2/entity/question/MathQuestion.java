@@ -1,7 +1,8 @@
 package be.ehb.swp2.entity.question;
 
+import be.ehb.swp2.entity.Answer;
+import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
-import be.ehb.swp2.entity.QuestionType;
 
 /**
  * Created by Thomas on 29/10/2015.
@@ -15,12 +16,12 @@ public class MathQuestion extends Question {
      * Contains the answer in the form of a double
      */
     private double answer;
-    private QuestionType questionType;
+    private AnswerType answerType;
 
-    public MathQuestion(String title, String text, QuestionType questionType, double answer) {
-        super(title, text, questionType);
+    public MathQuestion(String title, String text, AnswerType answerType, double answer) {
+        super(title, text, answerType, 1);
         this.answer = answer;
-        this.questionType = QuestionType.MATH;
+        this.answerType = AnswerType.MATH;
     }
 
     public MathQuestion(double answer) {
