@@ -1,7 +1,11 @@
 package be.ehb.swp2.entity;
 
 import be.ehb.swp2.entity.question.MultipleChoice;
+import be.ehb.swp2.entity.question.TrueFalseQuestion;
 import be.ehb.swp2.ui.*;
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserFunction;
+import com.teamdev.jxbrowser.chromium.JSValue;
 
 import java.util.ArrayList;
 
@@ -10,7 +14,7 @@ import java.util.ArrayList;
 public class QuizLauncher {
 
     static ArrayList<questionWindow> windows = new ArrayList<questionWindow>();
-    static ArrayList<Question> questions = new ArrayList<Question>();
+
 
     String title = "Alpha";
     String text = "Alpha release quiz";
@@ -20,12 +24,14 @@ public class QuizLauncher {
         antwoorden.add("kraai");
         antwoorden.add("twitter");
         antwoorden.add("duif");
-        MultipleChoice mc = new MultipleChoice("title", "text", QuestionType.MULTIPLE_CHOICE, 0, antwoorden.get(1));
-        questions.add(mc);
-        windows.add(new TextWindow("Wat is ..... ?"));
-        windows.add(new ImageWindow("https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png", "Wat zijn dit?"));
-        windows.add(new VideoWindow("ovU1xUT4vRk"));
-        windows.add(new AudioWindow("u1I9ITfzqFs"));
+        MultipleChoice mc = new MultipleChoice("title", "wat is this?", QuestionType.MULTIPLE_CHOICE, antwoorden.get(1));
+        TrueFalseQuestion tc = new TrueFalseQuestion("title", "wat is that?", QuestionType.TRUE_FALSE, 0, true);
+
+        windows.clear();
+        windows.add(new TextWindow(mc));
+        windows.add(new ImageWindow("https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png", tc));
+        windows.add(new VideoWindow("u1I9ITfzqFs", mc));
+        windows.add(new AudioWindow("u1I9ITfzqFs", tc));
 
 
     }
@@ -42,23 +48,47 @@ public class QuizLauncher {
             if (windows.get(i).getClass().getSimpleName().equals("TextWindow")){
                 TextWindow t = (TextWindow) windows.get(i);
                 t.printGui();
+                if (t.getChoice() == 1) {
+                    i++;
+                }
+                else if (t.getChoice() == 2){
+                    i--;
+                }
             }
             if (windows.get(i).getClass().getSimpleName().equals("ImageWindow")){
                 ImageWindow p = (ImageWindow) windows.get(i);
                 p.printGui();
+                if (p.getChoice() == 1) {
+                    i++;
+                }
+                else if (p.getChoice() == 2){
+                    i--;
+                }
             }
              if (windows.get(i).getClass().getSimpleName().equals("VideoWindow")){
                 VideoWindow v = (VideoWindow) windows.get(i);
                 v.printGui();
+                 if (v.getChoice() == 1) {
+                     i++;
+                 }
+                 else if (v.getChoice() == 2){
+                     i--;
+                 }
             }
             if (windows.get(i).getClass().getSimpleName().equals("AudioWindow")){
                 AudioWindow a = (AudioWindow) windows.get(i);
                 a.printGui();
+                if (a.getChoice() == 1) {
+                    i++;
+                }
+                else if (a.getChoice() == 2){
+                    i--;
+                }
             }
             if (windows.get(i).getClass().getSimpleName().equals(null)) {
                 b = false;
             }
-            i++;
+
         }
 
 
