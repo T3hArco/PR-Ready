@@ -68,6 +68,19 @@ public class VideoWindow implements questionWindow {
             }
         });
 
+        browser.registerFunction("nextQuestion", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                return  JSValue.createUndefined();
+            }
+
+
+
+        });
+
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
         dialog.setResizable(false);
@@ -76,19 +89,6 @@ public class VideoWindow implements questionWindow {
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
 
-
-        browser.registerFunction("nextQuestion", new BrowserFunction() {
-
-            public JSValue invoke(JSValue... jsValues) {
-                browser.dispose();
-                dialog.setVisible(false);
-                dialog.dispose();
-                return null;
-            }
-
-
-
-        });
 
     }
 }

@@ -52,7 +52,7 @@ public class ImageWindow implements questionWindow{
                     p.setAttribute("class", "text");
                     DOMNode n = document.createTextNode(question);
                     root2.appendChild(p);
-                    p.appendChild(n);
+                     p.appendChild(n);
 
                 }
             }
@@ -68,6 +68,19 @@ public class ImageWindow implements questionWindow{
             }
         });
 
+        browser.registerFunction("nextQuestion", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                return  JSValue.createUndefined();
+            }
+
+
+
+        });
+
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
         dialog.setResizable(false);
@@ -75,19 +88,6 @@ public class ImageWindow implements questionWindow{
         dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
-
-         browser.registerFunction("nextQuestion", new BrowserFunction() {
-
-            public JSValue invoke(JSValue... jsValues) {
-                browser.dispose();
-                dialog.setVisible(false);
-                dialog.dispose();
-                return null;
-            }
-
-
-
-        });
 
     }
 

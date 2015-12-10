@@ -2,10 +2,7 @@ package be.ehb.swp2.entity;
 
 import be.ehb.swp2.entity.question.MultipleChoice;
 import be.ehb.swp2.entity.question.TrueFalseQuestion;
-import be.ehb.swp2.ui.ImageWindow;
-import be.ehb.swp2.ui.TextWindow;
-import be.ehb.swp2.ui.VideoWindow;
-import be.ehb.swp2.ui.questionWindow;
+import be.ehb.swp2.ui.*;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
@@ -29,32 +26,38 @@ public class QuizLauncher {
         antwoorden.add("duif");
         MultipleChoice mc = new MultipleChoice("title", "text", QuestionType.MULTIPLE_CHOICE, 0, antwoorden.get(1));
         questions.add(mc);
-        windows.add(new TextWindow(mc.getText()));
-        windows.add(new ImageWindow(mc.getText(), "img"));
-        windows.add(new VideoWindow(mc.getText()));
+        windows.add(new TextWindow("Wat is ..... ?"));
+        windows.add(new ImageWindow("https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png", "Wat zijn dit?"));
+        windows.add(new VideoWindow("u1I9ITfzqFs"));
+        windows.add(new AudioWindow("u1I9ITfzqFs"));
 
 
     }
 
 
 
-   static  public void main(String[] args) {
+   public void launch() {
         QuizLauncher q = new QuizLauncher();
         int i = 0;
-       boolean b = true;
-        while (b != false){
+        boolean b = true;
+        while (b != false) {
+
 
             if (windows.get(i).getClass().getSimpleName().equals("TextWindow")){
                 TextWindow t = (TextWindow) windows.get(i);
-                t.main(args);
+                t.printGui();
             }
             if (windows.get(i).getClass().getSimpleName().equals("ImageWindow")){
                 ImageWindow p = (ImageWindow) windows.get(i);
-                p.main(args);
+                p.printGui();
             }
              if (windows.get(i).getClass().getSimpleName().equals("VideoWindow")){
                 VideoWindow v = (VideoWindow) windows.get(i);
-                v.main(args);
+                v.printGui();
+            }
+            if (windows.get(i).getClass().getSimpleName().equals("AudioWindow")){
+                AudioWindow a = (AudioWindow) windows.get(i);
+                a.printGui();
             }
             if (windows.get(i).getClass().getSimpleName().equals(null)) {
                 b = false;
