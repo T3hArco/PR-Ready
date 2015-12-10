@@ -2,23 +2,27 @@ package be.ehb.swp2.ui;
 
 
 
-import java.awt.BorderLayout;
-import java.awt.GraphicsEnvironment;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+        import java.awt.BorderLayout;
+        import java.awt.GraphicsEnvironment;
+        import java.awt.event.WindowAdapter;
+        import java.awt.event.WindowEvent;
 
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
+        import javax.swing.JDialog;
+        import javax.swing.JFrame;
+        import javax.swing.WindowConstants;
 
-import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.dom.By;
-import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
-import com.teamdev.jxbrowser.chromium.dom.DOMElement;
-import com.teamdev.jxbrowser.chromium.dom.DOMNode;
-import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
-import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
-import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+        import com.teamdev.jxbrowser.chromium.Browser;
+        import com.teamdev.jxbrowser.chromium.JSValue;
+        import com.teamdev.jxbrowser.chromium.dom.By;
+        import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
+        import com.teamdev.jxbrowser.chromium.dom.DOMElement;
+        import com.teamdev.jxbrowser.chromium.dom.DOMNode;
+        import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
+        import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
+        import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+        import com.teamdev.jxbrowser.chromium.BrowserFunction;
+
+
 
 /**
  * Created by Thomas on 3/12/2015.
@@ -27,7 +31,7 @@ public class TextWindow implements questionWindow{
 
     final private String question;
 
-    TextWindow(final String question){
+    public TextWindow(final String question){
         this.question = question;
     }
     public void printGui(){
@@ -63,6 +67,21 @@ public class TextWindow implements questionWindow{
             }
         });
 
+
+
+        browser.registerFunction("nextQuestion", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                return null;
+            }
+
+
+
+        });
+
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
         dialog.setResizable(false);
@@ -73,8 +92,13 @@ public class TextWindow implements questionWindow{
 
     }
 
+
+
+
     static public void main(String[] args){
-        TextWindow t = new TextWindow("Wie is de huidige CEO van Apple");
+        //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
+        //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
+        TextWindow t = new TextWindow("u1I9ITfzqFs");
         t.printGui();
     }
 }

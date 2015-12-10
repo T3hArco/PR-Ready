@@ -16,6 +16,8 @@ import com.teamdev.jxbrowser.chromium.dom.DOMNode;
 import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import com.teamdev.jxbrowser.chromium.JSValue;
+import com.teamdev.jxbrowser.chromium.BrowserFunction;
 /**
  * Created by Thomas on 3/12/2015.
  */
@@ -23,7 +25,7 @@ public class ImageWindow implements questionWindow{
     final private String url;
     final private String question;
 
-    ImageWindow(final String url, final String question){
+    public ImageWindow(final String url, final String question){
         this.url = url;
         this.question = question;
     }
@@ -39,7 +41,7 @@ public class ImageWindow implements questionWindow{
                 if (event.isMainFrame()) {
 
                     String imageURL = url;
-
+/* fsfds*/
                     DOMDocument document = event.getBrowser().getDocument();
                     DOMNode root = document.findElement(By.id("img"));
                     DOMElement img = document.createElement("img");
@@ -52,21 +54,11 @@ public class ImageWindow implements questionWindow{
                     root2.appendChild(p);
                     p.appendChild(n);
 
-                    /*for (int i = 0; i<4; i++){
-                    DOMElement test = document.createElement("<input type=\"radio\" name=\"a1\" value=\"\"> answer1 <br><input type=\"radio\" name=\"a1\" value=\"\"> answer1 <br><input type=\"radio\" name=\"a1\" value=\"\"> answer1 <br>");
-                    DOMElement titel = document.findElement(By.id("titel"));
-                    titel.getChildren().get(0).setNodeValue("test");
-                    //titel.getParent().replaceChild(titel, test);
-                    //titel.getParent().appendChild(test);
-                    titel.getParent().insertChild(titel, test);
-                    DOMElement desc = document.findElement(By.id("desc"));
-                    desc.getChildren().get(0).setNodeValue("test beschrijving");*/
-
                 }
             }
         });
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/ImageFrame.html?7613847623");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/ImageFrame.html");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -83,6 +75,19 @@ public class ImageWindow implements questionWindow{
         dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
+
+         browser.registerFunction("nextQuestion", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                return null;
+            }
+
+
+
+        });
 
     }
 
