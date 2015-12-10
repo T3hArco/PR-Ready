@@ -33,6 +33,8 @@ public class Question {
      */
     private QuestionType questionType;
 
+
+
     /**
      * @todo define this
      */
@@ -41,6 +43,20 @@ public class Question {
     /**
      * The default constructor for Question
      */
+
+
+    /* enum type voor de answerType */
+
+    public enum AnswerType {
+        MULCHOICE, KEYWORD, BOOLEAN
+    }
+
+    public enum QuestionMedia {
+        AUDIO, VIDEO, IMAGE, EMPTY
+    }
+
+
+
     public Question() {
     }
 
