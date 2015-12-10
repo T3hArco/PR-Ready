@@ -3,7 +3,6 @@ package be.ehb.swp2.manager;
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.Quiz;
 import be.ehb.swp2.exception.QuizNotFoundException;
-import be.ehb.swp2.util.ImageHandler;
 import org.hibernate.*;
 import org.jboss.logging.Logger;
 
@@ -70,8 +69,8 @@ public class QuizManager {
         try {
             transaction = session.beginTransaction();
 			Quiz quiz = session.get(Quiz.class, quizId);
-			byte[] logoBytes = ImageHandler.toByteArray(path);
-			quiz.setLogo(logoBytes);
+			//byte[] logoBytes = ImageHandler.toByteArray(path);
+			quiz.setLogo(null);
 
 			session.update(quiz);
 			transaction.commit();
