@@ -11,6 +11,8 @@ package be.ehb.swp2.ui;
         import javax.swing.JFrame;
         import javax.swing.WindowConstants;
 
+        import be.ehb.swp2.entity.*;
+        import be.ehb.swp2.entity.Question;
         import com.teamdev.jxbrowser.chromium.Browser;
         import com.teamdev.jxbrowser.chromium.JSValue;
         import com.teamdev.jxbrowser.chromium.dom.By;
@@ -28,12 +30,22 @@ package be.ehb.swp2.ui;
  * Created by Thomas on 3/12/2015.
  */
 public class TextWindow implements questionWindow{
+    private Question question;
+    private int choice = 1;
 
-    final private String question;
-
-    public TextWindow(final String question){
+    public TextWindow(Question question){
         this.question = question;
+
     }
+
+    public int getChoice() {
+        return choice;
+    }
+
+    public void setChoice(int choice) {
+        this.choice = choice;
+    }
+
     public void printGui(){
         final Browser browser = new Browser();
         BrowserView browserView = new BrowserView(browser);
@@ -49,7 +61,7 @@ public class TextWindow implements questionWindow{
 
                     DOMDocument document = event.getBrowser().getDocument();
                     DOMNode root = document.findElement(By.id("text"));
-                    DOMNode n = document.createTextNode(question);
+                    DOMNode n = document.createTextNode(question.getText());
                     root.appendChild(n);
 
 
@@ -61,6 +73,7 @@ public class TextWindow implements questionWindow{
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                setChoice(1);
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
@@ -72,6 +85,7 @@ public class TextWindow implements questionWindow{
         browser.registerFunction("nextQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
+                setChoice(1);
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
@@ -81,6 +95,22 @@ public class TextWindow implements questionWindow{
 
 
         });
+
+        browser.registerFunction("previousQuestion", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                setChoice(2);
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                return  JSValue.createUndefined();
+            }
+
+
+
+        });
+
+
 
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
@@ -98,7 +128,7 @@ public class TextWindow implements questionWindow{
     static public void main(String[] args){
         //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
         //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
-        TextWindow t = new TextWindow("u1I9ITfzqFs");
-        t.printGui();
+        //TextWindow t = new TextWindow();
+        //t.printGui();
     }
 }
