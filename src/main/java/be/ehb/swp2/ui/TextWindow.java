@@ -75,7 +75,7 @@ public class TextWindow implements questionWindow{
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
-                return null;
+                return  JSValue.createUndefined();
             }
 
 

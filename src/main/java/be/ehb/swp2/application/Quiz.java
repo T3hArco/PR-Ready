@@ -1,5 +1,6 @@
 package be.ehb.swp2.application;
 
+import be.ehb.swp2.entity.QuizLauncher;
 import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.ui.LoginWindow;
@@ -86,6 +87,8 @@ public class Quiz {
         LoginWindow lw = new LoginWindow(factory);
         OverviewWindow ow = new OverviewWindow(factory);
         ow.printGui();
+        //QuizLauncher quizLauncher = new QuizLauncher();
+        //quizLauncher.launch();
     }
 
     /**
