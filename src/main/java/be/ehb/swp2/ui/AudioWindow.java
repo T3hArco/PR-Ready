@@ -22,7 +22,7 @@ import java.awt.event.WindowEvent;
 public class AudioWindow implements questionWindow {
     final private String url;
 
-    AudioWindow(final String url) {
+    public AudioWindow(final String url) {
         this.url = url;
     }
 
@@ -69,6 +69,19 @@ public class AudioWindow implements questionWindow {
             }
         });
 
+        browser.registerFunction("nextQuestion", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                return  JSValue.createUndefined();
+            }
+
+
+
+        });
+
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
         dialog.setResizable(false);
@@ -76,19 +89,6 @@ public class AudioWindow implements questionWindow {
         dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
-
-        browser.registerFunction("nextQuestion", new BrowserFunction() {
-
-            public JSValue invoke(JSValue... jsValues) {
-                browser.dispose();
-                dialog.setVisible(false);
-                dialog.dispose();
-                return null;
-            }
-
-
-
-        });
 
     }
 

@@ -4,6 +4,10 @@ package be.ehb.swp2.entity;
  * Created by arnaudcoel on 29/10/2015.
  */
 
+import be.ehb.swp2.ui.questionWindow;
+
+import java.util.ArrayList;
+
 /**
  * This class contains all data for a question
  */
