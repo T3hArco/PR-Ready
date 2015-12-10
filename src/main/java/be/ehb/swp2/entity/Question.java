@@ -4,6 +4,10 @@ package be.ehb.swp2.entity;
  * Created by arnaudcoel on 29/10/2015.
  */
 
+import be.ehb.swp2.ui.questionWindow;
+
+import java.util.ArrayList;
+
 /**
  * This class contains all data for a question
  */
@@ -29,6 +33,8 @@ public class Question {
      */
     private QuestionType questionType;
 
+
+
     /**
      * @todo define this
      */
@@ -37,6 +43,20 @@ public class Question {
     /**
      * The default constructor for Question
      */
+
+
+    /* enum type voor de answerType */
+
+    public enum AnswerType {
+        MULCHOICE, KEYWORD, BOOLEAN
+    }
+
+    public enum QuestionMedia {
+        AUDIO, VIDEO, IMAGE, EMPTY
+    }
+
+
+
     public Question() {
     }
 

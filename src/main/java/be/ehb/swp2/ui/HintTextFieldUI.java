@@ -79,13 +79,13 @@ public class HintTextFieldUI extends BasicTextFieldUI implements FocusListener {
         }
     }
 
-    @Override
+
     public void focusGained(FocusEvent e) {
         if (hideOnFocus) repaint();
 
     }
 
-    @Override
+
     public void focusLost(FocusEvent e) {
         if (hideOnFocus) repaint();
     }
