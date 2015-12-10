@@ -22,8 +22,8 @@ import java.io.PrintWriter;
 import java.util.TreeSet;
 
 /**
- * Created by domienhennion on 22/11/15..
- * Bijgewerkt door arnaudcoel 22/11/15
+ * Created by domienhennion on 22/11/15.
+ * Bijgewerkt door arnaudcoel 22/11/15.
  */
 
 public class OverviewWindow {
@@ -90,9 +90,9 @@ public class OverviewWindow {
             html.println("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>OVERVIEW</title><link rel=\"stylesheet\" href=\"overview.css\"></head><body><div class=\"collection\">");
             int size = quizSet.size();
             for (int i = 0; i < size; i++) {
-                html.println("<div class=\"quiz\"><div class=\"titel\"><p>" + quizSet.first().getTitle() + "</p></div><div class=\"desc\"><p>" + quizSet.pollFirst().getDescription() + "</p></div><div class=\"button\"><button onclick=\"launch();\">launch</button></div></div>");
+                html.println("<div class=\"quiz\"><div class=\"titel\"><p>" + quizSet.first().getTitle() + "</p></div><div class=\"desc\"><p>" + quizSet.pollFirst().getDescription() + "</p></div><div class=\"button\"><button onclick=\"launchQ();\">launch</button></div></div>");
             }
-            html.println("</div><button class=\"add\">add</button> <script>function launch(){ launchQuiz(); } </script></body></html>");
+            html.println("</div><button onclick=\"launchE();\" class=\"add\">add</button> <script>function launchQ(){ launchQuiz(); } function launchE(){ launchEditor(); } </script></body></html>");
             html.close();
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
@@ -141,6 +141,17 @@ public class OverviewWindow {
 
         });
 
+        browser.registerFunction("launchEditor", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                EditorWindow ew = new EditorWindow();
+                ew.printGui();
+                return  JSValue.createUndefined();
+            }
+
+
+
+        });
 
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
