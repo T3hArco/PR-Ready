@@ -2,6 +2,8 @@ package be.ehb.swp2.ui;
 
 import be.ehb.swp2.entity.Question;
 import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserFunction;
+import com.teamdev.jxbrowser.chromium.JSValue;
 import com.teamdev.jxbrowser.chromium.dom.By;
 import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
 import com.teamdev.jxbrowser.chromium.dom.DOMElement;
@@ -9,8 +11,6 @@ import com.teamdev.jxbrowser.chromium.dom.DOMNode;
 import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
-import com.teamdev.jxbrowser.chromium.JSValue;
-import com.teamdev.jxbrowser.chromium.BrowserFunction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,9 +20,9 @@ import java.awt.event.WindowEvent;
 /**
  * Created by domienhennion on 3/12/15.
  */
-public class AudioWindow implements questionWindow {
-    private Question question;
+public class AudioWindow implements QuestionWindow {
     final private String url;
+    private Question question;
     private int choice = 1;
     public AudioWindow(final String url, Question question) {
         this.url = url;
