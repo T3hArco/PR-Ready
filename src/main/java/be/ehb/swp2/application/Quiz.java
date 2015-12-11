@@ -2,6 +2,8 @@ package be.ehb.swp2.application;
 
 import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.manager.QuizManager;
+import be.ehb.swp2.ui.LoginWindow;
+import be.ehb.swp2.ui.OverviewWindow;
 import be.ehb.swp2.ui.test.ImageTestWindow;
 import be.ehb.swp2.util.Configurator;
 import com.teamdev.jxbrowser.chromium.LoggerProvider;
@@ -88,11 +90,11 @@ public class Quiz {
         logger.log(Level.SEVERE, "Testing saving images");
         //imageSaveTest();
 
-        /*LoginWindow lw = new LoginWindow(factory);
+        LoginWindow lw = new LoginWindow(factory);
         OverviewWindow ow = new OverviewWindow(factory);
-        ow.printGui();*/
+        ow.printGui();
 
-        ImageTestWindow imageTestWindow = new ImageTestWindow(factory);
+        //ImageTestWindow imageTestWindow = new ImageTestWindow(factory);
     }
 
     /**

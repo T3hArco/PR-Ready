@@ -30,9 +30,11 @@ public class Question {
     private AnswerType answerType;
 
     /**
-     * @todo define this
+     * The media type for the answer
      */
-    private int questionExtraId;
+    private AnswerMediaType answerMediaType;
+
+    private int parentId;
 
     /**
      * The default constructor for Question
@@ -46,13 +48,15 @@ public class Question {
      * @param title           The title of the question
      * @param text            The body of the question
      * @param answerType    the type of the question.
-     * @param questionExtraId ??? TODO
+     * @param answerMediaType the type of the media
+     * @param parentId ??? TODO
      */
-    public Question(String title, String text, AnswerType answerType, int questionExtraId) {
+    public Question(String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, int parentId) {
         this.title = title;
         this.text = text;
         this.answerType = answerType;
-        this.questionExtraId = questionExtraId;
+        this.answerMediaType = answerMediaType;
+        this.parentId = parentId;
     }
 
     /**
@@ -127,21 +131,19 @@ public class Question {
         this.answerType = answerType;
     }
 
-    /**
-     * ???
-     *
-     * @return ???
-     */
-    public int getQuestionExtraId() {
-        return questionExtraId;
+    public int getParentId() {
+        return parentId;
     }
 
-    /**
-     * `??
-     *
-     * @param questionExtraId ???
-     */
-    public void setQuestionExtraId(int questionExtraId) {
-        this.questionExtraId = questionExtraId;
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
+
+    public AnswerMediaType getAnswerMediaType() {
+        return answerMediaType;
+    }
+
+    public void setAnswerMediaType(AnswerMediaType answerMediaType) {
+        this.answerMediaType = answerMediaType;
     }
 }
