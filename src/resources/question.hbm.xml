@@ -20,12 +20,6 @@
                 <param name="useNamed">true</param>
             </type>
         </property>
-        <property name="answerType" column="answerType">
-            <type name="org.hibernate.type.EnumType">
-                <param name="enumClass">be.ehb.swp2.entity.AnswerType</param>
-                <param name="useNamed">true</param>
-            </type>
-        </property>
         <property name="answerMediaType" column="answerMediaType">
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">be.ehb.swp2.entity.AnswerMediaType</param>
