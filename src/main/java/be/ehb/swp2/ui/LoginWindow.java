@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @implements Window
  * @extends JFrame
  */
-public class LoginWindow implements questionWindow {
+public class LoginWindow implements QuestionWindow {
     JFrame frame = new JFrame();
     /**
      * Provides a connection to the database

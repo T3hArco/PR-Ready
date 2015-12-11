@@ -1,36 +1,25 @@
 package be.ehb.swp2.ui;
 
 import be.ehb.swp2.entity.User;
-import be.ehb.swp2.exception.BadLoginException;
-import be.ehb.swp2.exception.DuplicateUserException;
-import be.ehb.swp2.exception.UserNotFoundException;
-import be.ehb.swp2.manager.LoginManager;
-import be.ehb.swp2.manager.UserManager;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
-import javafx.stage.FileChooser;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.swing.JFileChooser;
-import java.io.File;
-
 /**
  * Created by domienhennion on 8/12/15.
  */
-public class NewQuizWindow implements questionWindow{
+public class NewQuizWindow implements QuestionWindow {
     JFrame parent = new JFrame();
-    public JFrame getParent(){
-        return this.parent;
-    }
     public NewQuizWindow() {
         final AtomicReference<User> result = new AtomicReference<User>();
         final JDialog dialog = new JDialog(parent, "newQuiz", true);
@@ -77,7 +66,12 @@ public class NewQuizWindow implements questionWindow{
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
     }
+
     public static void main(String[] args){
         NewQuizWindow nqw = new NewQuizWindow();
+    }
+
+    public JFrame getParent() {
+        return this.parent;
     }
 }

@@ -1,41 +1,41 @@
 package be.ehb.swp2.ui;
 
 
+import be.ehb.swp2.entity.Question;
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserFunction;
+import com.teamdev.jxbrowser.chromium.JSValue;
+import com.teamdev.jxbrowser.chromium.dom.By;
+import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
+import com.teamdev.jxbrowser.chromium.dom.DOMNode;
+import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
+import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 
-        import java.awt.BorderLayout;
-        import java.awt.GraphicsEnvironment;
-        import java.awt.event.WindowAdapter;
-        import java.awt.event.WindowEvent;
-
-        import javax.swing.JDialog;
-        import javax.swing.JFrame;
-        import javax.swing.WindowConstants;
-
-        import be.ehb.swp2.entity.*;
-        import be.ehb.swp2.entity.Question;
-        import com.teamdev.jxbrowser.chromium.Browser;
-        import com.teamdev.jxbrowser.chromium.JSValue;
-        import com.teamdev.jxbrowser.chromium.dom.By;
-        import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
-        import com.teamdev.jxbrowser.chromium.dom.DOMElement;
-        import com.teamdev.jxbrowser.chromium.dom.DOMNode;
-        import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
-        import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
-        import com.teamdev.jxbrowser.chromium.swing.BrowserView;
-        import com.teamdev.jxbrowser.chromium.BrowserFunction;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 
 /**
  * Created by Thomas on 3/12/2015.
  */
-public class TextWindow implements questionWindow{
+public class TextWindow implements QuestionWindow {
     private Question question;
     private int choice = 1;
 
     public TextWindow(Question question){
         this.question = question;
 
+    }
+
+    static public void main(String[] args) {
+        //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
+        //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
+        //TextWindow t = new TextWindow();
+        //t.printGui();
     }
 
     public int getChoice() {
@@ -120,15 +120,5 @@ public class TextWindow implements questionWindow{
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
 
-    }
-
-
-
-
-    static public void main(String[] args){
-        //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
-        //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
-        //TextWindow t = new TextWindow();
-        //t.printGui();
     }
 }

@@ -1,6 +1,6 @@
 package be.ehb.swp2.entity.question;
 
-import be.ehb.swp2.entity.Answer;
+import be.ehb.swp2.entity.AnswerMediaType;
 import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
 
@@ -18,8 +18,8 @@ public class MathQuestion extends Question {
     private double answer;
     private AnswerType answerType;
 
-    public MathQuestion(String title, String text, AnswerType answerType, double answer) {
-        super(title, text, answerType, 1);
+    public MathQuestion(String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, double answer) {
+        super(title, text, answerType, answerMediaType, 1);
         this.answer = answer;
         this.answerType = AnswerType.MATH;
     }

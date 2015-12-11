@@ -1,7 +1,8 @@
 package be.ehb.swp2.entity.question;
 
-import be.ehb.swp2.entity.Question;
+import be.ehb.swp2.entity.AnswerMediaType;
 import be.ehb.swp2.entity.AnswerType;
+import be.ehb.swp2.entity.Question;
 import org.hibernate.SessionFactory;
 
 /**
@@ -19,8 +20,8 @@ public class TrueFalseQuestion extends Question {
      */
     private boolean answer;
 
-    public TrueFalseQuestion(String title, String text, AnswerType answerType, int questionExtraId, boolean answer) {
-        super(title, text, answerType, 1);
+    public TrueFalseQuestion(String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, int questionExtraId, boolean answer) {
+        super(title, text, answerType, answerMediaType, 1);
         this.answer = answer;
         this.answerType = AnswerType.TRUE_FALSE;
     }
