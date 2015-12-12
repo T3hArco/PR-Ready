@@ -3,9 +3,6 @@ package be.ehb.swp2.entity;
 import be.ehb.swp2.entity.question.MultipleChoice;
 import be.ehb.swp2.entity.question.TrueFalseQuestion;
 import be.ehb.swp2.ui.*;
-import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.BrowserFunction;
-import com.teamdev.jxbrowser.chromium.JSValue;
 
 import java.util.ArrayList;
 
@@ -13,7 +10,7 @@ import java.util.ArrayList;
 
 public class QuizLauncher {
 
-    static ArrayList<questionWindow> windows = new ArrayList<questionWindow>();
+    static ArrayList<QuestionWindow> windows = new ArrayList<QuestionWindow>();
 
 
     String title = "Alpha";
@@ -24,8 +21,8 @@ public class QuizLauncher {
         antwoorden.add("kraai");
         antwoorden.add("twitter");
         antwoorden.add("duif");
-        MultipleChoice mc = new MultipleChoice("title", "wat is this?", QuestionType.MULTIPLE_CHOICE, antwoorden.get(1));
-        TrueFalseQuestion tc = new TrueFalseQuestion("title", "wat is that?", QuestionType.TRUE_FALSE, 0, true);
+        MultipleChoice mc = new MultipleChoice("title", "wat is this?", AnswerType.MULTIPLE_CHOICE, AnswerMediaType.EMPTY, antwoorden.get(1));
+        TrueFalseQuestion tc = new TrueFalseQuestion("title", "wat is that?", AnswerType.TRUE_FALSE, AnswerMediaType.EMPTY, 0, true);
 
         windows.clear();
         windows.add(new TextWindow(mc));

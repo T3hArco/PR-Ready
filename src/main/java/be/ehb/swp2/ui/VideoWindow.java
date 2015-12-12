@@ -1,6 +1,5 @@
 package be.ehb.swp2.ui;
 
-import be.ehb.swp2.entity.*;
 import be.ehb.swp2.entity.Question;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
@@ -23,14 +22,21 @@ import java.awt.event.WindowEvent;
  */
 
 
-public class VideoWindow implements questionWindow {
-    private Question question;
+public class VideoWindow implements QuestionWindow {
     final private String url;
+    private Question question;
     private int choice = 1;
 
     public VideoWindow(final String url,  Question question) {
         this.url = url;
         this.question = question;
+    }
+
+    static public void main(String[] arsg) {
+        //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
+        //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
+        // VideoWindow v = new VideoWindow("u1I9ITfzqFs");
+        // v.printGui();
     }
 
     public int getChoice() {
@@ -39,13 +45,6 @@ public class VideoWindow implements questionWindow {
 
     public void setChoice(int choice) {
         this.choice = choice;
-    }
-
-    static public void main(String[] arsg) {
-        //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
-        //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
-       // VideoWindow v = new VideoWindow("u1I9ITfzqFs");
-       // v.printGui();
     }
 
     public void printGui() {
@@ -59,8 +58,8 @@ public class VideoWindow implements questionWindow {
             public void onFinishLoadingFrame(FinishLoadingEvent event) {
                 if (event.isMainFrame()) {
 
-                    //String videoUrl = "https://www.youtube.com/embed/" + url + "?rel=0&amp;controls=0&amp;showinfo=0";
-                    String videoUrl = "htttp://www.youtube.com/v/" + url;
+                    String videoUrl = "https://www.youtube.com/embed/" + url + "?rel=0&amp;controls=0&amp;showinfo=0";
+                    //String videoUrl = "htttp://www.youtube.com/v/" + url;
 
                     DOMDocument document = event.getBrowser().getDocument();
                     DOMNode root = document.findElement(By.id("video"));
