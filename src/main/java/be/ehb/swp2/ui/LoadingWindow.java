@@ -1,6 +1,8 @@
 package be.ehb.swp2.ui;
 
 import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserFunction;
+import com.teamdev.jxbrowser.chromium.JSValue;
 import com.teamdev.jxbrowser.chromium.dom.By;
 import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
 import com.teamdev.jxbrowser.chromium.dom.DOMElement;
@@ -8,8 +10,6 @@ import com.teamdev.jxbrowser.chromium.dom.DOMNode;
 import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
-import com.teamdev.jxbrowser.chromium.JSValue;
-import com.teamdev.jxbrowser.chromium.BrowserFunction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,37 +17,16 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * Created by domienhennion on 10/12/15.
+ * Created by domienhennion on 12/12/15.
  */
-public class EditorWindow {
+public class LoadingWindow {
     public void printGui(){
         final Browser browser = new Browser();
         BrowserView browserView = new BrowserView(browser);
         JFrame parent = new JFrame();
-        final JDialog dialog = new JDialog(parent, "Editor", true);
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/editor/editor.html");
+        final JDialog dialog = new JDialog(parent, "LOADING", true);
 
-        browser.registerFunction("saveQuestionToJava", new BrowserFunction() {
-
-            public JSValue invoke(JSValue... jsValues) {
-
-                return  JSValue.createUndefined();
-            }
-
-        });
-
-        browser.registerFunction("saveAnswerToJava", new BrowserFunction() {
-
-            public JSValue invoke(JSValue... jsValues) {
-                browser.dispose();
-                dialog.setVisible(false);
-                dialog.dispose();
-                //OverviewWindow ow = new OverviewWindow(null);
-                //ow.printGui();
-                return  JSValue.createUndefined();
-            }
-
-        });
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/loadingFrame.html");
 
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
