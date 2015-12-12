@@ -2,6 +2,7 @@ package be.ehb.swp2.application;
 
 import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.manager.QuizManager;
+import be.ehb.swp2.ui.LoadingWindow;
 import be.ehb.swp2.ui.LoginWindow;
 import be.ehb.swp2.ui.OverviewWindow;
 import be.ehb.swp2.ui.test.ImageTestWindow;
@@ -90,6 +91,7 @@ public class Quiz {
         logger.log(Level.SEVERE, "Testing saving images");
         //imageSaveTest();
 
+        LoadingWindow load = new LoadingWindow();
         LoginWindow lw = new LoginWindow(factory);
         OverviewWindow ow = new OverviewWindow(factory);
         ow.printGui();

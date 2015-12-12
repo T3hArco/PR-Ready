@@ -1,5 +1,6 @@
 package be.ehb.swp2.ui;
 
+import be.ehb.swp2.entity.QuizLauncher;
 import be.ehb.swp2.entity.User;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
@@ -20,7 +21,7 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class NewQuizWindow implements QuestionWindow {
     JFrame parent = new JFrame();
-    public NewQuizWindow() {
+    public void printGui() {
         final AtomicReference<User> result = new AtomicReference<User>();
         final JDialog dialog = new JDialog(parent, "newQuiz", true);
         final Browser browser = new Browser();
@@ -28,21 +29,30 @@ public class NewQuizWindow implements QuestionWindow {
         browser.registerFunction("newFile", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
-                    JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-                    int result = fileChooser.showOpenDialog(parent);
-                    if (result == JFileChooser.APPROVE_OPTION) {
-                        File selectedFile = fileChooser.getSelectedFile();
-                        System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-                    }
-                fileChooser = null;
-
-                //JOptionPane.showMessageDialog(null, "ok");
-
-
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+                int result = fileChooser.showOpenDialog(parent);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+                }
                 return  JSValue.createUndefined();
-
             }
+
+        });
+
+        browser.registerFunction("createQuiz", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                EditorWindow ew = new EditorWindow();
+                ew.printGui();
+                return  JSValue.createUndefined();
+            }
+
+
 
         });
 
