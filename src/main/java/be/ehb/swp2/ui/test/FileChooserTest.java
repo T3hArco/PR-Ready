@@ -1,4 +1,4 @@
-package be.ehb.swp2.ui;
+package be.ehb.swp2.ui.test;
 
 /**
  * Created by Ibrahim on 02-12-15.

@@ -11,7 +11,6 @@ import org.hibernate.SessionFactory;
  * Created by arnaudcoel on 13/12/15.
  */
 public class PermissionHandler {
-
     public static boolean currentUserHasPermission(SessionFactory factory, UserRole requiredRole) {
         ConfigurationHandler configurationHandler = new ConfigurationHandler(); // moved configurationHandler due to reloading problems
         String token = configurationHandler.getSetting("user", "token");
