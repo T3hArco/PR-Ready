@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Base64;
 
 /**
  * Created by arnaudcoel on 03/12/15.
@@ -58,6 +59,7 @@ public class ImageHandler {
         request.setRequestBody(encodedImage);*/
 
         String[] allowedTypes = new String[]{"jpeg", "jpg", "png", "gif"};
+        String base64 = null;
 
         try {
             BufferedImage source = ImageIO.read(path);
@@ -67,11 +69,17 @@ public class ImageHandler {
             if (!Arrays.asList(allowedTypes).contains(extension))
                 throw new BadFileException("Extension not allowed");
 
-
+            ImageIO.write(source, extension, byteArrayOutputStream);
+            byteArrayOutputStream.flush();
+            base64 = Base64.getEncoder().encodeToString(byteArrayOutputStream.toByteArray());
+            byteArrayOutputStream.close();
         } catch (IOException e) {
-            throw new BadFileException("test");
+            throw new BadFileException("Failed to convert");
         }
 
-        return null;
+        if (base64 == null)
+            throw new BadFileException("Failed to convert");
+
+        return base64;
     }
 }

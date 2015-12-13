@@ -1,17 +1,18 @@
 package be.ehb.swp2.application;
 
-import be.ehb.swp2.entity.QuizLauncher;
 import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.manager.QuizManager;
+import be.ehb.swp2.ui.LoadingWindow;
 import be.ehb.swp2.ui.LoginWindow;
 import be.ehb.swp2.ui.OverviewWindow;
+import be.ehb.swp2.ui.test.ImageTestWindow;
 import be.ehb.swp2.util.Configurator;
+import com.teamdev.jxbrowser.chromium.LoggerProvider;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.util.logging.Level;
@@ -55,6 +56,11 @@ public class Quiz {
         logger.info("Starting application");
         logger.info("Setting JFrame Look and Feel");
 
+        logger.info("Disabling obnoxious logging");
+        LoggerProvider.getChromiumProcessLogger().setLevel(Level.OFF);
+        LoggerProvider.getIPCLogger().setLevel(Level.OFF);
+        LoggerProvider.getBrowserLogger().setLevel(Level.OFF);
+
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException e) {
@@ -82,13 +88,15 @@ public class Quiz {
         long totalTime = end - start;
         logger.info("Initialization took " + totalTime + " milliseconds!");
 
-        imageSaveTest();
+        logger.log(Level.SEVERE, "Testing saving images");
+        //imageSaveTest();
 
+        LoadingWindow load = new LoadingWindow();
         LoginWindow lw = new LoginWindow(factory);
         OverviewWindow ow = new OverviewWindow(factory);
         ow.printGui();
-        //QuizLauncher quizLauncher = new QuizLauncher();
-        //quizLauncher.launch();
+
+        //ImageTestWindow imageTestWindow = new ImageTestWindow(factory);
     }
 
     /**
@@ -107,7 +115,7 @@ public class Quiz {
         be.ehb.swp2.entity.Quiz quiz = null;
 
         try {
-            quizId = quizManager.addQuiz(new BigInteger(130, random).toString(32), "test");
+            quizId = quizManager.addQuiz("pliep", "test");
             quiz = quizManager.getQuizById(quizId);
         } catch (QuizNotFoundException e) {
             logger.log(Level.SEVERE, "\"Fout tijdens het aanmaken van de quiz\"");
