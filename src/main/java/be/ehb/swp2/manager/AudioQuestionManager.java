@@ -18,12 +18,12 @@ public class AudioQuestionManager {
 
         Session session = factory.openSession();
         Transaction transaction = null;
-        Integer Id = null;
+        Integer id = null;
 
         try {
             transaction = session.beginTransaction();
             AudioQuestion audioquestion = new AudioQuestion(parentQuestion, link);
-            Id = (Integer) session.save(audioquestion);
+            id = (Integer) session.save(audioquestion);
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null)
@@ -31,16 +31,16 @@ public class AudioQuestionManager {
         } finally {
             session.close();
         }
-        return Id;
+        return id;
     }
 
-    public void deleteAudioQuestion(Integer Id) {
+    public void deleteAudioQuestion(Integer id) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
-            AudioQuestion audioquestion = session.get(AudioQuestion.class, Id);
+            AudioQuestion audioquestion = session.get(AudioQuestion.class, id);
             session.delete(audioquestion);
             transaction.commit(); //
         } catch (HibernateException e) {
@@ -54,13 +54,13 @@ public class AudioQuestionManager {
     }
 
 
-    public void updateAudioQuestion( int Id, String link, int parentQuestion) {
+    public void updateAudioQuestion( int id, String link, int parentQuestion) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
-            AudioQuestion audioquestion = session.get(AudioQuestion.class,Id);
+            AudioQuestion audioquestion = session.get(AudioQuestion.class,id);
             audioquestion.setLink(link);
             audioquestion.setParentQuestion(parentQuestion);
             session.update(audioquestion);
