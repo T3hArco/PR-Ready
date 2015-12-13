@@ -144,8 +144,11 @@ public class OverviewWindow {
         browser.registerFunction("launchEditor", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
-                EditorWindow ew = new EditorWindow();
-                ew.printGui();
+                NewQuizWindow nqw = new NewQuizWindow();
+                nqw.printGui();
+                //browser.dispose();
+                //dialog.setVisible(false);
+                //dialog.dispose();
                 return  JSValue.createUndefined();
             }
 
