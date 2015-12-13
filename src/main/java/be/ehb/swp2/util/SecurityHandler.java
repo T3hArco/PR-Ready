@@ -8,6 +8,12 @@ import org.jsoup.examples.HtmlToPlainText;
  */
 public class SecurityHandler {
 
+    /**
+     * Method to protect out input against evil people
+     *
+     * @param input Unescaped
+     * @return Escaped tags
+     */
     public static String stripTags(String input) {
         if (input == null)
             return input;

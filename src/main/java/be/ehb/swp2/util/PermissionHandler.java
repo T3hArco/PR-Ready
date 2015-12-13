@@ -11,28 +11,26 @@ import org.hibernate.SessionFactory;
  * Created by arnaudcoel on 13/12/15.
  */
 public class PermissionHandler {
-
-    public static boolean currentUserHasPermission(SessionFactory factory, UserRole role) {
+    public static boolean currentUserHasPermission(SessionFactory factory, UserRole requiredRole) {
         ConfigurationHandler configurationHandler = new ConfigurationHandler(); // moved configurationHandler due to reloading problems
         String token = configurationHandler.getSetting("user", "token");
 
-        return userHasPermission(factory, role, token);
+        return hasPermission(factory, requiredRole, token);
     }
 
-    public static boolean userHasPermission(SessionFactory factory, UserRole role, String token) {
-        UserManager um = new UserManager(factory);
+    public static boolean hasPermission(SessionFactory factory, UserRole requiredRole, String token) {
+        UserManager userManager = new UserManager(factory);
         User user = null;
 
         try {
-            user = um.getUserByToken(token);
-        } catch (TokenNotFoundException e) {
-            e.printStackTrace();
+            user = userManager.getUserByToken(token);
         } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (TokenNotFoundException e) {
             e.printStackTrace();
         }
 
-        return user.getUserRole().equals(role);
+        return user.getUserRole().equals(requiredRole);
 
     }
-
 }
