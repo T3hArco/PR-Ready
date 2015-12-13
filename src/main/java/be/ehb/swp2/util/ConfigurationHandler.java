@@ -13,13 +13,13 @@ import java.io.IOException;
 /**
  * The config manager for the project
  */
-public class Configurator {
+public class ConfigurationHandler {
     Wini ini;
 
     /**
      * Default constructor
      */
-    public Configurator() {
+    public ConfigurationHandler() {
         try {
             File cf = new File("config.ini");
             if (!cf.exists())

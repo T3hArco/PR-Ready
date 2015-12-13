@@ -7,7 +7,7 @@ import be.ehb.swp2.exception.UserNoPermissionException;
 import be.ehb.swp2.exception.UserNotFoundException;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.ui.PermissionWindow;
-import be.ehb.swp2.util.Configurator;
+import be.ehb.swp2.util.ConfigurationHandler;
 import org.hibernate.SessionFactory;
 
 import javax.swing.*;
@@ -67,8 +67,8 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
 
                 UserManager um = new UserManager(factory);
                 User user = null;
-                Configurator configurator = new Configurator(); // moved configurator due to reloading problems
-                String token = configurator.getSetting("user", "token");
+                ConfigurationHandler configurationHandler = new ConfigurationHandler(); // moved configurationHandler due to reloading problems
+                String token = configurationHandler.getSetting("user", "token");
 
                 try {
                     user = um.getUserByToken(token);
@@ -95,8 +95,8 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
             public void actionPerformed(ActionEvent e) {
                 UserManager um = new UserManager(factory);
                 User user = null;
-                Configurator configurator = new Configurator(); // moved configurator due to reloading problems
-                String token = configurator.getSetting("user", "token");
+                ConfigurationHandler configurationHandler = new ConfigurationHandler(); // moved configurationHandler due to reloading problems
+                String token = configurationHandler.getSetting("user", "token");
 
                 try {
                     user = um.getUserByToken(token);
@@ -119,8 +119,8 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
             public void actionPerformed(ActionEvent e) {
                 UserManager um = new UserManager(factory);
                 User user = null;
-                Configurator configurator = new Configurator(); // moved configurator due to reloading problems
-                String token = configurator.getSetting("user", "token");
+                ConfigurationHandler configurationHandler = new ConfigurationHandler(); // moved configurationHandler due to reloading problems
+                String token = configurationHandler.getSetting("user", "token");
 
                 try {
                     user = um.getUserByToken(token);
@@ -147,8 +147,8 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
     public boolean hasPermission() throws UserNoPermissionException, UserNotFoundException, TokenNotFoundException {
         UserManager um = new UserManager(factory);
         User user = null;
-        Configurator configurator = new Configurator(); // moved configurator due to reloading problems
-        String token = configurator.getSetting("user", "token");
+        ConfigurationHandler configurationHandler = new ConfigurationHandler(); // moved configurationHandler due to reloading problems
+        String token = configurationHandler.getSetting("user", "token");
 
         user = um.getUserByToken(token);
 

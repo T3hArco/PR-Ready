@@ -4,7 +4,7 @@ import be.ehb.swp2.entity.User;
 import be.ehb.swp2.exception.InternalErrorException;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.ui.Window;
-import be.ehb.swp2.util.Configurator;
+import be.ehb.swp2.util.ConfigurationHandler;
 import org.hibernate.SessionFactory;
 
 import javax.swing.*;
@@ -19,12 +19,12 @@ import java.awt.event.ActionListener;
  */
 public class SwingAdminWindow extends JFrame implements Window {
     private SessionFactory factory;
-    private Configurator configurator;
+    private ConfigurationHandler configurationHandler;
     private UserManager userManager;
 
     public SwingAdminWindow(SessionFactory factory) {
         this.factory = factory;
-        this.configurator = new Configurator();
+        this.configurationHandler = new ConfigurationHandler();
         this.userManager = new UserManager(factory);
 
         this.initComponents();
