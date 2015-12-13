@@ -17,7 +17,7 @@ import java.security.SecureRandom;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Created by domienhennion on 8/12/15.
+ * Created by domienhennion on 8/12/15
  */
 public class NewQuizWindow implements QuestionWindow {
     JFrame parent = new JFrame();
