@@ -5,8 +5,7 @@ import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.ui.LoadingWindow;
 import be.ehb.swp2.ui.LoginWindow;
 import be.ehb.swp2.ui.OverviewWindow;
-import be.ehb.swp2.ui.test.ImageTestWindow;
-import be.ehb.swp2.util.Configurator;
+import be.ehb.swp2.util.ConfigurationHandler;
 import com.teamdev.jxbrowser.chromium.LoggerProvider;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -28,7 +27,7 @@ import java.util.logging.Logger;
 public class Quiz {
     private SessionFactory factory;
     private Logger logger;
-    private Configurator configurator;// !
+    private ConfigurationHandler configurationHandler;// !
 
     /**
      * Default constructor.
@@ -74,7 +73,7 @@ public class Quiz {
         }
 
         logger.info("Starting configuration manager");
-        configurator = new Configurator();
+        configurationHandler = new ConfigurationHandler();
 
         logger.info("Starting database");
         try {
@@ -88,15 +87,9 @@ public class Quiz {
         long totalTime = end - start;
         logger.info("Initialization took " + totalTime + " milliseconds!");
 
-        logger.log(Level.SEVERE, "Testing saving images");
-        //imageSaveTest();
-
         LoadingWindow load = new LoadingWindow();
         LoginWindow lw = new LoginWindow(factory);
         OverviewWindow ow = new OverviewWindow(factory);
-        ow.printGui();
-
-        //ImageTestWindow imageTestWindow = new ImageTestWindow(factory);
     }
 
     /**
