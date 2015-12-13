@@ -42,8 +42,10 @@ public class NewQuizWindow implements QuestionWindow {
         });
 
         browser.registerFunction("createQuiz", new BrowserFunction() {
+            public JSValue invoke(JSValue... args) {
+                String quizName = args[0].getString();
+                String quizDescription = args[1].getString();
 
-            public JSValue invoke(JSValue... jsValues) {
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
