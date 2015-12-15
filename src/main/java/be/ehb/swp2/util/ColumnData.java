@@ -8,7 +8,7 @@ public class ColumnData {
     private String name;
     private double[] data;
 
-    ColumnData(String name, double[] data){
+    public ColumnData(String name, double[] data){
         this.name = name;
         this.data = data;
     }

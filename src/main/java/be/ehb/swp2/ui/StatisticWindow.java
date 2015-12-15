@@ -12,6 +12,7 @@ import be.ehb.swp2.util.PieChartData;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.hibernate.SessionFactory;
+import org.jboss.jandex.Main;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -26,7 +27,7 @@ import java.util.TreeSet;
  */
 public class StatisticWindow {
 
-    public void printPie(PieChartData[] DataArr, String title){
+    public static void printPie(PieChartData[] DataArr, String title){
         final File temp;
         String absolutePath = null;
         String tempFilePath = null;
@@ -79,9 +80,15 @@ public class StatisticWindow {
                     "                }\n" +
                     "            }\n" +
                     "        },\n" +
-                    "        series: [ ");
+                    "        series: [{ \n" +
+                    " name:\"Percentage\", \n" +
+                    " colorByPoint: true, \n" +
+                    " data:[");
                     for (int i = 0; i < DataArr.length; i++) {
-                        html.println( "name: " + DataArr[i].getName() +", y: " + DataArr[i].getPercentage());
+                        html.println( "{ name: \"" + DataArr[i].getName() +"\", y: " + DataArr[i].getPercentage() + "}");
+                        if (i != DataArr.length-1){
+                            html.println(", ");
+                        }
             }
 
                             html.println("]\n" +
@@ -91,8 +98,8 @@ public class StatisticWindow {
                     "\t\t</script>\n" +
                     "\t</head>\n" +
                     "\t<body>\n" +
-                                    "<script src=\"dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/highcharts.js\"></script>\n" +
-                    "<script src=\"dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/modules/exporting.js\"></script>\n" +
+                                    "<script src=\"http://dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/highcharts.js\"></script>\n" +
+                    "<script src=\"http://dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/modules/exporting.js\"></script>\n" +
                     "\n" +
                     "<div id=\"container\" style=\"min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto\"></div>\n" +
                     "\n" +
@@ -106,7 +113,7 @@ public class StatisticWindow {
 
     }
 
-    public void printLine(LineChartData[] DataArr, String title, String subtitle, String titleLeft, String[] categories){
+    public static void printLine(LineChartData[] DataArr, String title, String subtitle, String titleLeft, String[] categories){
         int longestData = 0;
         for (int i = 0; i<DataArr.length; i++){
             if(DataArr[i].getData().length > longestData){
@@ -137,7 +144,7 @@ public class StatisticWindow {
                     "\t\t<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js\"></script> \n" +
                     "\t\t<style type=\"text/css\"> \n" +
                     "${demo.css}\n" +
-                    "\t\t</style\n" +
+                    "\t\t</style >\n" +
                     "<script type=\"text/javascript\"> \n" +
                     "$(function () { \n" +
                     "$('#container').highcharts({\n" +
@@ -159,7 +166,7 @@ public class StatisticWindow {
             }
 
 
-            html.println("] \\n},\n" +
+            html.println("] \n},\n" +
                     "yAxis: {\n" +
                     "title: {\n" +
                     "text: '" + titleLeft + "'\n" +
@@ -181,29 +188,28 @@ public class StatisticWindow {
                     "},\n" +
                     "series: [{\n");
             for (int i = 0; i < DataArr.length; i++) {
-                html.println( "name: " + DataArr[i].getName() +",\n data: [");
+                html.println( "name: \"" + DataArr[i].getName() +"\",\n data: [");
                 for (int j=0; j<DataArr[i].getData().length; j++){
                     html.println(DataArr[i].getData()[j]);
-                    if(DataArr[i].getData()[j] != DataArr[i].getData()[DataArr[i].getData().length]){
+                    if(DataArr[i].getData()[j] != DataArr[i].getData()[DataArr[i].getData().length-1]){
                         html.println(",");
                     }
                 }
                 html.println("]}");
-                if(DataArr[i] != DataArr[DataArr.length]){
+                if(DataArr[i] != DataArr[DataArr.length-1]){
                     html.println(", {\n");
                 }
             }
 
 
         html.println("]\n" +
-        "        }]\n" +
         "    });\n" +
         "});\n" +
         "\t\t</script>\n" +
         "\t</head>\n" +
         "\t<body>\n" +
-        "<script src=\"dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/highcharts.js\"></script>\n" +
-        "<script src=\"dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/modules/exporting.js\"></script>\n" +
+        "<script src=\"http://dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/highcharts.js\"></script>\n" +
+        "<script src=\"http://dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/modules/exporting.js\"></script>\n" +
         "\n" +
         "<div id=\"container\" style=\"min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto\"></div>\n" +
         "\n" +
@@ -217,7 +223,7 @@ public class StatisticWindow {
 
     }
 
-    public void printColumn(ColumnData[] DataArr, String title, String subtitle){
+    public static void printColumn(ColumnData[] DataArr, String title, String subtitle){
 
         final File temp;
         String absolutePath = null;
@@ -232,7 +238,7 @@ public class StatisticWindow {
             e.printStackTrace();
         }
         try {
-            PrintWriter html = new PrintWriter(tempFilePath + "/statisticsLine.html");
+            PrintWriter html = new PrintWriter(tempFilePath + "/statisticsColumn.html");
             html.println(
                     "<!DOCTYPE HTML>\n"+
                     "\t<html>\n" +
@@ -278,22 +284,22 @@ public class StatisticWindow {
                     "},\n" +
                     "series: [{\n");
             for (int i = 0; i < DataArr.length; i++) {
-                html.println( "name: " + DataArr[i].getName() +",\n data: [");
+                html.println( "name: \"" + DataArr[i].getName() +"\",\n data: [");
                 for (int j=0; j<DataArr[i].getData().length; j++){
                     html.println(DataArr[i].getData()[j]);
-                    if(DataArr[i].getData()[j] != DataArr[i].getData()[DataArr[i].getData().length]){
+                    if(DataArr[i].getData()[j] != DataArr[i].getData()[DataArr[i].getData().length-1]){
                         html.println(",");
                     }
                 }
                 html.println("]}");
-                if(DataArr[i] != DataArr[DataArr.length]){
+                if(DataArr[i] != DataArr[DataArr.length-1]){
                     html.println(", {\n");
                 }
             }
 
 
                     html.println(
-                    "});\n" +
+                    "]});\n" +
                     "function showValues() {\n" +
                     "$('#R0-value').html(chart.options.chart.options3d.alpha);\n" +
                     "$('#R1-value').html(chart.options.chart.options3d.beta);\n" +
@@ -313,9 +319,9 @@ public class StatisticWindow {
                     "</script>\n" +
                     "</head>\n" +
                     "<body>\n" +
-                    "<script src=\"dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/highcharts.js\"></script>\n" +
-                    "<script src=\"dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/highcharts-3d.js\"></script>\n" +
-                    "<script src=\"dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/modules/exporting.js\"></script>\n" +
+                    "<script src=\"http://dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/highcharts.js\"></script>\n" +
+                    "<script src=\"http://dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/highcharts-3d.js\"></script>\n" +
+                    "<script src=\"http://dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/modules/exporting.js\"></script>\n" +
                     "<div id=\"container\"></div>\n" +
                     "<div id=\"sliders\">\n" +
                     "<table>\n" +
@@ -325,12 +331,31 @@ public class StatisticWindow {
                     "</div>\n" +
                     "</body>\n" +
                     "</html>\n" +
-                    ");\n");
+                    "\n");
             html.close();
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+    }
+
+    public static void main(String [ ] args)
+    {
+        PieChartData[] Pie = new PieChartData[] { new PieChartData("Quiz1", 27.0), new PieChartData("Quiz2", 73.0) };
+
+        printPie(Pie, "Test");
+        double[] dat1 = {70.0,50.0,30.0};
+        double[] dat2 = {20.0,75.0,80.0};
+        String[] cats = {"Try1", "Try2", "Try3"};
+
+
+        LineChartData[] Line = new LineChartData[] {new LineChartData("Quiz1Scores", dat1), new LineChartData("Quiz2scores", dat2)};
+
+        printLine(Line, "Test", "Dat Testing though", "Percentage", cats);
+
+        ColumnData[] columns = new ColumnData[] {new ColumnData("Column1", dat1)};
+        printColumn(columns, "Das Title", "wasub");
 
     }
 }

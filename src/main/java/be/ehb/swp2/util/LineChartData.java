@@ -7,7 +7,7 @@ public class LineChartData {
     private String name;
     private double[] data;
 
-    LineChartData(String name, double[] data){
+    public LineChartData(String name, double[] data){
         this.name = name;
         this.data = data;
     }

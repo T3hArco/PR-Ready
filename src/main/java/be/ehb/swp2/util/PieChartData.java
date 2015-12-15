@@ -7,7 +7,7 @@ public class PieChartData {
     private String name;
     private double percentage;
 
-    PieChartData(String name, double percentage){
+    public PieChartData(String name, double percentage){
         this.name = name;
         this.percentage = percentage;
     }
