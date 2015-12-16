@@ -47,6 +47,7 @@ public class OverviewWindow extends JFrame implements Window {
         this.factory = factory;
         this.quizSet = new TreeSet<Quiz>();
         this.quizManager = new QuizManager(factory);
+        this.userManager = new UserManager(factory);
 
         this.initComponents();
     }
@@ -110,8 +111,7 @@ public class OverviewWindow extends JFrame implements Window {
 
         browser.registerFunction("launchQuiz", new BrowserFunction() {
             public JSValue invoke(JSValue... jsValues) {
-                QuizLauncher ql = new QuizLauncher();
-                ql.launch();
+                QuizLauncher ql = new QuizLauncher(factory);
                 return JSValue.createUndefined();
             }
         });

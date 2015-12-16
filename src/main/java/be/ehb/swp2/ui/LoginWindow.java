@@ -26,30 +26,17 @@ import java.util.concurrent.atomic.AtomicReference;
  * Modified by arnaudcoel 19/11/15 -> implemented window fully.
  */
 
-/**
- * This class provides the implementation of the Login UI using JxBrowser
- *
- * @implements Window
- * @extends JFrame
- */
-public class LoginWindow implements QuestionWindow {
-    JFrame frame = new JFrame();
-    /**
-     * Provides a connection to the database
-     */
+public class LoginWindow implements Window {
+    private JFrame frame;
     private SessionFactory factory;
-
-    /**
-     * Provides a method for the session data of the user to be saved
-     */
     private ConfigurationHandler configurationHandler;
 
     /**
-     * Main constructor of the login window. Initializes the variables and then initializes the form
-     *
-     * @param factory SQL session
+     * Main constructor for the login windows
+     * @param factory the factory
      */
     public LoginWindow(SessionFactory factory) {
+        this.frame = new JFrame();
         this.factory = factory;
         this.configurationHandler = new ConfigurationHandler();
 

@@ -28,18 +28,27 @@ public class EditorWindow extends JFrame implements Window {
     private QuizManager quizManager;
     private Integer quizId;
 
+    /**
+     * Constructor for Editor Window
+     *
+     * @param factory Session factory singleton
+     * @param quizId  the id for the parent quiz
+     * @throws UserNoPermissionException
+     */
     public EditorWindow(SessionFactory factory, Integer quizId) throws UserNoPermissionException {
         this.factory = factory;
+        this.quizManager = new QuizManager(factory);
+        this.quizId = quizId;
 
         if (!PermissionHandler.currentUserHasPermission(factory, UserRole.ADMINISTRATOR))
             throw new UserNoPermissionException();
 
-        this.quizManager = new QuizManager(factory);
-        this.quizId = quizId;
-
         this.initComponents();
     }
 
+    /**
+     * Initialize the GUI components
+     */
     public void initComponents() {
         final Browser browser = new Browser();
         JFrame parent = this;
@@ -48,22 +57,18 @@ public class EditorWindow extends JFrame implements Window {
         browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/editor/editor.html");
 
         browser.registerFunction("saveQuestionToJava", new BrowserFunction() {
-
             public JSValue invoke(JSValue... jsValues) {
                 return  JSValue.createUndefined();
             }
-
         });
 
         browser.registerFunction("saveAnswerToJava", new BrowserFunction() {
-
             public JSValue invoke(JSValue... jsValues) {
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
                 return JSValue.createUndefined();
             }
-
         });
 
         browser.addLoadListener(new LoadAdapter() {

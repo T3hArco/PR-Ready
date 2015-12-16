@@ -26,6 +26,14 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
     private SessionFactory factory;
     private UserRole requiredRole = ADMINISTRATOR;
 
+    /**
+     * Constructor for SwingAdminUI
+     *
+     * @param factory factory
+     * @throws UserNotFoundException
+     * @throws UserNoPermissionException
+     * @throws TokenNotFoundException
+     */
     public SwingAdminUI(SessionFactory factory) throws UserNotFoundException, UserNoPermissionException, TokenNotFoundException {
         this.factory = factory;
 
@@ -33,6 +41,9 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
         this.initComponents();
     }
 
+    /**
+     * Initialize the GUI
+     */
     public void initComponents() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -146,11 +157,9 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
 
     public boolean hasPermission() throws UserNoPermissionException, UserNotFoundException, TokenNotFoundException {
         UserManager um = new UserManager(factory);
-        User user = null;
         ConfigurationHandler configurationHandler = new ConfigurationHandler(); // moved configurationHandler due to reloading problems
         String token = configurationHandler.getSetting("user", "token");
-
-        user = um.getUserByToken(token);
+        User user = um.getUserByToken(token);
 
         if (!user.hasRole(this.requiredRole))
             throw new UserNoPermissionException();
