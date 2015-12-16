@@ -2,7 +2,6 @@ package be.ehb.swp2.application;
 
 import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.manager.QuizManager;
-import be.ehb.swp2.ui.LoadingWindow;
 import be.ehb.swp2.ui.LoginWindow;
 import be.ehb.swp2.ui.OverviewWindow;
 import be.ehb.swp2.util.ConfigurationHandler;
@@ -87,7 +86,7 @@ public class Quiz {
         long totalTime = end - start;
         logger.info("Initialization took " + totalTime + " milliseconds!");
 
-        LoadingWindow load = new LoadingWindow();
+        //LoadingWindow load = new LoadingWindow(factory);
         LoginWindow lw = new LoginWindow(factory);
         OverviewWindow ow = new OverviewWindow(factory);
     }

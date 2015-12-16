@@ -4,6 +4,8 @@ package be.ehb.swp2.ui;
  * Created by Christophe on 3/11/2015.
  */
 
+import be.ehb.swp2.ui.test.Editor;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -22,8 +24,6 @@ public class QuestionCreateButtonListener implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        System.out.println("klik");
-
         //change color
         colorCounter++;
         colorCounter = (colorCounter < parentPanel.getColors().length) ? colorCounter : 0;
@@ -33,7 +33,6 @@ public class QuestionCreateButtonListener implements ActionListener {
         Question newElement = new Question((int) panelInsideScrollPane.getPreferredSize().getWidth(), parentPanel.getCurrentColor());
         parentPanel.getLayout().putConstraint(SpringLayout.NORTH, newElement, parentPanel.getVerticalMargin(), SpringLayout.SOUTH, parentPanel.CalculateNextOffsetFromThisComponent);
         parentPanel.CalculateNextOffsetFromThisComponent = newElement;
-
 
         //Add Question Panel to the inner pannel (pannel within the scrollpane)
         panelInsideScrollPane.add(newElement);
@@ -52,8 +51,6 @@ public class QuestionCreateButtonListener implements ActionListener {
 
         parentPanel.getFrame().pack();
         parentPanel.getVerticalScrollBar().setValue(parentPanel.getVerticalScrollBar().getMaximum());
-
-
     }
 
 }

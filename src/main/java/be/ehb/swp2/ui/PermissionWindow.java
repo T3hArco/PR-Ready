@@ -8,7 +8,7 @@ import be.ehb.swp2.exception.UserNotFoundException;
 /**
  * Created by arnaudcoel on 22/11/15.
  */
-public interface PermissionWindow {
+public interface PermissionWindow extends Window {
     UserRole ADMINISTRATOR = UserRole.ADMINISTRATOR;
     UserRole USER = UserRole.USER;
 
