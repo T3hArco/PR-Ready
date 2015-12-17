@@ -6,7 +6,7 @@ import be.ehb.swp2.exception.DuplicateUserException;
 import be.ehb.swp2.exception.UserNotFoundException;
 import be.ehb.swp2.manager.LoginManager;
 import be.ehb.swp2.manager.UserManager;
-import be.ehb.swp2.util.Configurator;
+import be.ehb.swp2.util.ConfigurationHandler;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
@@ -26,32 +26,19 @@ import java.util.concurrent.atomic.AtomicReference;
  * Modified by arnaudcoel 19/11/15 -> implemented window fully.
  */
 
-/**
- * This class provides the implementation of the Login UI using JxBrowser
- *
- * @implements Window
- * @extends JFrame
- */
-public class LoginWindow implements QuestionWindow {
-    JFrame frame = new JFrame();
-    /**
-     * Provides a connection to the database
-     */
+public class LoginWindow implements Window {
+    private JFrame frame;
     private SessionFactory factory;
+    private ConfigurationHandler configurationHandler;
 
     /**
-     * Provides a method for the session data of the user to be saved
-     */
-    private Configurator configurator;
-
-    /**
-     * Main constructor of the login window. Initializes the variables and then initializes the form
-     *
-     * @param factory SQL session
+     * Main constructor for the login windows
+     * @param factory the factory
      */
     public LoginWindow(SessionFactory factory) {
+        this.frame = new JFrame();
         this.factory = factory;
-        this.configurator = new Configurator();
+        this.configurationHandler = new ConfigurationHandler();
 
         this.initComponents();
     }
@@ -101,7 +88,7 @@ public class LoginWindow implements QuestionWindow {
                 try {
                     result.set(user = lm.authenticate(username, password));
                     String token = um.setToken(user.getId());
-                    configurator.setSetting("user", "token", token);
+                    configurationHandler.setSetting("user", "token", token);
 
                     JOptionPane.showMessageDialog(null, "Inloggen is gelukt: " + username + ", Token: " + token, "PR-Ready", JOptionPane.INFORMATION_MESSAGE);
                 } catch (BadLoginException e) {

@@ -11,6 +11,7 @@ import com.teamdev.jxbrowser.chromium.dom.DOMNode;
 import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import org.hibernate.SessionFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,44 +21,38 @@ import java.awt.event.WindowEvent;
  * Created by Thomas on 3/12/2015.
  */
 public class ImageWindow implements QuestionWindow {
-    final private String url;
+    private SessionFactory session;
+    private String url;
     private Question question;
-    private int choice = 1;
+    private int choice;
 
-    public ImageWindow(final String url, Question question){
+    /**
+     * The constructor for ImageWindow
+     *
+     * @param session  the current session
+     * @param url      the URL of the question
+     * @param question
+     */
+    public ImageWindow(SessionFactory session, String url, Question question) {
+        this.session = session;
         this.url = url;
         this.question = question;
+        this.choice = 1;
     }
 
-    static public void main(String[] args) {
-        //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
-        //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
-        //ImageWindow i = new ImageWindow("http://s3.standaardcdn.be/Assets/Images_Upload/2011/10/03/fktwitter2.jpg?scale=both&format=jpg","wie ben ik");
-        //i.printGui();
-    }
-
-    public int getChoice() {
-        return choice;
-    }
-
-    public void setChoice(int choice) {
-        this.choice = choice;
-    }
-
-    public void printGui(){
+    /**
+     * Initialize the GUI
+     */
+    public void initComponents() {
         final Browser browser = new Browser();
-        BrowserView browserView = new BrowserView(browser);
         JFrame parent = new JFrame();
         final JDialog dialog = new JDialog(parent, "QUIZ", true);
-
 
         browser.addLoadListener(new LoadAdapter() {
             @Override
             public void onFinishLoadingFrame(FinishLoadingEvent event) {
                 if (event.isMainFrame()) {
-
                     String imageURL = url;
-/* fsfds*/
                     DOMDocument document = event.getBrowser().getDocument();
                     DOMNode root = document.findElement(By.id("img"));
                     DOMElement img = document.createElement("img");
@@ -68,8 +63,7 @@ public class ImageWindow implements QuestionWindow {
                     p.setAttribute("class", "text");
                     DOMNode n = document.createTextNode(question.getText());
                     root2.appendChild(p);
-                     p.appendChild(n);
-
+                    p.appendChild(n);
                 }
             }
         });
@@ -97,6 +91,7 @@ public class ImageWindow implements QuestionWindow {
 
 
         });
+
         browser.registerFunction("previousQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
@@ -119,6 +114,23 @@ public class ImageWindow implements QuestionWindow {
         dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
+    }
 
+    /**
+     * Getter for the choice
+     *
+     * @return integer
+     */
+    public int getChoice() {
+        return choice;
+    }
+
+    /**
+     * sets the coice
+     *
+     * @param choice integer
+     */
+    public void setChoice(int choice) {
+        this.choice = choice;
     }
 }

@@ -24,7 +24,7 @@
             hqXLv
         </property>
 
-        <!-- Debug properties, remove for production use!-->
+        <!-- Debug properties, remove for production use! -->
         <property name="show_sql">false</property>
         <property name="format_sql">false</property>
         <property name="use_sql_comments">false</property>

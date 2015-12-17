@@ -1,26 +1,31 @@
 package be.ehb.swp2.ui;
 
 import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.BrowserFunction;
-import com.teamdev.jxbrowser.chromium.JSValue;
-import com.teamdev.jxbrowser.chromium.dom.By;
-import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
-import com.teamdev.jxbrowser.chromium.dom.DOMElement;
-import com.teamdev.jxbrowser.chromium.dom.DOMNode;
-import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
-import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import org.hibernate.SessionFactory;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 /**
  * Created by domienhennion on 12/12/15.
  */
-public class LoadingWindow {
-    public void printGui(){
+public class LoadingWindow implements Window {
+    private SessionFactory factory;
+
+    /**
+     * Default cons
+     */
+    public LoadingWindow(SessionFactory factory) {
+        this.factory = factory;
+
+        this.initComponents();
+    }
+
+    /**
+     * Inititialize the GUI
+     */
+    public void initComponents() {
         final Browser browser = new Browser();
         BrowserView browserView = new BrowserView(browser);
         JFrame parent = new JFrame();
@@ -35,6 +40,5 @@ public class LoadingWindow {
         dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
-
     }
 }
