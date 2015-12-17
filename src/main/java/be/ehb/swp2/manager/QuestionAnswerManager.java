@@ -1,25 +1,19 @@
 package be.ehb.swp2.manager;
-import be.ehb.swp2.entity.question.AudioQuestion;
-//import be.ehb.swp2.entity.Quiz;
+import be.ehb.swp2.entity.question.QuestionAnswer;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-//import org.hibernate.sql.ordering.antlr.Factory;
 
 /**
  * Created by Ibrahim on 10-12-15.
  */
-public class AudioQuestionManager {
-    public  SessionFactory factory;
+public class QuestionAnswerManager {
 
+    public SessionFactory factory;
+    public QuestionAnswerManager(SessionFactory factory) {this.factory = factory;}
 
-    public AudioQuestionManager(SessionFactory factory) {this.factory = factory;}
-    //public AudioQuestionManager(){};
-
-
-
-    public  Integer addAudioQuestion( int parentQuestion, String link) {
+    public  Integer addQuestionAnswer( boolean correct) {
 
         Session session = factory.openSession();
         Transaction transaction = null;
@@ -27,8 +21,8 @@ public class AudioQuestionManager {
 
         try {
             transaction = session.beginTransaction();
-            AudioQuestion audioquestion = new AudioQuestion(parentQuestion, link);
-            id = (Integer) session.save(audioquestion);
+            QuestionAnswer questionanswer = new QuestionAnswer(correct);
+            id = (Integer) session.save(questionanswer);
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null)
@@ -39,14 +33,14 @@ public class AudioQuestionManager {
         return id;
     }
 
-    public void deleteAudioQuestion(Integer id) {
+    public void deleteQuestionAnswer(Integer id) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
-            AudioQuestion audioquestion = session.get(AudioQuestion.class, id);
-            session.delete(audioquestion);
+            QuestionAnswer questionanswer = session.get(QuestionAnswer.class, id);
+            session.delete(questionanswer);
             transaction.commit(); //
         } catch (HibernateException e) {
             if (transaction != null)
@@ -59,16 +53,17 @@ public class AudioQuestionManager {
     }
 
 
-    public void updateAudioQuestion( int id, String link, int parentQuestion) {
+    public void updateQuestionAnswer( int questionId, int answerId, boolean correct) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
-            AudioQuestion audioquestion = session.get(AudioQuestion.class,id);
-            audioquestion.setLink(link);
-            audioquestion.setParentQuestion(parentQuestion);
-            session.update(audioquestion);
+            QuestionAnswer questionanswer = session.get(QuestionAnswer.class,questionId);
+            questionanswer.setQuestionId(questionId);
+            questionanswer.setAnswerId(answerId);
+            questionanswer.setCorrect(correct);
+            session.update(questionanswer);
             transaction.commit();
         } catch (HibernateException e) {
 
@@ -80,11 +75,4 @@ public class AudioQuestionManager {
             session.close();
         }
     }
-
-
-
-
-
-
-
 }
