@@ -2,12 +2,12 @@ package be.ehb.swp2.ui.test;
 
 import be.ehb.swp2.entity.User;
 import be.ehb.swp2.entity.UserRole;
-import be.ehb.swp2.exception.*;
-import be.ehb.swp2.manager.LoginManager;
+import be.ehb.swp2.exception.TokenNotFoundException;
+import be.ehb.swp2.exception.UserNoPermissionException;
+import be.ehb.swp2.exception.UserNotFoundException;
 import be.ehb.swp2.manager.UserManager;
-import be.ehb.swp2.ui.*;
-import be.ehb.swp2.util.Configurator;
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
+import be.ehb.swp2.ui.LoginWindow;
+import be.ehb.swp2.util.ConfigurationHandler;
 import org.hibernate.SessionFactory;
 
 import javax.swing.*;
@@ -24,11 +24,11 @@ import java.awt.event.ActionListener;
  */
 public class SwingTestMain extends JFrame implements be.ehb.swp2.ui.Window {
     private SessionFactory factory;
-    private Configurator configurator;
+    private ConfigurationHandler configurationHandler;
 
     public SwingTestMain(SessionFactory factory) {
         this.factory = factory;
-        this.configurator = new Configurator();
+        this.configurationHandler = new ConfigurationHandler();
 
         this.initComponents();
     }
@@ -68,7 +68,7 @@ public class SwingTestMain extends JFrame implements be.ehb.swp2.ui.Window {
         launchLoginInterface.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new LoginWindow(factory);
-                configurator.setSetting("user", "token", "loggedout");
+                configurationHandler.setSetting("user", "token", "loggedout");
             }
         });
 
@@ -92,8 +92,8 @@ public class SwingTestMain extends JFrame implements be.ehb.swp2.ui.Window {
 
                 UserManager um = new UserManager(factory);
                 User user = null;
-                Configurator configurator = new Configurator(); // moved configurator due to reloading problems
-                String token = configurator.getSetting("user", "token");
+                ConfigurationHandler configurationHandler = new ConfigurationHandler(); // moved configurationHandler due to reloading problems
+                String token = configurationHandler.getSetting("user", "token");
 
                 try {
                     user = um.getUserByToken(token);
@@ -107,7 +107,7 @@ public class SwingTestMain extends JFrame implements be.ehb.swp2.ui.Window {
                     status.setForeground(Color.RED);
                 }
 
-                if(user != null && token != null) {
+                if (user != null && token != null) {
                     status.setText("Authenticated");
                     status.setForeground(new Color(28, 184, 65));
                 }
@@ -120,8 +120,8 @@ public class SwingTestMain extends JFrame implements be.ehb.swp2.ui.Window {
             public void actionPerformed(ActionEvent e) {
                 UserManager um = new UserManager(factory);
                 User user = null;
-                Configurator configurator = new Configurator(); // moved configurator due to reloading problems
-                String token = configurator.getSetting("user", "token");
+                ConfigurationHandler configurationHandler = new ConfigurationHandler(); // moved configurationHandler due to reloading problems
+                String token = configurationHandler.getSetting("user", "token");
 
                 try {
                     user = um.getUserByToken(token);
@@ -133,7 +133,7 @@ public class SwingTestMain extends JFrame implements be.ehb.swp2.ui.Window {
                     e1.printStackTrace();
                 }
 
-                if(user.hasRole(UserRole.ADMINISTRATOR))
+                if (user.hasRole(UserRole.ADMINISTRATOR))
                     JOptionPane.showMessageDialog(null, "User is an administrator", "PR-Ready", JOptionPane.INFORMATION_MESSAGE);
                 else
                     JOptionPane.showMessageDialog(null, "User is not an administrator", "PR-Ready", JOptionPane.ERROR_MESSAGE);
@@ -144,8 +144,8 @@ public class SwingTestMain extends JFrame implements be.ehb.swp2.ui.Window {
             public void actionPerformed(ActionEvent e) {
                 UserManager um = new UserManager(factory);
                 User user = null;
-                Configurator configurator = new Configurator(); // moved configurator due to reloading problems
-                String token = configurator.getSetting("user", "token");
+                ConfigurationHandler configurationHandler = new ConfigurationHandler(); // moved configurationHandler due to reloading problems
+                String token = configurationHandler.getSetting("user", "token");
 
                 try {
                     user = um.getUserByToken(token);
@@ -157,7 +157,7 @@ public class SwingTestMain extends JFrame implements be.ehb.swp2.ui.Window {
                     e1.printStackTrace();
                 }
 
-                if(user.hasRole(UserRole.USER))
+                if (user.hasRole(UserRole.USER))
                     JOptionPane.showMessageDialog(null, "User is a user", "PR-Ready", JOptionPane.INFORMATION_MESSAGE);
                 else
                     JOptionPane.showMessageDialog(null, "User is a user", "PR-Ready", JOptionPane.ERROR_MESSAGE);

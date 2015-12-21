@@ -4,10 +4,8 @@ import be.ehb.swp2.entity.User;
 import be.ehb.swp2.exception.BadLoginException;
 import be.ehb.swp2.exception.DuplicateUserException;
 import be.ehb.swp2.manager.LoginManager;
-import be.ehb.swp2.manager.SessionManager;
 import be.ehb.swp2.manager.UserManager;
-import be.ehb.swp2.ui.*;
-import be.ehb.swp2.util.Configurator;
+import be.ehb.swp2.util.ConfigurationHandler;
 import org.hibernate.SessionFactory;
 
 import javax.swing.*;
@@ -21,15 +19,16 @@ import java.awt.event.ActionListener;
 
 /**
  * The main login window for PR-Ready
+ *
  * @deprecated
  */
 public class SwingLoginWindow extends JFrame implements be.ehb.swp2.ui.Window {
     private SessionFactory factory;
-    private Configurator configurator;
+    private ConfigurationHandler configurationHandler;
 
     public SwingLoginWindow(SessionFactory factory) {
         this.factory = factory;
-        this.configurator = new Configurator();
+        this.configurationHandler = new ConfigurationHandler();
 
         this.initComponents();
     }
@@ -66,7 +65,7 @@ public class SwingLoginWindow extends JFrame implements be.ehb.swp2.ui.Window {
                 try {
                     User user = lm.authenticate(username.getText(), password.getText());
                     String token = um.setToken(user.getId());
-                    configurator.setSetting("user", "token", token);
+                    configurationHandler.setSetting("user", "token", token);
 
                     JOptionPane.showMessageDialog(null, "Inloggen is gelukt: " + username.getText() + ", Token: " + token, "PR-Ready", JOptionPane.INFORMATION_MESSAGE);
                 } catch (BadLoginException e) {

@@ -13,16 +13,16 @@ import java.io.IOException;
 /**
  * The config manager for the project
  */
-public class Configurator {
+public class ConfigurationHandler {
     Wini ini;
 
     /**
      * Default constructor
      */
-    public Configurator() {
+    public ConfigurationHandler() {
         try {
             File cf = new File("config.ini");
-            if(!cf.exists())
+            if (!cf.exists())
                 cf.createNewFile();
 
             this.ini = new Wini(cf);
@@ -41,14 +41,14 @@ public class Configurator {
     }
 
     @Deprecated
-    public void setSession(String session) {
-        ini.put("session", "id", session);
-        this.save();
+    public String getSession() {
+        return ini.get("session", "id");
     }
 
     @Deprecated
-    public String getSession() {
-        return ini.get("session", "id");
+    public void setSession(String session) {
+        ini.put("session", "id", session);
+        this.save();
     }
 
     private void save() {

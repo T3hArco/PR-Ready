@@ -5,7 +5,7 @@ package be.ehb.swp2.entity;
  */
 
 /**
- * Hier definieren we de verschillende rollen die een gebruiker kan hebben.
+ * Definition of the roles set to users
  */
 public enum UserRole {
     USER, ADMINISTRATOR

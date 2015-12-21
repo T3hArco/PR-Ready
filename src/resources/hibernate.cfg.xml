@@ -11,6 +11,8 @@
             com.mysql.jdbc.Driver
         </property>
 
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
         <!-- Assume test is the database name -->
         <property name="hibernate.connection.url">
             jdbc:mysql://dt5.ehb.be/SP2_gr8
@@ -30,7 +32,15 @@
         <!-- List of XML mapping files -->
         <mapping resource="user.hbm.xml"/>
         <mapping resource="quiz.hbm.xml"/>
-        <mapping resource="session.hbm.xml"/>
+        <mapping resource="question.hbm.xml"/>
+        <mapping resource="userAnswer.hbm.xml"/>
+        <mapping resource="userSubscription.hbm.xml"/>
+        <mapping resource="questionAnswer.hbm.xml"/>
+        <mapping resource="answer.hbm.xml"/>
+        <mapping resource="audioQuestion.hbm.xml"/>
+        <mapping resource="videoQuestion.hbm.xml"/>
+        <mapping resource="imageQuestion.hbm.xml"/>
+
 
     </session-factory>
 </hibernate-configuration>

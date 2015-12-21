@@ -6,11 +6,12 @@ import be.ehb.swp2.exception.DuplicateUserException;
 import be.ehb.swp2.exception.UserNotFoundException;
 import be.ehb.swp2.manager.LoginManager;
 import be.ehb.swp2.manager.UserManager;
-import be.ehb.swp2.util.Configurator;
-import com.teamdev.jxbrowser.chromium.*;
+import be.ehb.swp2.util.ConfigurationHandler;
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserFunction;
+import com.teamdev.jxbrowser.chromium.JSValue;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.hibernate.SessionFactory;
-
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,29 +26,19 @@ import java.util.concurrent.atomic.AtomicReference;
  * Modified by arnaudcoel 19/11/15 -> implemented window fully.
  */
 
-/**
- * This class provides the implementation of the Login UI using JxBrowser
- * @implements Window
- * @extends JFrame
- */
-public class LoginWindow extends JFrame implements Window {
-    /**
-     * Provides a connection to the database
-     */
+public class LoginWindow implements Window {
+    private JFrame frame;
     private SessionFactory factory;
+    private ConfigurationHandler configurationHandler;
 
     /**
-     * Provides a method for the session data of the user to be saved
-     */
-    private Configurator configurator;
-
-    /**
-     * Main constructor of the login window. Initializes the variables and then initializes the form
-     * @param factory SQL session
+     * Main constructor for the login windows
+     * @param factory the factory
      */
     public LoginWindow(SessionFactory factory) {
+        this.frame = new JFrame();
         this.factory = factory;
-        this.configurator = new Configurator();
+        this.configurationHandler = new ConfigurationHandler();
 
         this.initComponents();
     }
@@ -56,14 +47,15 @@ public class LoginWindow extends JFrame implements Window {
      * Initializes the components
      */
     public void initComponents() {
-        User u = action(this);
+        User u = action(frame);
     }
 
     /**
      * The action listener for this form. This will listen to login and registration requests.
-     * @todo the error messages are currently shown with messagedialogs, please put this inside of the HTML
+     *
      * @param parent the parent frame in order to get the data required
      * @return User object that has been signed in or created.
+     * @todo the error messages are currently shown with messagedialogs, please put this inside of the HTML
      */
     private User action(JFrame parent) {
         /**
@@ -96,7 +88,7 @@ public class LoginWindow extends JFrame implements Window {
                 try {
                     result.set(user = lm.authenticate(username, password));
                     String token = um.setToken(user.getId());
-                    configurator.setSetting("user", "token", token);
+                    configurationHandler.setSetting("user", "token", token);
 
                     JOptionPane.showMessageDialog(null, "Inloggen is gelukt: " + username + ", Token: " + token, "PR-Ready", JOptionPane.INFORMATION_MESSAGE);
                 } catch (BadLoginException e) {
@@ -104,7 +96,7 @@ public class LoginWindow extends JFrame implements Window {
                     e.printStackTrace();
                 }
 
-                if(user != null)
+                if (user != null)
                     dialog.setVisible(false);
 
                 return JSValue.createUndefined();

@@ -1,7 +1,14 @@
 package be.ehb.swp2.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by arnaudcoel on 26/10/15.
+ */
+
+/**
+ * The class that contains the data of Quizzes
  */
 public class Quiz implements Comparable<Quiz> {
     /**
@@ -12,11 +19,10 @@ public class Quiz implements Comparable<Quiz> {
     /**
      * De naam van een Quiz
      */
-    private String name;
+    private String title;
 
     /**
      * Het logo van een Quiz
-     * @todo is dit het correcte type waar we achter zoeken? Ik denk niet dat het zo in elkaar mag zitten
      */
     private String logo;
 
@@ -26,24 +32,31 @@ public class Quiz implements Comparable<Quiz> {
     private String description;
 
     /**
-     * Default constructor voor Quiz
+     * De vragen die in de quiz zitten. Worden geinterpreteerd als een questionCollection
      */
-    public Quiz() {}
+    private List<Question> questions;
 
     /**
-     * Constructor voor quiz
-     * @param logo
-     * @param name
+     * Default constructor voor Quiz
+     */
+    public Quiz() {
+    }
+
+    /**
+     * Constructor voor Quiz
+     *
+     * @param title
      * @param description
      */
-    public Quiz(String name, String logo, String description) {
-        this.logo = logo;
-        this.name = name;
+    public Quiz(String title, String description) {
+        this.title = title;
         this.description = description;
+        this.questions = new ArrayList<Question>();
     }
 
     /**
      * Getter voor id
+     *
      * @return Id van de Quiz
      */
     public int getId() {
@@ -52,6 +65,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Setter voor id
+     *
      * @param id de nieuwe id
      */
     public void setId(int id) {
@@ -59,7 +73,9 @@ public class Quiz implements Comparable<Quiz> {
     }
 
     /**
-     * Getter voor logo URI
+     * Geeft een byte array terug van het object
+     * Niet gebruiken zonder manager!
+     *
      * @return logo URI
      */
     public String getLogo() {
@@ -68,6 +84,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * setter voor logo URI
+     *
      * @param logo logo URI
      */
     public void setLogo(String logo) {
@@ -76,22 +93,25 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * getter voor name
+     *
      * @return
      */
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     /**
      * setter voor name
+     *
      * @param name
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String name) {
+        this.title = title;
     }
 
     /**
      * getter voor description
+     *
      * @return
      */
     public String getDescription() {
@@ -100,6 +120,7 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * setter voor description
+     *
      * @param description
      */
     public void setDescription(String description) {
@@ -110,9 +131,43 @@ public class Quiz implements Comparable<Quiz> {
      * compareTo methode voor klasse Quiz
      */
     public int compareTo(Quiz q) {
-        int i = this.description.compareTo(q.getDescription());
-        i += this.name.compareTo(q.getName());
-        return i;
+        return this.description.compareTo(q.getDescription());
     }
 
+    /**
+     * Gets the questions in a certain quiz
+     *
+     * @return questions
+     */
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    /**
+     * Sets the list of questions
+     *
+     * @param questions
+     */
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+
+    /**
+     * Adds a question to the question list. This should not be called on the object self
+     *
+     * @param question Question
+     */
+    public void addQuestion(Question question) {
+        this.questions.add(question);
+    }
+
+    /**
+     * Gets a certain question in the DB
+     *
+     * @param id identifier
+     * @return question
+     */
+    public Question getQuestion(int id) {
+        return this.questions.get(id);
+    }
 }

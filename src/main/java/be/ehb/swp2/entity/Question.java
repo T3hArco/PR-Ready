@@ -1,117 +1,149 @@
 package be.ehb.swp2.entity;
 
 /**
- * Created by Thomas on 29/10/2015.
+ * Created by arnaudcoel on 29/10/2015.
  */
-public abstract class Question {
+
+/**
+ * This class contains all data for a question
+ */
+public class Question {
     /**
-     * De naam van een vraag
+     * The identifier for this question in the database
      */
-    private String name;
+    private int id;
 
     /**
-     * De beschrijving van een vraag
+     * This is the title of the question
      */
-    private String description;
+    private String title;
 
     /**
-     * De tijd voor een vraag
-     * @todo verduidelijk dit concept
+     * This is the body of the question
      */
-    private int time;
+    private String text;
 
     /**
-     * De time on voor een vraag
-     * @todo verduidelijk dit concept
+     * This is the type of the question. This identifier is only used in the database and is used to point to the correct
+     * sub-table
      */
-    private boolean timeOn;
+    private AnswerType answerType;
 
     /**
-     * De default constructor, set naam op 'Naamloos'.
+     * The media type for the answer
      */
-    @Deprecated
+    private AnswerMediaType answerMediaType;
+
+    private int parentId;
+
+    /**
+     * The default constructor for Question
+     */
     public Question() {
-        this.name = "Naamloos";
     }
 
     /**
-     * De constructor van Question
-     * @param name
-     * @param description
-     * @param time
-     * @param timeOn
+     * The constructor for question
+     *
+     * @param title           The title of the question
+     * @param text            The body of the question
+     * @param answerType    the type of the question.
+     * @param answerMediaType the type of the media
+     * @param parentId ??? TODO
      */
-    public Question(String name, String description, int time, boolean timeOn) {
-        this.name = name;
-        this.description = description;
-        this.time = time;
-        this.timeOn = timeOn;
+    public Question(String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, int parentId) {
+        this.title = title;
+        this.text = text;
+        this.answerType = answerType;
+        this.answerMediaType = answerMediaType;
+        this.parentId = parentId;
     }
 
     /**
-     * Geeft de naam van een vraag terug weer
-     * @return
+     * Returns the unique identifier of the question
+     *
+     * @return integer
      */
-    public String getName() {
-        return this.name;
+    public int getId() {
+        return id;
     }
 
     /**
-     * Geeft de beschrijving weer van een vraag
-     * @return
+     * Sets the id of the question
+     *
+     * @param id identifier
      */
-    public String getDescription() {
-        return this.description;
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
-     * Geeft de tijd weer van een vraag
-     * @return
+     * Returns the title of the question
+     *
+     * @return String
      */
-    public int getTime() {
-        return this.time;
+    public String getTitle() {
+        return this.title;
     }
 
     /**
-     * Geeft de time on weer van een vraag
-     * @todo verduidelijk dit concept!
-     * @return
+     * Sets the title of the question
+     *
+     * @param title title of the question
      */
-    public boolean isTimeOn() {
-        return this.timeOn;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
-     * Zet de naam van een vraag
-     * @param name
+     * Gets the body of the question
+     *
+     * @return String
      */
-    public void setName(String name) {
-        this.name = name;
+    public String getText() {
+        return text;
     }
 
     /**
-     * Zet de beschrijving van een vraag
-     * @param description
+     * Sets the body of the question
+     *
+     * @param text body
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setText(String text) {
+        this.text = text;
     }
 
     /**
-     * Zet de tijd van een vraag
-     * @param time
+     * Gets the type of the question
+     *
+     * @return type
      */
-    public void setTime(int time) {
-        this.time = time;
+    public AnswerType getAnswerType() {
+        return answerType;
     }
 
     /**
-     * Zet de time on van een vraag
-     * @todo implementeer dit
-     * @param timeOn
+     * Sets the body of the question
+     *
+     * @param answerType type
      */
-    public void setTimeOn(boolean timeOn) {
-
+    public void setAnswerType(AnswerType answerType) {
+        this.answerType = answerType;
     }
 
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
+
+    public AnswerMediaType getAnswerMediaType() {
+        return answerMediaType;
+    }
+
+    public void setAnswerMediaType(AnswerMediaType answerMediaType) {
+        this.answerMediaType = answerMediaType;
+    }
 }

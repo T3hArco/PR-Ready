@@ -1,5 +1,7 @@
 package be.ehb.swp2.entity.question;
 
+import be.ehb.swp2.entity.AnswerMediaType;
+import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 
 /**
  * Class for an open question which allows any form of response in a string
+ *
  * @Todo implement this further
  */
 public class OpenQuestion extends Question {
@@ -17,22 +20,17 @@ public class OpenQuestion extends Question {
      * The answer to the question
      */
     private ArrayList<String> answers;
+    private AnswerType answerType;
 
-    /**
-     * Constructor of the OpenQuestion class
-     * @param name
-     * @param description
-     * @param time
-     * @param timeOn
-     * @param answer
-     */
-    public OpenQuestion(String name, String description, int time, boolean timeOn, String answer) {
-        super(name, description, time, timeOn);
-        this.answers = new ArrayList<String>();
+    public OpenQuestion(String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, ArrayList<String> answers) {
+        super(title, text, answerType, answerMediaType, 1);
+        this.answers = answers;
+        this.answerType = AnswerType.OPEN;
     }
 
     /**
      * Adds an answer to the allowed answers.
+     *
      * @param answer
      */
     public void addAnswer(String answer) {
@@ -41,14 +39,13 @@ public class OpenQuestion extends Question {
 
     /**
      * Checks whether the answer is correct.
-     * @todo implement a better way to do this.
+     *
      * @param answer
      * @return vailidity
+     * @todo implement a better way to do this.
      */
     public boolean solve(String answer) {
-        if(answers.contains(answer))
-            return true;
+        return answers.contains(answer);
 
-        return false;
     }
 }
