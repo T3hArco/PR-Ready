@@ -7,7 +7,7 @@ import be.ehb.swp2.exception.UserNoPermissionException;
 import be.ehb.swp2.exception.UserNotFoundException;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.ui.PermissionWindow;
-import be.ehb.swp2.util.Configurator;
+import be.ehb.swp2.util.ConfigurationHandler;
 import org.hibernate.SessionFactory;
 
 import javax.swing.*;
@@ -26,6 +26,14 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
     private SessionFactory factory;
     private UserRole requiredRole = ADMINISTRATOR;
 
+    /**
+     * Constructor for SwingAdminUI
+     *
+     * @param factory factory
+     * @throws UserNotFoundException
+     * @throws UserNoPermissionException
+     * @throws TokenNotFoundException
+     */
     public SwingAdminUI(SessionFactory factory) throws UserNotFoundException, UserNoPermissionException, TokenNotFoundException {
         this.factory = factory;
 
@@ -33,6 +41,9 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
         this.initComponents();
     }
 
+    /**
+     * Initialize the GUI
+     */
     public void initComponents() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -67,8 +78,8 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
 
                 UserManager um = new UserManager(factory);
                 User user = null;
-                Configurator configurator = new Configurator(); // moved configurator due to reloading problems
-                String token = configurator.getSetting("user", "token");
+                ConfigurationHandler configurationHandler = new ConfigurationHandler(); // moved configurationHandler due to reloading problems
+                String token = configurationHandler.getSetting("user", "token");
 
                 try {
                     user = um.getUserByToken(token);
@@ -95,8 +106,8 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
             public void actionPerformed(ActionEvent e) {
                 UserManager um = new UserManager(factory);
                 User user = null;
-                Configurator configurator = new Configurator(); // moved configurator due to reloading problems
-                String token = configurator.getSetting("user", "token");
+                ConfigurationHandler configurationHandler = new ConfigurationHandler(); // moved configurationHandler due to reloading problems
+                String token = configurationHandler.getSetting("user", "token");
 
                 try {
                     user = um.getUserByToken(token);
@@ -119,8 +130,8 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
             public void actionPerformed(ActionEvent e) {
                 UserManager um = new UserManager(factory);
                 User user = null;
-                Configurator configurator = new Configurator(); // moved configurator due to reloading problems
-                String token = configurator.getSetting("user", "token");
+                ConfigurationHandler configurationHandler = new ConfigurationHandler(); // moved configurationHandler due to reloading problems
+                String token = configurationHandler.getSetting("user", "token");
 
                 try {
                     user = um.getUserByToken(token);
@@ -146,11 +157,9 @@ public class SwingAdminUI extends JFrame implements be.ehb.swp2.ui.Window, Permi
 
     public boolean hasPermission() throws UserNoPermissionException, UserNotFoundException, TokenNotFoundException {
         UserManager um = new UserManager(factory);
-        User user = null;
-        Configurator configurator = new Configurator(); // moved configurator due to reloading problems
-        String token = configurator.getSetting("user", "token");
-
-        user = um.getUserByToken(token);
+        ConfigurationHandler configurationHandler = new ConfigurationHandler(); // moved configurationHandler due to reloading problems
+        String token = configurationHandler.getSetting("user", "token");
+        User user = um.getUserByToken(token);
 
         if (!user.hasRole(this.requiredRole))
             throw new UserNoPermissionException();

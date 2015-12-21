@@ -1,6 +1,6 @@
 package be.ehb.swp2.entity;
 
-import be.ehb.swp2.util.Encryptor;
+import be.ehb.swp2.util.EncryptionHandler;
 
 
 /**
@@ -108,7 +108,7 @@ public class User {
      * @param password
      */
     public void setPassword(String password) {
-        this.password = Encryptor.hashPassword(password);
+        this.password = EncryptionHandler.hashPassword(password);
     }
 
     /**
@@ -149,10 +149,10 @@ public class User {
     }
 
     /**
-     * Zet de token van de gebruiker, dit roept generateToken van de Encryptor class op.
+     * Zet de token van de gebruiker, dit roept generateToken van de EncryptionHandler class op.
      */
     public String setToken() {
-        this.token = Encryptor.generateToken(this);
+        this.token = EncryptionHandler.generateToken(this);
 
         return this.token;
     }

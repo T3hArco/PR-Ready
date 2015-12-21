@@ -11,6 +11,7 @@ import com.teamdev.jxbrowser.chromium.dom.DOMNode;
 import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import org.hibernate.SessionFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,35 +19,30 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 
-
 /**
  * Created by Thomas on 3/12/2015.
  */
 public class TextWindow implements QuestionWindow {
+    private SessionFactory session;
     private Question question;
-    private int choice = 1;
+    private int choice;
 
-    public TextWindow(Question question){
+    /**
+     * Constructor
+     *
+     * @param session  question factory
+     * @param question question parent
+     */
+    public TextWindow(SessionFactory session, Question question) {
+        this.session = session;
         this.question = question;
-
+        this.choice = 1;
     }
 
-    static public void main(String[] args) {
-        //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
-        //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
-        //TextWindow t = new TextWindow();
-        //t.printGui();
-    }
-
-    public int getChoice() {
-        return choice;
-    }
-
-    public void setChoice(int choice) {
-        this.choice = choice;
-    }
-
-    public void printGui(){
+    /**
+     * Initialize the GUI
+     */
+    public void initComponents() {
         final Browser browser = new Browser();
         BrowserView browserView = new BrowserView(browser);
         JFrame parent = new JFrame();
@@ -56,15 +52,10 @@ public class TextWindow implements QuestionWindow {
             @Override
             public void onFinishLoadingFrame(FinishLoadingEvent event) {
                 if (event.isMainFrame()) {
-
-
-
                     DOMDocument document = event.getBrowser().getDocument();
                     DOMNode root = document.findElement(By.id("text"));
                     DOMNode n = document.createTextNode(question.getText());
                     root.appendChild(n);
-
-
                 }
             }
         });
@@ -80,8 +71,6 @@ public class TextWindow implements QuestionWindow {
             }
         });
 
-
-
         browser.registerFunction("nextQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
@@ -89,9 +78,8 @@ public class TextWindow implements QuestionWindow {
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
-                return  JSValue.createUndefined();
+                return JSValue.createUndefined();
             }
-
 
 
         });
@@ -103,14 +91,11 @@ public class TextWindow implements QuestionWindow {
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
-                return  JSValue.createUndefined();
+                return JSValue.createUndefined();
             }
 
 
-
         });
-
-
 
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
@@ -120,5 +105,23 @@ public class TextWindow implements QuestionWindow {
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
 
+    }
+
+    /**
+     * Getter for choice
+     *
+     * @return integer
+     */
+    public int getChoice() {
+        return choice;
+    }
+
+    /**
+     * Sets the choice
+     *
+     * @param choice integer
+     */
+    public void setChoice(int choice) {
+        this.choice = choice;
     }
 }

@@ -10,7 +10,7 @@ import java.security.SecureRandom;
 /**
  * Created by arnaudcoel on 22/10/15.
  */
-public class Encryptor {
+public class EncryptionHandler {
 
     /**
      * Will return an MD5 hash of a provided password
@@ -33,7 +33,7 @@ public class Encryptor {
      */
     public static String generateToken(User user) {
         SecureRandom random = new SecureRandom();
-        String token = Encryptor.hashPassword(user.getId() + new BigInteger(130, random).toString(32));
+        String token = EncryptionHandler.hashPassword(user.getId() + new BigInteger(130, random).toString(32));
 
         return token;
     }
