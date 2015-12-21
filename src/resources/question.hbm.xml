@@ -4,31 +4,30 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="be.ehb.swp2.entity.Question" table="question">
+    <class name="be.ehb.swp2.entity.Question" table="Question">
         <meta attribute="class-description">
             This class contains all data for questions
         </meta>
-        <id name="id" type="int" column="questionID">
+        <id name="id" type="int" column="questionId">
             <generator class="native"/>
         </id>
-        <property name="parentId" type="int" column="parentId"/>
+        <property name="parentId" type="int" column="parentId" not-null="true"/>
         <property name="title" type="string" column="title" not-null="true" />
-        <property name="text" type="string" column="questionText" not-null="true"/>
+        <property name="text" type="string" column="text" not-null="true"/>
         <property name="answerType" column="answerType">
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">be.ehb.swp2.entity.AnswerType</param>
                 <param name="useNamed">true</param>
             </type>
         </property>
-        <property name="idQuestionExtra" type="int" column="idQuestionExtra"/>
-        <property name="questionMedia" column="questionMedia">
+        <property name="answerMediaType" column="answerMediaType">
             <type name="org.hibernate.type.EnumType">
-                <param name="enumClass">be.ehb.swp2.entity.Question</param>
+                <param name="enumClass">be.ehb.swp2.entity.AnswerMediaType</param>
                 <param name="useNamed">true</param>
             </type>
         </property>
-        <one-to-one name="answer" class="be.ehb.swp2.entity.answer"/>
-        <many-to-one name="video" class="be.ehb.swp2.entity.video"/>
+        <!--<many-to-one name="videoQuestion" class="be.ehb.swp2.entity.question.VideoQuestion"/>
+        <many-to-one name="audioQuestion" class="be.ehb.swp2.entity.question.AudioQuestion"/>-->
         
     </class>
 </hibernate-mapping>

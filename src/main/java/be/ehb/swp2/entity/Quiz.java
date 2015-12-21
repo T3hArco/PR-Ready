@@ -23,10 +23,8 @@ public class Quiz implements Comparable<Quiz> {
 
     /**
      * Het logo van een Quiz
-     *
-     * @todo is dit het correcte type waar we achter zoeken? Ik denk niet dat het zo in elkaar mag zitten
      */
-    private byte[] logo;
+    private String logo;
 
     /**
      * De beschrijving van een Quiz
@@ -80,7 +78,7 @@ public class Quiz implements Comparable<Quiz> {
      *
      * @return logo URI
      */
-    public byte[] getLogo() {
+    public String getLogo() {
         return logo;
     }
 
@@ -89,7 +87,7 @@ public class Quiz implements Comparable<Quiz> {
      *
      * @param logo logo URI
      */
-    public void setLogo(byte[] logo) {
+    public void setLogo(String logo) {
         this.logo = logo;
     }
 

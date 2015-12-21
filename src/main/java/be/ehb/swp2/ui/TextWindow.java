@@ -1,40 +1,48 @@
 package be.ehb.swp2.ui;
 
 
+import be.ehb.swp2.entity.Question;
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserFunction;
+import com.teamdev.jxbrowser.chromium.JSValue;
+import com.teamdev.jxbrowser.chromium.dom.By;
+import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
+import com.teamdev.jxbrowser.chromium.dom.DOMNode;
+import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
+import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import org.hibernate.SessionFactory;
 
-        import java.awt.BorderLayout;
-        import java.awt.GraphicsEnvironment;
-        import java.awt.event.WindowAdapter;
-        import java.awt.event.WindowEvent;
-
-        import javax.swing.JDialog;
-        import javax.swing.JFrame;
-        import javax.swing.WindowConstants;
-
-        import com.teamdev.jxbrowser.chromium.Browser;
-        import com.teamdev.jxbrowser.chromium.JSValue;
-        import com.teamdev.jxbrowser.chromium.dom.By;
-        import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
-        import com.teamdev.jxbrowser.chromium.dom.DOMElement;
-        import com.teamdev.jxbrowser.chromium.dom.DOMNode;
-        import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
-        import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
-        import com.teamdev.jxbrowser.chromium.swing.BrowserView;
-        import com.teamdev.jxbrowser.chromium.BrowserFunction;
-
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 /**
  * Created by Thomas on 3/12/2015.
  */
-public class TextWindow implements questionWindow{
+public class TextWindow implements QuestionWindow {
+    private SessionFactory session;
+    private Question question;
+    private int choice;
 
-    final private String question;
-
-    public TextWindow(final String question){
+    /**
+     * Constructor
+     *
+     * @param session  question factory
+     * @param question question parent
+     */
+    public TextWindow(SessionFactory session, Question question) {
+        this.session = session;
         this.question = question;
+        this.choice = 1;
     }
-    public void printGui(){
+
+    /**
+     * Initialize the GUI
+     */
+    public void initComponents() {
         final Browser browser = new Browser();
         BrowserView browserView = new BrowserView(browser);
         JFrame parent = new JFrame();
@@ -44,15 +52,10 @@ public class TextWindow implements questionWindow{
             @Override
             public void onFinishLoadingFrame(FinishLoadingEvent event) {
                 if (event.isMainFrame()) {
-
-
-
                     DOMDocument document = event.getBrowser().getDocument();
                     DOMNode root = document.findElement(By.id("text"));
-                    DOMNode n = document.createTextNode(question);
+                    DOMNode n = document.createTextNode(question.getText());
                     root.appendChild(n);
-
-
                 }
             }
         });
@@ -61,23 +64,35 @@ public class TextWindow implements questionWindow{
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                setChoice(1);
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
             }
         });
 
-
-
         browser.registerFunction("nextQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
+                setChoice(1);
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
-                return  JSValue.createUndefined();
+                return JSValue.createUndefined();
             }
 
+
+        });
+
+        browser.registerFunction("previousQuestion", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                setChoice(2);
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                return JSValue.createUndefined();
+            }
 
 
         });
@@ -92,13 +107,21 @@ public class TextWindow implements questionWindow{
 
     }
 
+    /**
+     * Getter for choice
+     *
+     * @return integer
+     */
+    public int getChoice() {
+        return choice;
+    }
 
-
-
-    static public void main(String[] args){
-        //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
-        //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
-        TextWindow t = new TextWindow("u1I9ITfzqFs");
-        t.printGui();
+    /**
+     * Sets the choice
+     *
+     * @param choice integer
+     */
+    public void setChoice(int choice) {
+        this.choice = choice;
     }
 }

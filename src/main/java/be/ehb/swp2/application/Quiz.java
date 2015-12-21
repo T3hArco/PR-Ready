@@ -1,17 +1,16 @@
 package be.ehb.swp2.application;
 
-import be.ehb.swp2.entity.QuizLauncher;
 import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.ui.LoginWindow;
 import be.ehb.swp2.ui.OverviewWindow;
-import be.ehb.swp2.util.Configurator;
+import be.ehb.swp2.util.ConfigurationHandler;
+import com.teamdev.jxbrowser.chromium.LoggerProvider;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.util.logging.Level;
@@ -27,7 +26,7 @@ import java.util.logging.Logger;
 public class Quiz {
     private SessionFactory factory;
     private Logger logger;
-    private Configurator configurator;// !
+    private ConfigurationHandler configurationHandler;// !
 
     /**
      * Default constructor.
@@ -55,6 +54,11 @@ public class Quiz {
         logger.info("Starting application");
         logger.info("Setting JFrame Look and Feel");
 
+        logger.info("Disabling obnoxious logging");
+        LoggerProvider.getChromiumProcessLogger().setLevel(Level.OFF);
+        LoggerProvider.getIPCLogger().setLevel(Level.OFF);
+        LoggerProvider.getBrowserLogger().setLevel(Level.OFF);
+
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException e) {
@@ -68,7 +72,7 @@ public class Quiz {
         }
 
         logger.info("Starting configuration manager");
-        configurator = new Configurator();
+        configurationHandler = new ConfigurationHandler();
 
         logger.info("Starting database");
         try {
@@ -82,13 +86,9 @@ public class Quiz {
         long totalTime = end - start;
         logger.info("Initialization took " + totalTime + " milliseconds!");
 
-        imageSaveTest();
-
+        //LoadingWindow load = new LoadingWindow(factory);
         LoginWindow lw = new LoginWindow(factory);
         OverviewWindow ow = new OverviewWindow(factory);
-        ow.printGui();
-        //QuizLauncher quizLauncher = new QuizLauncher();
-        //quizLauncher.launch();
     }
 
     /**
@@ -107,7 +107,7 @@ public class Quiz {
         be.ehb.swp2.entity.Quiz quiz = null;
 
         try {
-            quizId = quizManager.addQuiz(new BigInteger(130, random).toString(32), "test");
+            quizId = quizManager.addQuiz("pliep", "test");
             quiz = quizManager.getQuizById(quizId);
         } catch (QuizNotFoundException e) {
             logger.log(Level.SEVERE, "\"Fout tijdens het aanmaken van de quiz\"");

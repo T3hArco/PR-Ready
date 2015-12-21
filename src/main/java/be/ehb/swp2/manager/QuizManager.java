@@ -2,6 +2,7 @@ package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.Quiz;
+import be.ehb.swp2.exception.BadFileException;
 import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.util.ImageHandler;
 import org.hibernate.*;
@@ -42,14 +43,12 @@ public class QuizManager {
 		try {
 			transaction = session.beginTransaction(); // start een transactie op
 			Quiz quiz = new Quiz(name, description);
-			quizId = (Integer) session.save(quiz); // geef de ID van de quiz
-			// weer
-			transaction.commit(); // persist in de database
+            quizId = (Integer) session.save(quiz); // geef de ID van de quiz weer
+            transaction.commit(); // persist in de database
 		} catch (HibernateException e) {
 			if (transaction != null)
-				transaction.rollback(); // maak de transactie ongedaan indien er
-			// een fout is
-		} finally {
+                transaction.rollback(); // maak de transactie ongedaan indien er een fout is
+        } finally {
 			session.close(); // we zijn klaar en sluiten onze sessie af
 		}
 
@@ -70,14 +69,18 @@ public class QuizManager {
         try {
             transaction = session.beginTransaction();
 			Quiz quiz = session.get(Quiz.class, quizId);
-			byte[] logoBytes = ImageHandler.toByteArray(path);
-			quiz.setLogo(logoBytes);
+            String logoBase64 = ImageHandler.toBase64(path);
+            quiz.setLogo(logoBase64);
 
 			session.update(quiz);
 			transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
+        } catch (BadFileException e) {
+            System.err.println("Failed to convert to base64");
+
+            e.printStackTrace();
         } finally {
             session.close();
         }

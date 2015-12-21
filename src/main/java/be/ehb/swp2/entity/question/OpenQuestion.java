@@ -1,7 +1,8 @@
 package be.ehb.swp2.entity.question;
 
+import be.ehb.swp2.entity.AnswerMediaType;
+import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
-import be.ehb.swp2.entity.QuestionType;
 
 import java.util.ArrayList;
 
@@ -19,12 +20,12 @@ public class OpenQuestion extends Question {
      * The answer to the question
      */
     private ArrayList<String> answers;
-    private QuestionType questionType;
+    private AnswerType answerType;
 
-    public OpenQuestion(String title, String text, QuestionType questionType, ArrayList<String> answers) {
-        super(title, text, questionType);
+    public OpenQuestion(String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, ArrayList<String> answers) {
+        super(title, text, answerType, answerMediaType, 1);
         this.answers = answers;
-        this.questionType = QuestionType.OPEN;
+        this.answerType = AnswerType.OPEN;
     }
 
     /**

@@ -1,8 +1,12 @@
 package be.ehb.swp2.entity;
 
 /**
- * Created by arnaudcoel on 10/12/15.
+ * Created by arnaudcoel on 19/11/2015.
+ */
+
+/**
+ * Defines the type of a question
  */
 public enum AnswerType {
-    MULTICHOICE, KEYWORD, BOOLEAN
+    TRUE_FALSE, KEYWORD, MULTIPLE_CHOICE, MATH, OPEN
 }

@@ -6,13 +6,13 @@
 
 
 <hibernate-mapping>
-    <class name="be.ehb.swp2.entity.Answer" table="Answers">
+    <class name="be.ehb.swp2.entity.Answer" table="Answer">
         <meta attribute="class-description">
             This class contains all the users
         </meta>
-        <id name="id" type="int" column="Id">
+        <id name="id" type="int" column="id">
             <generator class="native"/>
         </id>
-        <property name="answerID" column="answerID" type="int"/>
+        <property name="answerId" column="answerId" type="int"/>
     </class>
 </hibernate-mapping>
