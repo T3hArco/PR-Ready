@@ -11,6 +11,7 @@ import com.teamdev.jxbrowser.chromium.dom.DOMNode;
 import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import org.hibernate.SessionFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,31 +24,18 @@ import java.awt.event.WindowEvent;
 
 
 public class VideoWindow implements QuestionWindow {
-    final private String url;
+    private SessionFactory session;
+    private String url;
     private Question question;
     private int choice = 1;
 
-    public VideoWindow(final String url,  Question question) {
+    public VideoWindow(SessionFactory session, String url, Question question) {
+        this.session = session;
         this.url = url;
         this.question = question;
     }
 
-    static public void main(String[] arsg) {
-        //VideoWindow v = new VideoWindow("mTG2ZBzAZq0");
-        //VideoWindow v = new VideoWindow("pk-5aS9G9I4");
-        // VideoWindow v = new VideoWindow("u1I9ITfzqFs");
-        // v.printGui();
-    }
-
-    public int getChoice() {
-        return choice;
-    }
-
-    public void setChoice(int choice) {
-        this.choice = choice;
-    }
-
-    public void printGui() {
+    public void initComponents() {
         final Browser browser = new Browser();
         BrowserView browserView = new BrowserView(browser);
         JFrame parent = new JFrame();
@@ -57,10 +45,7 @@ public class VideoWindow implements QuestionWindow {
             @Override
             public void onFinishLoadingFrame(FinishLoadingEvent event) {
                 if (event.isMainFrame()) {
-
                     String videoUrl = "https://www.youtube.com/embed/" + url + "?rel=0&amp;controls=0&amp;showinfo=0";
-                    //String videoUrl = "htttp://www.youtube.com/v/" + url;
-
                     DOMDocument document = event.getBrowser().getDocument();
                     DOMNode root = document.findElement(By.id("video"));
                     DOMElement iframe = document.createElement("iframe");
@@ -94,7 +79,7 @@ public class VideoWindow implements QuestionWindow {
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
-                return  JSValue.createUndefined();
+                return JSValue.createUndefined();
             }
         });
 
@@ -105,7 +90,7 @@ public class VideoWindow implements QuestionWindow {
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
-                return  JSValue.createUndefined();
+                return JSValue.createUndefined();
             }
         });
 
@@ -116,7 +101,13 @@ public class VideoWindow implements QuestionWindow {
         dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
+    }
 
+    public int getChoice() {
+        return choice;
+    }
 
+    public void setChoice(int choice) {
+        this.choice = choice;
     }
 }

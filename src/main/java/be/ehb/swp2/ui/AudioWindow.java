@@ -11,6 +11,7 @@ import com.teamdev.jxbrowser.chromium.dom.DOMNode;
 import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import org.hibernate.SessionFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,36 +20,32 @@ import java.awt.event.WindowEvent;
 
 /**
  * Created by domienhennion on 3/12/15.
+ * Modified by arnaudcoel
  */
 public class AudioWindow implements QuestionWindow {
-    final private String url;
+    private SessionFactory factory;
+    private String url;
     private Question question;
-    private int choice = 1;
-    public AudioWindow(final String url, Question question) {
+    private int choice;
+
+    /**
+     * The constructor voor AudioWindow
+     *
+     * @param url      URL van de question
+     * @param question Parent question object
+     */
+    public AudioWindow(SessionFactory factory, String url, Question question) {
+        this.factory = factory;
         this.url = url;
         this.question = question;
+        this.choice = 1;
     }
 
-
-
-    static public void main(String[] arsg) {
-        //AudioWindow a = new AudioWindow("mTG2ZBzAZq0");
-        //AudioWindow a = new AudioWindow("pk-5aS9G9I4");
-        //AudioWindow a = new AudioWindow("u1I9ITfzqFs");
-       //a.printGui();
-    }
-
-    public int getChoice() {
-        return choice;
-    }
-
-    public void setChoice(int choice) {
-        this.choice = choice;
-    }
-
-    public void printGui() {
+    /**
+     * Initializes the GUI
+     */
+    public void initComponents() {
         final Browser browser = new Browser();
-        BrowserView browserView = new BrowserView(browser);
         JFrame parent = new JFrame();
         final JDialog dialog = new JDialog(parent, "QUIZ", true);
 
@@ -121,7 +118,25 @@ public class AudioWindow implements QuestionWindow {
         dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
-
     }
 
+    /**
+     * Gets the current choice
+     *
+     * @return integer
+     * @deprecated why is there a getter here?
+     */
+    public int getChoice() {
+        return choice;
+    }
+
+    /**
+     * Sets the current choice
+     *
+     * @param choice integer
+     * @deprecated why is there a setter here?
+     */
+    public void setChoice(int choice) {
+        this.choice = choice;
+    }
 }

@@ -47,17 +47,14 @@ public class ImageHandler {
         return new ByteArrayInputStream(bytes);
     }
 
+    /**
+     * Converts the image to base64
+     *
+     * @param path
+     * @return
+     * @throws BadFileException
+     */
     public static String toBase64(URL path) throws BadFileException {
-        /*BufferedImage source = ImageIO.read(path);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(img, "jpg", baos);
-        baos.flush();
-        Base64 base = new Base64(false);
-        String encodedImage = base.encodeToString(baos.toByteArray());
-        baos.close();
-        encodedImage = java.net.URLEncoder.encode(encodedImage, "ISO-8859-1");
-        request.setRequestBody(encodedImage);*/
-
         String[] allowedTypes = new String[]{"jpeg", "jpg", "png", "gif"};
         String base64 = null;
 

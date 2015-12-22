@@ -3,7 +3,7 @@ package be.ehb.swp2.manager;
 import be.ehb.swp2.entity.User;
 import be.ehb.swp2.exception.BadLoginException;
 import be.ehb.swp2.exception.UserNotFoundException;
-import be.ehb.swp2.util.Encryptor;
+import be.ehb.swp2.util.EncryptionHandler;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -34,7 +34,7 @@ public class LoginManager {
     public User authenticate(String username, String password) throws BadLoginException {
         Session session = factory.openSession();
 
-        password = Encryptor.hashPassword(password); // hash the password
+        password = EncryptionHandler.hashPassword(password); // hash the password
 
         List<Object[]> userList = session.createQuery("SELECT id, username, password FROM User WHERE (username = :username AND password = :password AND deleted = false)")
                 .setMaxResults(1)
