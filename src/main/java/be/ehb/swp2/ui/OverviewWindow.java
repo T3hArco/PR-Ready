@@ -76,10 +76,13 @@ public class OverviewWindow extends JFrame implements Window {
                         "<div class='desc'><p>" + SecurityHandler.stripTags(quiz.getDescription()) + "</p></div>" +
                         "<div class='button'><button onclick='launchQ();'>launch</button></div></div>");
             }
-            html.println("</div><button onclick='launchE();' class='add'>add</button> <script>function launchQ(){ launchQuiz(); } function launchE(){ launchEditor(); } </script></body></html>");
+            //html.println("</div><button onclick='launchE();' class='add'>add</button>");
 
             if (PermissionHandler.currentUserHasPermission(factory, UserRole.ADMINISTRATOR))
-                html.println("<button onclick='launchEditor()'>ADD QUIZ (Admin)</button>");
+                html.println("<button onclick='launchE();' class='add'>ADD QUIZ (Admin)</button>");
+
+            html.println("<script>function launchQ(){ launchQuiz(); } " +
+                    "function launchE(){ launchEditor(); } </script></body></html>");
 
             html.close();
         } catch (FileNotFoundException e) {
@@ -89,7 +92,16 @@ public class OverviewWindow extends JFrame implements Window {
         PrintWriter css = null;
         try {
             css = new PrintWriter(tempFilePath + "/overview.css");
-            css.println("body{ background-color: rgba(46,57,100,1); background: url('http://dtprojecten.ehb.be/~PR-Ready/background.jpg') no-repeat center center fixed; text-align: center; color: whitesmoke; font-family: tahoma; font-size: 15px; } .quiz{ border: 1px solid white; width: 100%; overflow: hidden; white-space: nowrap; display: inline-block; background-color: rgba(0,0,0,0.5); } .quiz .titel{ display: block; float: left; width: 25%; margin: auto; } .quiz .button{ display: block; float: right; width: 25%; margin: auto; } .quiz .desc{ display: block; width: 50%; margin: auto; } .quiz button, .add { -webkit-border-radius: 60; -moz-border-radius: 60; border-radius: 60px; border-color: none; color: #2e3964; background: #ffffff; padding: 8px 15px 8px 15px; } .quiz button:hover, .add:hover { background: #b2d8f0; } .add { float: right; margin: 1%; margin-right: 3%; }");
+            css.println("body{ background-color: rgba(46,57,100,1); " +
+                    "background: url('http://dtprojecten.ehb.be/~PR-Ready/background.jpg') no-repeat center center fixed; text-align: center; color: whitesmoke; font-family: tahoma; font-size: 15px; } " +
+                    ".quiz{ border: 1px solid white; width: 100%; overflow: hidden; white-space: nowrap; display: inline-block; background-color: rgba(0,0,0,0.5); } " +
+                    ".quiz .titel{ display: block; float: left; width: 25%; margin: auto; } " +
+                    ".quiz .button{ display: block; float: right; width: 25%; margin: auto; } " +
+                    ".quiz .desc{ display: block; width: 50%; margin: auto; } " +
+                    ".quiz button, .add { -webkit-border-radius: 60; -moz-border-radius: 60; border-radius: 60px; border-color: none; color: #2e3964; background: #ffffff; padding: 8px 15px 8px 15px; } " +
+                    ".quiz button:hover, .add:hover { background: #b2d8f0; } " +
+                    ".add { float: right; margin: 1%; margin-right: 3%; } " +
+                    ".logo img{ float: right; width: 4%; margin-right: 10px;}");
             css.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -99,19 +111,15 @@ public class OverviewWindow extends JFrame implements Window {
         final JDialog dialog = new JDialog(parent, "Overview", true);
         final Browser browser = new Browser();
 
-        browser.loadURL("file://" + tempFilePath + "/overview.html");
-        dialog.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
+        browser.registerFunction("launchQuiz", new BrowserFunction() {
+            public JSValue invoke(JSValue... jsValues) {
+
+                QuizLauncher ql = new QuizLauncher(factory);
+
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
-            }
-        });
 
-        browser.registerFunction("launchQuiz", new BrowserFunction() {
-            public JSValue invoke(JSValue... jsValues) {
-                QuizLauncher ql = new QuizLauncher(factory);
                 return JSValue.createUndefined();
             }
         });
@@ -132,6 +140,16 @@ public class OverviewWindow extends JFrame implements Window {
             }
 
 
+        });
+
+        browser.loadURL("file://" + tempFilePath + "/overview.html");
+        dialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+            }
         });
 
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
