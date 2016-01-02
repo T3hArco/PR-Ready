@@ -9,12 +9,13 @@ import be.ehb.swp2.exception.UserNoPermissionException;
 import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.util.PermissionHandler;
-import be.ehb.swp2.util.SecurityHandler;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.hibernate.SessionFactory;
+import be.ehb.swp2.entity.Question;
+import be.ehb.swp2.util.SecurityHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.TreeSet;
+
 
 /**
  * Created by domienhennion on 22/11/15.
@@ -114,7 +116,10 @@ public class OverviewWindow extends JFrame implements Window {
         browser.registerFunction("launchQuiz", new BrowserFunction() {
             public JSValue invoke(JSValue... jsValues) {
 
+
+
                 QuizLauncher ql = new QuizLauncher(factory);
+
 
                 browser.dispose();
                 dialog.setVisible(false);
