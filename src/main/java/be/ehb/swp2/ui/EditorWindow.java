@@ -33,7 +33,7 @@ public class EditorWindow extends JFrame implements Window {
      *
      * @param factory Session factory singleton
      * @param quizId  the id for the parent quiz
-     * @throws UserNoPermissionException
+     * @throws UserNoPermissionException.
      */
     public EditorWindow(SessionFactory factory, Integer quizId) throws UserNoPermissionException {
         this.factory = factory;
