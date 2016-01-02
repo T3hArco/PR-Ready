@@ -78,11 +78,14 @@ public class OverviewWindow extends JFrame implements Window {
             }
             //html.println("</div><button onclick='launchE();' class='add'>add</button>");
 
-            if (PermissionHandler.currentUserHasPermission(factory, UserRole.ADMINISTRATOR))
-                html.println("<button onclick='launchE();' class='add'>ADD QUIZ (Admin)</button>");
+            if (PermissionHandler.currentUserHasPermission(factory, UserRole.ADMINISTRATOR)) {
+                html.println("<button onclick='launchE();' class='add'>ADD QUIZ (Admin)</button>" +
+                        "<button onclick='launchM();' class='add'>MENU (Admin)</button>");
+            }
 
             html.println("<script>function launchQ(){ launchQuiz(); } " +
-                    "function launchE(){ launchEditor(); } </script></body></html>");
+                    "function launchE(){ launchEditor(); } " +
+                    "function launchM(){ launchMenu(); } </script></body></html>");
 
             html.close();
         } catch (FileNotFoundException e) {
@@ -110,6 +113,23 @@ public class OverviewWindow extends JFrame implements Window {
         final JFrame parent = new JFrame();
         final JDialog dialog = new JDialog(parent, "Overview", true);
         final Browser browser = new Browser();
+
+        browser.registerFunction("launchMenu", new BrowserFunction() {
+            public JSValue invoke(JSValue... jsValues) {
+
+                try {
+                    AdminMenuWindow amw = new AdminMenuWindow(factory);
+                } catch (UserNoPermissionException e) {
+                    e.printStackTrace();
+                }
+
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+
+                return  JSValue.createUndefined();
+            }
+        });
 
         browser.registerFunction("launchQuiz", new BrowserFunction() {
             public JSValue invoke(JSValue... jsValues) {
