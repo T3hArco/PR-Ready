@@ -1,6 +1,6 @@
 package be.ehb.swp2.ui;
 
-import be.ehb.swp2.entity.UserRole;
+import be.ehb.swp2.entity.*;
 import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.exception.UserNoPermissionException;
 import be.ehb.swp2.manager.QuizManager;
@@ -19,6 +19,7 @@ import org.hibernate.SessionFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 /**
  * Created by domienhennion on 10/12/15.
@@ -27,6 +28,15 @@ public class EditorWindow extends JFrame implements Window {
     private SessionFactory factory;
     private QuizManager quizManager;
     private Integer quizId;
+
+    private List<Question> newQuestions = null;
+    private List<MediaURL> newVideoURLs = null;
+    private List<MediaURL> newAudioURLs = null;
+    private List<MediaURL> newImgURLs = null;
+
+    private AnswerType currentAnswerType = null;
+    private AnswerMediaType currenMediaType = null;
+
 
     /**
      * Constructor for Editor Window
@@ -39,10 +49,10 @@ public class EditorWindow extends JFrame implements Window {
         this.factory = factory;
         this.quizManager = new QuizManager(factory);
         this.quizId = quizId;
-
+        System.out.println("nog 2 stappen");
         if (!PermissionHandler.currentUserHasPermission(factory, UserRole.ADMINISTRATOR))
             throw new UserNoPermissionException();
-
+        System.out.println("bijna");
         this.initComponents();
     }
 
@@ -50,23 +60,62 @@ public class EditorWindow extends JFrame implements Window {
      * Initialize the GUI components
      */
     public void initComponents() {
+        System.out.println("in de buurt");
         final Browser browser = new Browser();
-        JFrame parent = this;
+        final JFrame parent = this;
         final JDialog dialog = new JDialog(parent, "Editor", true);
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/editor/editor.html");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/editor/editor.html?1459713469871463");
+
+        //register error message function from web
+        browser.registerFunction("jxBrowserAlert", new BrowserFunction() {
+            public JSValue invoke(JSValue... args) {
+                String message = args[0].getString();
+                JOptionPane.showMessageDialog(parent, message);
+                return JSValue.create("jxBrowserAlert!");
+            }
+        });
+
 
         browser.registerFunction("saveQuestionToJava", new BrowserFunction() {
-            public JSValue invoke(JSValue... jsValues) {
+            public JSValue invoke(JSValue... args) {
+
+                //read web info current question
+                JSValue questionNumber = args[0];
+                JSValue questionText = args[1];
+                JSValue answerType = args[2];
+                JSValue mediaType = args[3];
+                JSValue mediaURL = args[4];
+
+                //convert info
+                getAnswerTypeFromWeb(answerType.getString());
+                getMediaTypeFromWeb(mediaType.getString());
+
+                //add new question in java
+                Question currentQuestion = new Question();
+
+                currentQuestion.setId((int)questionNumber.getNumber());
+                currentQuestion.setText(questionText.getString());
+                currentQuestion.setAnswerType(currentAnswerType);
+                currentQuestion.setAnswerMediaType(currenMediaType);
+
+                //add the new question to the "new questions" list
+                newQuestions.add(currentQuestion);
+
                 return  JSValue.createUndefined();
             }
         });
 
         browser.registerFunction("saveAnswerToJava", new BrowserFunction() {
-            public JSValue invoke(JSValue... jsValues) {
-                browser.dispose();
-                dialog.setVisible(false);
-                dialog.dispose();
+            public JSValue invoke(JSValue... args) {
+
+                JSValue questionNumber = args[0];
+                JSValue answer = args[1];
+
+                // DISPOSE MAG PAS BIJ DE LAATSTE VRAAG? WANT DEZE FUNCTIE WORDT PER VRAAG AANGEROEPEN
+//            	browser.dispose();
+//                dialog.setVisible(false);
+//                dialog.dispose();
                 return JSValue.createUndefined();
             }
         });
@@ -100,5 +149,66 @@ public class EditorWindow extends JFrame implements Window {
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
         dialog.setAlwaysOnTop(true);
+    }
+
+    public void getAnswerTypeFromWeb(String stringFromWeb)
+    {
+
+        if (stringFromWeb.equals("Choice")){
+            currentAnswerType = AnswerType.MULTIPLE_CHOICE;
+        }
+        if(stringFromWeb.equals("String")){
+            currentAnswerType = AnswerType.KEYWORD;
+        }
+/*
+        switch (temp) {
+            case "Choice":
+                currentAnswerType = AnswerType.MULTIPLE_CHOICE;
+                break;
+            case "String":
+                currentAnswerType = AnswerType.KEYWORD;
+                break;
+            default:
+                break;
+        }
+*/
+    }
+
+    public void getMediaTypeFromWeb(String stringFromWeb)
+    {
+
+        if (stringFromWeb.equals("Audio")){
+            currenMediaType = AnswerMediaType.AUDIO;
+        }
+        if(stringFromWeb.equals("Video")){
+            currenMediaType = AnswerMediaType.VIDEO;
+        }
+        if(stringFromWeb.equals("IMG")){
+            currenMediaType = AnswerMediaType.IMAGE;
+        }
+        if(stringFromWeb.equals("None")){
+            currenMediaType = AnswerMediaType.EMPTY;
+        }
+
+    }
+
+    public void getUrlFromWeb(int id, String url){
+        MediaURL newMediaUrl = new MediaURL(id, url);
+
+        switch (currenMediaType) {
+            case AUDIO:
+                newAudioURLs.add(newMediaUrl);
+                break;
+            case VIDEO:
+                newVideoURLs.add(newMediaUrl);
+                break;
+            case IMAGE:
+                newImgURLs.add(newMediaUrl);
+                break;
+            case EMPTY:
+                break;
+            default:
+                break;
+        }
     }
 }

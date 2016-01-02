@@ -1,6 +1,5 @@
 package be.ehb.swp2.ui;
 
-import be.ehb.swp2.entity.Question;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
@@ -17,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import be.ehb.swp2.entity.Question;
 
 /**
  * Created by domienhennion on 3/12/15.
@@ -39,6 +39,8 @@ public class AudioWindow implements QuestionWindow {
         this.url = url;
         this.question = question;
         this.choice = 1;
+
+        this.initComponents();
     }
 
     /**
@@ -124,7 +126,7 @@ public class AudioWindow implements QuestionWindow {
      * Gets the current choice
      *
      * @return integer
-     * @deprecated why is there a getter here?
+
      */
     public int getChoice() {
         return choice;
@@ -134,7 +136,7 @@ public class AudioWindow implements QuestionWindow {
      * Sets the current choice
      *
      * @param choice integer
-     * @deprecated why is there a setter here?
+
      */
     public void setChoice(int choice) {
         this.choice = choice;
