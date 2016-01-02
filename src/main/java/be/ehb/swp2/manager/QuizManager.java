@@ -1,6 +1,7 @@
 package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.Quiz;
+import be.ehb.swp2.entity.question.AudioQuestion;
 import be.ehb.swp2.exception.BadFileException;
 import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.util.ImageHandler;
@@ -222,4 +223,5 @@ public class QuizManager {
 		return this.getQuizById(quizId) != null;
 
 	}
+
 }

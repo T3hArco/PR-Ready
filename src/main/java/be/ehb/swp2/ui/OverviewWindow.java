@@ -33,7 +33,6 @@ import java.util.TreeSet;
  * Bijgewerkt door arnaudcoel 22/11/15.
  */
 
-
 public class OverviewWindow extends JFrame implements Window {
     private TreeSet<Quiz> quizSet;
     private SessionFactory factory;
@@ -44,7 +43,7 @@ public class OverviewWindow extends JFrame implements Window {
      * Constructor voor Overviewwindow
      *
      * @param factory de SQL sessie
-     */
+*/
     public OverviewWindow(SessionFactory factory) {
         this.factory = factory;
         this.quizSet = new TreeSet<Quiz>();
@@ -192,6 +191,7 @@ public class OverviewWindow extends JFrame implements Window {
      * @param q quiz in question
      * @throws DuplicateQuizException if a duplicate was made
      */
+
     public void addQuiz(Quiz q) throws DuplicateQuizException {
         if (quizSet.contains(q))
             throw new DuplicateQuizException();
@@ -205,6 +205,7 @@ public class OverviewWindow extends JFrame implements Window {
      * @param q quiz in question
      * @throws QuizNotFoundException if the quiz was not found in the list
      */
+
     public void removeQuiz(Quiz q) throws QuizNotFoundException {
         if (!quizSet.contains(q))
             throw new QuizNotFoundException();

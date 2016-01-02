@@ -1,5 +1,9 @@
 package be.ehb.swp2.entity.question;
 
+import be.ehb.swp2.entity.Question;
+
+import java.util.List;
+
 /**
  * Created by arnaudcoel on 10/12/15.
  */
@@ -12,6 +16,8 @@ public class AudioQuestion {
      */
     public AudioQuestion() {
     }
+
+    private List<AudioQuestion> audioQuestions;
 
     /**
      * Constructor foor dingenejsdngkjzqdjk:gjeklzghkljsdhcklghsdjlfghiwdkluhfgj;:hwdfh,vflnxd;vbgj,ds
@@ -77,4 +83,10 @@ public class AudioQuestion {
     public void setParentQuestion(int parentQuestion) {
         this.parentQuestion = parentQuestion;
     }
+
+
+    public void addAudioQuestion(AudioQuestion audioQuestion) {
+        this.audioQuestions.add(audioQuestion);
+    }
+
 }

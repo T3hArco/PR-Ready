@@ -14,6 +14,7 @@ public class SecurityHandler {
      * @param input Unescaped
      * @return Escaped tags
      */
+
     public static String stripTags(String input) {
         if (input == null)
             return input;

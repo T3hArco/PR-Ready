@@ -5,8 +5,22 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-//import org.hibernate.sql.ordering.antlr.Factory;
+import org.hibernate.sql.ordering.antlr.Factory;
+import be.ehb.swp2.exception.QuizNotFoundException;
+import be.ehb.swp2.manager.QuizManager;
+import be.ehb.swp2.ui.LoginWindow;
+import be.ehb.swp2.ui.OverviewWindow;
+import be.ehb.swp2.util.ConfigurationHandler;
+import com.teamdev.jxbrowser.chromium.LoggerProvider;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
+import javax.swing.*;
+import java.io.IOException;
+import java.net.URL;
+import java.security.SecureRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  * Created by Ibrahim on 10-12-15.
  */
@@ -15,7 +29,7 @@ public class AudioQuestionManager {
 
 
     public AudioQuestionManager(SessionFactory factory) {this.factory = factory;}
-    //public AudioQuestionManager(){};
+    public AudioQuestionManager(){};
 
 
 
@@ -81,10 +95,17 @@ public class AudioQuestionManager {
         }
     }
 
+/*
+    AudioQuestionManager aqm = new AudioQuestionManager(factory);
+
+    public static void main (String [] args)
+    {
+
+        AudioQuestionManager aqm = new AudioQuestionManager();
+        aqm.addAudioQuestion(3,"TEST");
+
+    }
 
 
-
-
-
-
+*/
 }

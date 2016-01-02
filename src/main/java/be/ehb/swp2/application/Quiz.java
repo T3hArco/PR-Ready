@@ -1,6 +1,9 @@
 package be.ehb.swp2.application;
 
+import be.ehb.swp2.exception.DuplicateQuestionException;
 import be.ehb.swp2.exception.QuizNotFoundException;
+import be.ehb.swp2.manager.AudioQuestionManager;
+import be.ehb.swp2.entity.question.AudioQuestion;
 import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.ui.LoginWindow;
 import be.ehb.swp2.ui.OverviewWindow;
@@ -89,6 +92,7 @@ public class Quiz {
         //LoadingWindow load = new LoadingWindow(factory);
         LoginWindow lw = new LoginWindow(factory);
         OverviewWindow ow = new OverviewWindow(factory);
+        AudioQuestionManager aqm = new AudioQuestionManager(factory);
     }
 
     /**
@@ -96,9 +100,28 @@ public class Quiz {
      *
      * @deprecated To be deprecated and never used in production!
      */
+
+
+
     public void doDbTest() {
 
+        AudioQuestionManager audioQuestionManager = new AudioQuestionManager(factory);
+        SecureRandom random = new SecureRandom();
+        Integer id = null;
+        be.ehb.swp2.entity.question.AudioQuestion audioQuestion = null;
+
+        try {
+            id = AudioQuestionManager.addAudioQuestion(3,"TEST");
+        } catch (DuplicateQuestionException e) {
+            logger.log(Level.SEVERE, "\"Fout tijdens het aanmaken van de vraag\"");
+            e.printStackTrace();
+        }
+
+       AudioQuestionManager aqm = new AudioQuestionManager(factory);
+        aqm.addAudioQuestion(3,"TEST");
+
     }
+
 
     public void imageSaveTest() {
         QuizManager quizManager = new QuizManager(factory);
@@ -121,5 +144,14 @@ public class Quiz {
             logger.log(Level.SEVERE, "\"Fout tijdens het aanmaken van de afbeelding\"");
             e.printStackTrace();
         }
+    }
+
+    public static void main (String [] args)
+    {
+
+        Quiz q1 = new Quiz();
+        q1.doDbTest();
+
+
     }
 }
