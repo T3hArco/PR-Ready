@@ -17,21 +17,18 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.SecureRandom;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Created by domienhennion on 8/12/15.
- * Modified by Arnaud..
+ * Created by domienhennion on 2/01/16.
  */
-public class NewQuizWindow extends JFrame implements QuestionWindow, Window {
+public class AdminMenuWindow extends JFrame {
     private SessionFactory factory;
     private QuizManager quizManager;
 
-    public NewQuizWindow(SessionFactory factory) throws UserNoPermissionException {
+    public AdminMenuWindow(SessionFactory factory) throws UserNoPermissionException {
         this.factory = factory;
 
         if (!PermissionHandler.currentUserHasPermission(factory, UserRole.ADMINISTRATOR))
@@ -45,61 +42,20 @@ public class NewQuizWindow extends JFrame implements QuestionWindow, Window {
         final JFrame parent = this;
         final AtomicReference<User> result = new AtomicReference<User>();
         final Browser browser = new Browser();
-        final URL[] filePath = {null};
-        final File[] file = {null};
 
-        browser.registerFunction("newFile", new BrowserFunction() {
+        browser.registerFunction("onExit", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
-                JFileChooser jFileChooser = new JFileChooser();
-                jFileChooser.setCurrentDirectory(new File("."));
-                jFileChooser.setDialogTitle("Image selection");
-
-                if (jFileChooser.showOpenDialog(parent) == JFileChooser.APPROVE_OPTION) {
-                    try {
-                        file[0] = jFileChooser.getSelectedFile();
-                        filePath[0] = new URL("file://" + file[0].getCanonicalPath());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                return JSValue.createUndefined();
-            }
-
-        });
-
-        browser.registerFunction("createQuiz", new BrowserFunction() {
-            public JSValue invoke(JSValue... args) {
-
-                String name = args[0].getString();
-                String description = args[1].getString();
-                Integer newQuiz = null;
-
-                URL imagePath = null;
-                try {
-                    newQuiz = quizManager.addQuiz(name, description);
-                    quizManager.saveLogo(newQuiz, filePath[0]);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    EditorWindow ew = new EditorWindow(factory, newQuiz);
-                } catch (UserNoPermissionException e) {
-                    e.printStackTrace();
-                }
                 browser.dispose();
                 parent.setVisible(false);
                 parent.dispose();
+                OverviewWindow o = new OverviewWindow(factory);
                 return JSValue.createUndefined();
             }
+
         });
 
-        //SecureRandom random = new SecureRandom();
-
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/newQuiz.html");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/adminWin.html");
         parent.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
