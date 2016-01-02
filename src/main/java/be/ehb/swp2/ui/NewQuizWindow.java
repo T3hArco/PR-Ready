@@ -48,16 +48,6 @@ public class NewQuizWindow extends JFrame implements QuestionWindow, Window {
         final URL[] filePath = {null};
         final File[] file = {null};
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/newQuiz.html");
-        parent.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                browser.dispose();
-                parent.setVisible(false);
-                parent.dispose();
-            }
-        });
-
         browser.registerFunction("newFile", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
@@ -81,6 +71,7 @@ public class NewQuizWindow extends JFrame implements QuestionWindow, Window {
 
         browser.registerFunction("createQuiz", new BrowserFunction() {
             public JSValue invoke(JSValue... args) {
+                System.out.println("hallo");
                 String name = args[0].getString();
                 String description = args[1].getString();
                 Integer newQuiz = null;
@@ -94,22 +85,29 @@ public class NewQuizWindow extends JFrame implements QuestionWindow, Window {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                browser.dispose();
-                parent.setVisible(false);
-                parent.dispose();
                 try {
                     EditorWindow ew = new EditorWindow(factory, newQuiz);
                 } catch (UserNoPermissionException e) {
                     e.printStackTrace();
                 }
-                return  JSValue.createUndefined();
+                browser.dispose();
+                parent.setVisible(false);
+                parent.dispose();
+                return JSValue.createUndefined();
             }
         });
 
-        SecureRandom random = new SecureRandom();
+        //SecureRandom random = new SecureRandom();
 
-
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/newQuiz.html");
+        parent.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                browser.dispose();
+                parent.setVisible(false);
+                parent.dispose();
+            }
+        });
 
         parent.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         parent.add(new BrowserView(browser), BorderLayout.CENTER);
