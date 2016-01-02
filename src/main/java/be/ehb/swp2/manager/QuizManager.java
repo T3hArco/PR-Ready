@@ -1,6 +1,5 @@
 package be.ehb.swp2.manager;
 
-import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.Quiz;
 import be.ehb.swp2.exception.BadFileException;
 import be.ehb.swp2.exception.QuizNotFoundException;
@@ -11,6 +10,7 @@ import org.jboss.logging.Logger;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import be.ehb.swp2.entity.Question;
 
 /**
  * Created by arnaudcoel on 26/10/15.
