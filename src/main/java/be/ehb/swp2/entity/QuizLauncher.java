@@ -13,10 +13,16 @@ public class QuizLauncher implements Window {
     private ArrayList<QuestionWindow> windows;
     private ArrayList<String> antwoorden;
 
+
+
+
+
     public QuizLauncher(SessionFactory factory) {
         this.factory = factory;
         windows = new ArrayList<QuestionWindow>();
         antwoorden = new ArrayList<String>();
+        System.out.println("test1");
+
 
         antwoorden.add("kraai");
         antwoorden.add("twitter");
@@ -29,51 +35,97 @@ public class QuizLauncher implements Window {
         windows.add(new ImageWindow(factory, "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png", tc));
         windows.add(new VideoWindow(factory, "u1I9ITfzqFs", mc));
         windows.add(new AudioWindow(factory, "u1I9ITfzqFs", tc));
+
+
+
+        this.initComponents();
     }
 
     public void initComponents() {
-        QuizLauncher quizLauncher = new QuizLauncher(factory);
+
         int increment = 0;
         boolean running = true;
 
+//2255
+
+
+
         while (running != false) {
+            System.out.println("test test");
             if (windows.get(increment).getClass().getSimpleName().equals("TextWindow")) {
                 TextWindow t = (TextWindow) windows.get(increment);
+                System.out.println(increment);
+                if (t.getChoice() == 1) {
 
-                if (t.getChoice() == 1)
                     increment++;
-                else if (t.getChoice() == 2)
+
+
+                }
+                else if (t.getChoice() == 2) {
+
+
                     increment--;
+
+
+                }
             }
 
-            if (windows.get(increment).getClass().getSimpleName().equals("ImageWindow")) {
+           else if (windows.get(increment).getClass().getSimpleName().equals("ImageWindow")) {
                 ImageWindow p = (ImageWindow) windows.get(increment);
+                System.out.println(increment);
+                if (p.getChoice() == 1) {
 
-                if (p.getChoice() == 1)
                     increment++;
-                else if (p.getChoice() == 2)
+
+
+                }
+                else if (p.getChoice() == 2) {
+
+
                     increment--;
+
+
+                }
+
             }
 
-            if (windows.get(increment).getClass().getSimpleName().equals("VideoWindow")) {
+           else if (windows.get(increment).getClass().getSimpleName().equals("VideoWindow")) {
                 VideoWindow v = (VideoWindow) windows.get(increment);
+                System.out.println(increment);
+                if (v.getChoice() == 1) {
 
-                if (v.getChoice() == 1)
                     increment++;
-                else if (v.getChoice() == 2)
+
+
+                }
+                else if (v.getChoice() == 2) {
+
+
                     increment--;
+
+
+                }
             }
 
-            if (windows.get(increment).getClass().getSimpleName().equals("AudioWindow")) {
+            else if (windows.get(increment).getClass().getSimpleName().equals("AudioWindow")) {
                 AudioWindow a = (AudioWindow) windows.get(increment);
+                System.out.println(increment);
+                if (a.getChoice() == 1) {
 
-                if (a.getChoice() == 1)
                     increment++;
-                else if (a.getChoice() == 2)
+
+
+                }
+                else if (a.getChoice() == 2) {
+
+
                     increment--;
+
+
+                }
             }
 
-            if (windows.get(increment).getClass().getSimpleName().equals(null))
+           else if (increment >= windows.size())
                 running = false;
         }
     }

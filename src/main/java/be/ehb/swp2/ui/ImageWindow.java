@@ -1,6 +1,5 @@
 package be.ehb.swp2.ui;
 
-import be.ehb.swp2.entity.Question;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
@@ -17,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import be.ehb.swp2.entity.Question;
 /**
  * Created by Thomas on 3/12/2015.
  */
@@ -38,6 +38,8 @@ public class ImageWindow implements QuestionWindow {
         this.url = url;
         this.question = question;
         this.choice = 1;
+
+        this.initComponents();
     }
 
     /**

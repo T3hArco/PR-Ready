@@ -1,6 +1,5 @@
 package be.ehb.swp2.ui;
 
-import be.ehb.swp2.entity.Question;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
@@ -12,6 +11,7 @@ import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.hibernate.SessionFactory;
+import be.ehb.swp2.entity.Question;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,6 +33,8 @@ public class VideoWindow implements QuestionWindow {
         this.session = session;
         this.url = url;
         this.question = question;
+
+        this.initComponents();
     }
 
     public void initComponents() {
