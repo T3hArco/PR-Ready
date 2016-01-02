@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Created by domienhennion on 8/12/15.
- * Modified by Arnaud
+ * Modified by Arnaud.
  */
 public class NewQuizWindow extends JFrame implements QuestionWindow, Window {
     private SessionFactory factory;
