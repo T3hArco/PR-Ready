@@ -1,9 +1,9 @@
 package be.ehb.swp2.application;
 
-import be.ehb.swp2.exception.DuplicateQuestionException;
 import be.ehb.swp2.exception.QuizNotFoundException;
-import be.ehb.swp2.manager.*;
-import be.ehb.swp2.entity.question.AudioQuestion;
+import be.ehb.swp2.manager.AnswerManager;
+import be.ehb.swp2.manager.QuestionAnswerManager;
+import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.ui.LoginWindow;
 import be.ehb.swp2.ui.OverviewWindow;
 import be.ehb.swp2.util.ConfigurationHandler;
@@ -105,6 +105,9 @@ public class Quiz {
 
         QuestionAnswerManager questionAnswerManager = new QuestionAnswerManager(factory);
         questionAnswerManager.updateQuestionAnswer(1,1, false);
+
+        AnswerManager newAnswerManager = new AnswerManager(factory);
+        newAnswerManager.addAnswer(4,"Brussel");
 
 
        /* AudioQuestionManager audioQuestionManager = new AudioQuestionManager(factory);

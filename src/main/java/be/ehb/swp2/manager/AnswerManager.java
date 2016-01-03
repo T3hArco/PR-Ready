@@ -14,7 +14,7 @@ public class AnswerManager {
     public  SessionFactory factory;
     public AnswerManager(SessionFactory factory) {this.factory = factory;}
 
-    public  Integer addAnswer( int answerId) {
+    public  Integer addAnswer( int answerId, String text) {
 
         Session session = factory.openSession();
         Transaction transaction = null;
@@ -22,7 +22,7 @@ public class AnswerManager {
 
         try {
             transaction = session.beginTransaction();
-            Answer answer = new Answer(answerId);
+            Answer answer = new Answer(answerId, text);
             id = (Integer) session.save(answer);
             transaction.commit();
         } catch (HibernateException e) {
