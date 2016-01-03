@@ -26,11 +26,14 @@ import java.util.TreeSet;
  * Created by Chris on 26/11/2015.
  */
 public class StatisticWindow {
-
+    static final JFrame parent = new JFrame();
+    static final JDialog dialog = new JDialog(parent, "Overview", true);
+    static final Browser browser = new Browser();
     public static void printPie(PieChartData[] DataArr, String title){
         final File temp;
         String absolutePath = null;
         String tempFilePath = null;
+
         try {
             temp = File.createTempFile("temp", Long.toString(System.nanoTime()));
             absolutePath = temp.getAbsolutePath();
@@ -110,6 +113,23 @@ public class StatisticWindow {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        browser.loadURL("file://" + tempFilePath + "/statisticsPie.html");
+        dialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+            }
+        });
+
+        dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        dialog.add(new BrowserView(browser), BorderLayout.CENTER);
+        dialog.setResizable(false);
+        dialog.setUndecorated(true);
+        dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
+        dialog.setLocationRelativeTo(parent);
+        dialog.setVisible(true);
 
     }
 
@@ -220,6 +240,24 @@ public class StatisticWindow {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        browser.loadURL("file://" + tempFilePath + "/statisticsLine.html");
+        dialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+            }
+        });
+
+        dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        dialog.add(new BrowserView(browser), BorderLayout.CENTER);
+        dialog.setResizable(false);
+        dialog.setUndecorated(true);
+        dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
+        dialog.setLocationRelativeTo(parent);
+        dialog.setVisible(true);
 
     }
 
@@ -337,6 +375,23 @@ public class StatisticWindow {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        browser.loadURL("file://" + tempFilePath + "/statisticsColumn.html");
+        dialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+            }
+        });
+
+        dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        dialog.add(new BrowserView(browser), BorderLayout.CENTER);
+        dialog.setResizable(false);
+        dialog.setUndecorated(true);
+        dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
+        dialog.setLocationRelativeTo(parent);
+        dialog.setVisible(true);
 
     }
 
