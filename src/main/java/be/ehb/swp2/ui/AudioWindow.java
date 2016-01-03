@@ -1,6 +1,7 @@
 package be.ehb.swp2.ui;
 
-import be.ehb.swp2.entity.Question;
+import be.ehb.swp2.application.Quiz;
+import be.ehb.swp2.entity.QuizLauncher;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
@@ -17,6 +18,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import be.ehb.swp2.entity.Question;
 
 /**
  * Created by domienhennion on 3/12/15.
@@ -26,7 +28,7 @@ public class AudioWindow implements QuestionWindow {
     private SessionFactory factory;
     private String url;
     private Question question;
-    private int choice;
+    private QuizLauncher quizLauncher;
 
     /**
      * The constructor voor AudioWindow
@@ -34,11 +36,11 @@ public class AudioWindow implements QuestionWindow {
      * @param url      URL van de question
      * @param question Parent question object
      */
-    public AudioWindow(SessionFactory factory, String url, Question question) {
+    public AudioWindow(SessionFactory factory, String url, Question question, QuizLauncher quizLauncher) {
         this.factory = factory;
         this.url = url;
         this.question = question;
-        this.choice = 1;
+        this.quizLauncher = quizLauncher;
     }
 
     /**
@@ -88,10 +90,11 @@ public class AudioWindow implements QuestionWindow {
         browser.registerFunction("nextQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
-                setChoice(1);
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
+                quizLauncher.setIncrement(quizLauncher.getIncrement()+1);
+                quizLauncher.windowChoice();
                 return JSValue.createUndefined();
             }
 
@@ -101,10 +104,11 @@ public class AudioWindow implements QuestionWindow {
         browser.registerFunction("previousQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
-                setChoice(2);
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
+                quizLauncher.setIncrement(quizLauncher.getIncrement() - 1);
+                quizLauncher.windowChoice();
                 return JSValue.createUndefined();
             }
 
@@ -118,25 +122,5 @@ public class AudioWindow implements QuestionWindow {
         dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
-    }
-
-    /**
-     * Gets the current choice
-     *
-     * @return integer
-     * @deprecated why is there a getter here?
-     */
-    public int getChoice() {
-        return choice;
-    }
-
-    /**
-     * Sets the current choice
-     *
-     * @param choice integer
-     * @deprecated why is there a setter here?
-     */
-    public void setChoice(int choice) {
-        this.choice = choice;
     }
 }

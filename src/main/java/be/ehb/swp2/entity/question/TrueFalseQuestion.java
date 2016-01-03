@@ -2,8 +2,8 @@ package be.ehb.swp2.entity.question;
 
 import be.ehb.swp2.entity.AnswerMediaType;
 import be.ehb.swp2.entity.AnswerType;
-import be.ehb.swp2.entity.Question;
 import org.hibernate.SessionFactory;
+import be.ehb.swp2.entity.Question;
 
 /**
  * Created by Ibrahim on 03-11-15.

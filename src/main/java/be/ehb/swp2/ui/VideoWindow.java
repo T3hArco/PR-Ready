@@ -1,6 +1,6 @@
 package be.ehb.swp2.ui;
 
-import be.ehb.swp2.entity.Question;
+import be.ehb.swp2.entity.QuizLauncher;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
@@ -12,6 +12,7 @@ import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.hibernate.SessionFactory;
+import be.ehb.swp2.entity.Question;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,12 +28,14 @@ public class VideoWindow implements QuestionWindow {
     private SessionFactory session;
     private String url;
     private Question question;
-    private int choice = 1;
+    private int choice;
+    private QuizLauncher quizLauncher;
 
-    public VideoWindow(SessionFactory session, String url, Question question) {
+    public VideoWindow(SessionFactory session, String url, Question question, QuizLauncher quizLauncher) {
         this.session = session;
         this.url = url;
         this.question = question;
+        this.quizLauncher = quizLauncher;
     }
 
     public void initComponents() {
@@ -75,10 +78,11 @@ public class VideoWindow implements QuestionWindow {
         browser.registerFunction("nextQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
-                setChoice(1);
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
+                quizLauncher.setIncrement(quizLauncher.getIncrement() + 1);
+                quizLauncher.windowChoice();
                 return JSValue.createUndefined();
             }
         });
@@ -86,10 +90,11 @@ public class VideoWindow implements QuestionWindow {
         browser.registerFunction("previousQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
-                setChoice(2);
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
+                quizLauncher.setIncrement(quizLauncher.getIncrement() - 1);
+                quizLauncher.windowChoice();
                 return JSValue.createUndefined();
             }
         });
