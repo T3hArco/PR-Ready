@@ -1,5 +1,6 @@
-package be.ehb.swp2.ui;
+package be.ehb.swp2.ui.statistics;
 
+import be.ehb.swp2.ui.StatisticMenuWindow;
 import be.ehb.swp2.util.LineChartData;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
@@ -19,7 +20,7 @@ import java.io.PrintWriter;
 /**
  * Created by arnaudcoel on 03/01/16.
  */
-public class LinechartWindow implements Window {
+public class LineChartWindow implements be.ehb.swp2.ui.Window {
     private SessionFactory factory;
     private JFrame parent;
     private JDialog dialog;
@@ -28,7 +29,7 @@ public class LinechartWindow implements Window {
     private String title, subtitle, titleLeft;
     private String[] categories;
 
-    public LinechartWindow(SessionFactory factory, LineChartData[] dataArr, String title, String subtitle, String titleLeft, String[] categories) {
+    public LineChartWindow(SessionFactory factory, LineChartData[] dataArr, String title, String subtitle, String titleLeft, String[] categories) {
         this.factory = factory;
         this.parent = new JFrame();
         this.dialog = new JDialog(parent, "Overview", true);
