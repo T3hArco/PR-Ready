@@ -125,7 +125,7 @@ public class AdminMenuWindow extends JFrame {
                 browser.dispose();
                 parent.setVisible(false);
                 parent.dispose();
-                StatisticMenuWindow smw = new StatisticMenuWindow();
+                StatisticMenuWindow smw = new StatisticMenuWindow(factory);
                 return JSValue.createUndefined();
             }
 
