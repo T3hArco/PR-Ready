@@ -288,29 +288,24 @@ public class UserManager {
         return user;
     }
 
-
-    public User getUserByUsername(String username) throws UserNotFoundException
-    {
+    public Integer getUserByUsername(String username) throws UserNotFoundException, TokenNotFoundException {
         Session session = factory.openSession();
-        Transaction transaction = null;
-        User user = new User();
 
-        try {
-            transaction = session.beginTransaction();
-            user = session.get(User.class, username); // haal de user op via ID
-        } catch (HibernateException e) {
-            if (transaction != null)
-                transaction.rollback();
+        List<Object[]> userList = session.createQuery("SELECT id, username, password FROM User WHERE (username = :username)")
+                .setMaxResults(1)
+                .setParameter("username", username)
+                .list();
 
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+        // Check whether the list is empty, if so, no users are matched, thus return false
+        if (userList.size() == 0)
+            throw new TokenNotFoundException();
 
-        if (user == null)
-            throw new UserNotFoundException();
+        int userId = Integer.parseInt(userList.get(0)[0].toString());
 
-        return user;
+        session.close();
+
+        User user = new UserManager(factory).getUserById(userId);
+        return user.getId();
     }
 
     /**

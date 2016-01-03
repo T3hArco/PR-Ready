@@ -134,9 +134,10 @@ public class EditorWindow extends JFrame implements Window {
                 DOMDocument document = event.getBrowser().getDocument();
                 DOMNode logoDiv = document.findElement(By.id("demo"));
 
-                DOMElement logo = document.createElement("img");
-                logo.setAttribute("src", "data:image/png;base64," + base64);
 
+                DOMElement logo = document.createElement("img");
+               // logo.setAttribute("src", "data:image/png;base64," + base64);
+                logo.setAttribute("src", "http://www.download-free-wallpaper.com/img85/nxxqigvaodaeivvvevms.png");
                 logoDiv.appendChild(logo);
             }
         });

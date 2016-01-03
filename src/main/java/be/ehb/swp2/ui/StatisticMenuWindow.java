@@ -40,13 +40,6 @@ public class StatisticMenuWindow {
         JFrame parent = new JFrame();
         final JDialog dialog = new JDialog(parent, "QUIZ", true);
 
-        /*dataArr.add(new PieChartData("first", 30));
-        dataArr.add(new PieChartData("second", 50));
-        dataArr.add(new PieChartData("third", 20));*/
-
-
-
-
         browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/StatMenuWindow.html?851951951951951");
         dialog.addWindowListener(new WindowAdapter() {
             @Override

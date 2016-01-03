@@ -91,6 +91,10 @@ public class LoginWindow implements Window {
                     configurationHandler.setSetting("user", "token", token);
 
                     JOptionPane.showMessageDialog(null, "Inloggen is gelukt: " + username + ", Token: " + token, "PR-Ready", JOptionPane.INFORMATION_MESSAGE);
+                    browser.dispose();
+                    dialog.setVisible(false);
+                    dialog.dispose();
+                    OverviewWindow ow = new OverviewWindow(factory);
                 } catch (BadLoginException e) {
                     JOptionPane.showMessageDialog(null, "Gebruikersnaam of wachtwoord incorrect.", "PR-Ready", JOptionPane.ERROR_MESSAGE);
                     e.printStackTrace();

@@ -77,7 +77,7 @@ public class OverviewWindow extends JFrame implements Window {
                         "<div class='desc'><p>" + SecurityHandler.stripTags(quiz.getDescription()) + "</p></div>" +
                         "<div class='button'><button onclick='launchQ();'>launch</button></div></div>");
             }
-            //html.println("</div><button onclick='launchE();' class='add'>add</button>");
+            html.println("<button onclick='launchLog();' class='add'>Logout</button>");
 
             if (PermissionHandler.currentUserHasPermission(factory, UserRole.ADMINISTRATOR)) {
                 html.println("<button onclick='launchE();' class='add'>ADD QUIZ (Admin)</button>" +
@@ -86,7 +86,8 @@ public class OverviewWindow extends JFrame implements Window {
 
             html.println("<script>function launchQ(){ launchQuiz(); } " +
                     "function launchE(){ launchEditor(); } " +
-                    "function launchM(){ launchMenu(); } </script></body></html>");
+                    "function launchM(){ launchMenu(); } " +
+                    "function launchLog(){ launchLogout(); }</script></body></html>");
 
             html.close();
         } catch (FileNotFoundException e) {
@@ -138,6 +139,19 @@ public class OverviewWindow extends JFrame implements Window {
                 QuizLauncher ql = new QuizLauncher(factory);
 
                 return JSValue.createUndefined();
+            }
+        });
+
+
+        browser.registerFunction("launchLogout", new BrowserFunction() {
+            public JSValue invoke(JSValue... jsValues) {
+
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                LoginWindow lw = new LoginWindow(factory);
+
+                return  JSValue.createUndefined();
             }
         });
 
