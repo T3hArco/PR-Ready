@@ -2,9 +2,11 @@ package be.ehb.swp2.application;
 
 import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.manager.QuizManager;
+import be.ehb.swp2.ui.LoadingWindow;
 import be.ehb.swp2.ui.LoginWindow;
 import be.ehb.swp2.ui.OverviewWindow;
 import be.ehb.swp2.util.ConfigurationHandler;
+import be.ehb.swp2.util.LoadingThread;
 import be.ehb.swp2.util.PieChartData;
 import com.teamdev.jxbrowser.chromium.LoggerProvider;
 import org.hibernate.SessionFactory;
@@ -28,13 +30,14 @@ public class Quiz {
     private SessionFactory factory;
     private Logger logger;
     private ConfigurationHandler configurationHandler;// !
+    Thread loadingWindow = new Thread(new LoadingThread());
 
     /**
      * Default constructor.
      */
     public Quiz() {
         logger = Logger.getLogger(Quiz.class.getName());
-
+        //loadingWindow.start();
         this.initialize();
     }
 
@@ -86,10 +89,8 @@ public class Quiz {
         long end = System.currentTimeMillis();
         long totalTime = end - start;
         logger.info("Initialization took " + totalTime + " milliseconds!");
-
-        //LoadingWindow load = new LoadingWindow(factory);
         LoginWindow lw = new LoginWindow(factory);
-        OverviewWindow ow = new OverviewWindow(factory);
+        loadingWindow.stop();
     }
 
     /**

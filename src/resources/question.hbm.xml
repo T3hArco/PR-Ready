@@ -12,7 +12,7 @@
             <generator class="native"/>
         </id>
         <property name="parentId" type="int" column="parentId" not-null="true"/>
-        <property name="title" type="string" column="title" not-null="true" />
+        <property name="title" type="string" column="title" not-null="true"/>
         <property name="text" type="string" column="text" not-null="true"/>
         <property name="answerType" column="answerType">
             <type name="org.hibernate.type.EnumType">
@@ -28,6 +28,6 @@
         </property>
         <!--<many-to-one name="videoQuestion" class="be.ehb.swp2.entity.question.VideoQuestion"/>
         <many-to-one name="audioQuestion" class="be.ehb.swp2.entity.question.AudioQuestion"/>-->
-        
+
     </class>
 </hibernate-mapping>

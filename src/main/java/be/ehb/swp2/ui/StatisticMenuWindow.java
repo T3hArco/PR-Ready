@@ -1,5 +1,6 @@
 package be.ehb.swp2.ui;
 
+import be.ehb.swp2.exception.UserNoPermissionException;
 import be.ehb.swp2.util.ColumnData;
 import be.ehb.swp2.util.LineChartData;
 import com.teamdev.jxbrowser.chromium.Browser;
@@ -25,27 +26,20 @@ import java.awt.event.WindowEvent;
  * Created by Thomas on 2/01/2016.
  */
 public class StatisticMenuWindow {
-    private SessionFactory session;
+    private static SessionFactory factory;
 
 
-
-    public StatisticMenuWindow(){
-     this.initComponents();
+    public StatisticMenuWindow(SessionFactory factory){
+        this.factory = factory;
+        this.initComponents();
     }
 
 
-    public void initComponents() {
+    public static void initComponents() {
 
         final Browser browser = new Browser();
         JFrame parent = new JFrame();
         final JDialog dialog = new JDialog(parent, "QUIZ", true);
-
-        /*dataArr.add(new PieChartData("first", 30));
-        dataArr.add(new PieChartData("second", 50));
-        dataArr.add(new PieChartData("third", 20));*/
-
-
-
 
         browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/StatMenuWindow.html?851951951951951");
         dialog.addWindowListener(new WindowAdapter() {
@@ -61,14 +55,15 @@ public class StatisticMenuWindow {
         browser.registerFunction("createPieChart", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                System.out.println("pie");
                 PieChartData[] dataArr = new PieChartData[3];
                 dataArr[0] = new PieChartData("first", 30);
                 dataArr[1] = new PieChartData("second", 50);
                 dataArr[2] = new PieChartData("third", 20);
                 StatisticWindow.printPie(dataArr, "test");
-                browser.dispose();
-                dialog.setVisible(false);
-                dialog.dispose();
                 return JSValue.createUndefined();
             }
         });
@@ -77,6 +72,10 @@ public class StatisticMenuWindow {
         browser.registerFunction("createLineChart", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                System.out.println("line");
                 LineChartData[] lineData = new LineChartData[3];
                 String title = "title";
                 String subtitle = "subtitle";
@@ -91,10 +90,6 @@ public class StatisticMenuWindow {
                 lineData[1] = new LineChartData("line2", data);
                 lineData[2] = new LineChartData("line3", data);
                 StatisticWindow.printLine(lineData, title, subtitle, leftTitle, categories);
-
-                browser.dispose();
-                dialog.setVisible(false);
-                dialog.dispose();
                 return JSValue.createUndefined();
             }
         });
@@ -102,6 +97,10 @@ public class StatisticMenuWindow {
         browser.registerFunction("createColumnChart", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                System.out.println("column");
                 ColumnData[] dataColumn = new ColumnData[3];
                 double[] data = new double[2];
                 data[0] = 60.00;
@@ -112,15 +111,29 @@ public class StatisticMenuWindow {
                 dataColumn[1] = new ColumnData("column2", data);
                 dataColumn[2] = new ColumnData("column3", data);
                 StatisticWindow.printColumn(dataColumn, title, subtitle);
-                browser.dispose();
-                dialog.setVisible(false);
-                dialog.dispose();
+
                 return JSValue.createUndefined();
             }
         });
 
 
+        browser.registerFunction("onExit", new BrowserFunction() {
 
+            public JSValue invoke(JSValue... jsValues) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                System.out.println("exit");
+                try {
+                    AdminMenuWindow amw = new AdminMenuWindow(factory);
+                    System.out.println("exit2");
+                } catch (UserNoPermissionException e) {
+                    e.printStackTrace();
+                }
+                return JSValue.createUndefined();
+            }
+
+        });
 
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
@@ -129,9 +142,5 @@ public class StatisticMenuWindow {
         dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
-    }
-
-    public static void main(String[] args){
-        StatisticMenuWindow st = new StatisticMenuWindow();
     }
 }

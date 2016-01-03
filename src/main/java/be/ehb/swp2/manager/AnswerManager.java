@@ -1,4 +1,5 @@
 package be.ehb.swp2.manager;
+
 import be.ehb.swp2.entity.Answer;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -11,10 +12,13 @@ import org.hibernate.Transaction;
  */
 public class AnswerManager {
 
-    public  SessionFactory factory;
-    public AnswerManager(SessionFactory factory) {this.factory = factory;}
+    public SessionFactory factory;
 
-    public  Integer addAnswer( int answerId) {
+    public AnswerManager(SessionFactory factory) {
+        this.factory = factory;
+    }
+
+    public Integer addAnswer(int answerId, String text) {
 
         Session session = factory.openSession();
         Transaction transaction = null;
@@ -22,7 +26,7 @@ public class AnswerManager {
 
         try {
             transaction = session.beginTransaction();
-            Answer answer = new Answer(answerId);
+            Answer answer = new Answer(answerId, text);
             id = (Integer) session.save(answer);
             transaction.commit();
         } catch (HibernateException e) {
@@ -54,13 +58,13 @@ public class AnswerManager {
     }
 
 
-    public void updateAnswer( int id, int answerId) {
+    public void updateAnswer(int id, int answerId) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
-            Answer answer = session.get(Answer.class,id);
+            Answer answer = session.get(Answer.class, id);
             answer.setAnswerId(answerId);
             session.update(answer);
             transaction.commit();
@@ -74,7 +78,6 @@ public class AnswerManager {
             session.close();
         }
     }
-
 
 
 }

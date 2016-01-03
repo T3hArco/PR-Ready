@@ -7,6 +7,7 @@ package be.ehb.swp2.entity;
 /**
  * This class contains all data for a question
  */
+
 public class Question {
     /**
      * The identifier for this question in the database
@@ -17,46 +18,61 @@ public class Question {
      * This is the title of the question
      */
     private String title;
-
     /**
      * This is the body of the question
      */
     private String text;
-
     /**
      * This is the type of the question. This identifier is only used in the database and is used to point to the correct
      * sub-table
      */
     private AnswerType answerType;
-
     /**
      * The media type for the answer
      */
     private AnswerMediaType answerMediaType;
-
     private int parentId;
+    private int quizId;
 
     /**
      * The default constructor for Question
      */
     public Question() {
     }
-
     /**
      * The constructor for question
      *
      * @param title           The title of the question
      * @param text            The body of the question
-     * @param answerType    the type of the question.
+     * @param answerType      the type of the question.
      * @param answerMediaType the type of the media
-     * @param parentId ??? TODO
+     * @param parentId        ??? TODO
      */
-    public Question(String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, int parentId) {
+    public Question(String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, int parentId, int quizId) {
         this.title = title;
         this.text = text;
         this.answerType = answerType;
         this.answerMediaType = answerMediaType;
         this.parentId = parentId;
+        this.quizId = quizId;
+    }
+
+    public Question(int id, String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, int parentId, int quizId) {
+        this.id = id;
+        this.title = title;
+        this.text = text;
+        this.answerType = answerType;
+        this.answerMediaType = answerMediaType;
+        this.parentId = parentId;
+        this.quizId = quizId;
+    }
+
+    public int getQuizId() {
+        return quizId;
+    }
+
+    public void setQuizId(int quizId) {
+        this.quizId = quizId;
     }
 
     /**

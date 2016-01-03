@@ -288,6 +288,26 @@ public class UserManager {
         return user;
     }
 
+    public Integer getUserByUsername(String username) throws UserNotFoundException, TokenNotFoundException {
+        Session session = factory.openSession();
+
+        List<Object[]> userList = session.createQuery("SELECT id, username, password FROM User WHERE (username = :username)")
+                .setMaxResults(1)
+                .setParameter("username", username)
+                .list();
+
+        // Check whether the list is empty, if so, no users are matched, thus return false
+        if (userList.size() == 0)
+            throw new TokenNotFoundException();
+
+        int userId = Integer.parseInt(userList.get(0)[0].toString());
+
+        session.close();
+
+        User user = new UserManager(factory).getUserById(userId);
+        return user.getId();
+    }
+
     /**
      * Deze methode zal doormiddel van de gebruikersiD het wachtwoord van de gebruiker veranderen.
      *

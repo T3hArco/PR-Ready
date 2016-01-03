@@ -9,13 +9,12 @@ import be.ehb.swp2.exception.UserNoPermissionException;
 import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.util.PermissionHandler;
+import be.ehb.swp2.util.SecurityHandler;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.hibernate.SessionFactory;
-import be.ehb.swp2.entity.Question;
-import be.ehb.swp2.util.SecurityHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +31,6 @@ import java.util.TreeSet;
  * Created by domienhennion on 22/11/15.
  * Bijgewerkt door arnaudcoel 22/11/15.
  */
-
 
 public class OverviewWindow extends JFrame implements Window {
     private TreeSet<Quiz> quizSet;
@@ -78,7 +76,7 @@ public class OverviewWindow extends JFrame implements Window {
                         "<div class='desc'><p>" + SecurityHandler.stripTags(quiz.getDescription()) + "</p></div>" +
                         "<div class='button'><button onclick='launchQ();'>launch</button></div></div>");
             }
-            //html.println("</div><button onclick='launchE();' class='add'>add</button>");
+            html.println("<button onclick='launchLog();' class='add'>Logout</button>");
 
             if (PermissionHandler.currentUserHasPermission(factory, UserRole.ADMINISTRATOR)) {
                 html.println("<button onclick='launchE();' class='add'>ADD QUIZ (Admin)</button>" +
@@ -87,7 +85,8 @@ public class OverviewWindow extends JFrame implements Window {
 
             html.println("<script>function launchQ(){ launchQuiz(); } " +
                     "function launchE(){ launchEditor(); } " +
-                    "function launchM(){ launchMenu(); } </script></body></html>");
+                    "function launchM(){ launchMenu(); } " +
+                    "function launchLog(){ launchLogout(); }</script></body></html>");
 
             html.close();
         } catch (FileNotFoundException e) {
@@ -129,7 +128,7 @@ public class OverviewWindow extends JFrame implements Window {
                 dialog.setVisible(false);
                 dialog.dispose();
 
-                return  JSValue.createUndefined();
+                return JSValue.createUndefined();
             }
         });
 
@@ -137,6 +136,19 @@ public class OverviewWindow extends JFrame implements Window {
             public JSValue invoke(JSValue... jsValues) {
 
                 QuizLauncher ql = new QuizLauncher(factory);
+
+                return JSValue.createUndefined();
+            }
+        });
+
+
+        browser.registerFunction("launchLogout", new BrowserFunction() {
+            public JSValue invoke(JSValue... jsValues) {
+
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                LoginWindow lw = new LoginWindow(factory);
 
                 return JSValue.createUndefined();
             }
@@ -154,7 +166,7 @@ public class OverviewWindow extends JFrame implements Window {
                 dialog.setVisible(false);
                 dialog.dispose();
 
-                return  JSValue.createUndefined();
+                return JSValue.createUndefined();
             }
 
 
@@ -185,6 +197,7 @@ public class OverviewWindow extends JFrame implements Window {
      * @param q quiz in question
      * @throws DuplicateQuizException if a duplicate was made
      */
+
     public void addQuiz(Quiz q) throws DuplicateQuizException {
         if (quizSet.contains(q))
             throw new DuplicateQuizException();
@@ -198,6 +211,7 @@ public class OverviewWindow extends JFrame implements Window {
      * @param q quiz in question
      * @throws QuizNotFoundException if the quiz was not found in the list
      */
+
     public void removeQuiz(Quiz q) throws QuizNotFoundException {
         if (!quizSet.contains(q))
             throw new QuizNotFoundException();

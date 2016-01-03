@@ -4,14 +4,14 @@ package be.ehb.swp2.entity.question;
  * Created by arnaudcoel on 10/12/15.
  */
 public class ImageQuestion {
-    private int id, parentQuestion;
+    private int id, parentId;
     private String link;
 
     public ImageQuestion() {
     }
 
-    public ImageQuestion(int parentQuestion, String link) {
-        this.parentQuestion = parentQuestion;
+    public ImageQuestion(int parentId, String link) {
+        this.parentId = parentId;
         this.link = link;
     }
 
@@ -23,12 +23,12 @@ public class ImageQuestion {
         this.id = id;
     }
 
-    public int getParentQuestion() {
-        return parentQuestion;
+    public int getParentId() {
+        return parentId;
     }
 
-    public void setParentQuestion(int parentQuestion) {
-        this.parentQuestion = parentQuestion;
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
     }
 
     public String getLink() {

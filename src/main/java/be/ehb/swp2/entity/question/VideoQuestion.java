@@ -4,7 +4,7 @@ package be.ehb.swp2.entity.question;
  * Created by arnaudcoel on 10/12/15.
  */
 public class VideoQuestion {
-    private int id, parentQuestion;
+    private int id, parentId;
     private String link;
 
     /**
@@ -16,11 +16,11 @@ public class VideoQuestion {
     /**
      * The constructor for questions
      *
-     * @param parentQuestion integer
-     * @param link           string
+     * @param parentId integer
+     * @param link     string
      */
-    public VideoQuestion(int parentQuestion, String link) {
-        this.parentQuestion = parentQuestion;
+    public VideoQuestion(int parentId, String link) {
+        this.parentId = parentId;
         this.link = link;
     }
 
@@ -65,16 +65,17 @@ public class VideoQuestion {
      *
      * @return integer
      */
-    public int getParentQuestion() {
-        return parentQuestion;
+    public int getParentId() {
+        return parentId;
     }
 
     /**
      * Sets the parent question id
      *
-     * @param parentQuestion integer
+     * @param parentId integer
      */
-    public void setParentQuestion(int parentQuestion) {
-        this.parentQuestion = parentQuestion;
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
     }
+
 }

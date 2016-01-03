@@ -17,10 +17,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.SecureRandom;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -47,6 +45,7 @@ public class NewQuizWindow extends JFrame implements QuestionWindow, Window {
         final Browser browser = new Browser();
         final URL[] filePath = {null};
         final File[] file = {null};
+        final JFrame parentosshalamayamosHOERA = this;
 
         browser.registerFunction("newFile", new BrowserFunction() {
 
@@ -55,13 +54,15 @@ public class NewQuizWindow extends JFrame implements QuestionWindow, Window {
                 jFileChooser.setCurrentDirectory(new File("."));
                 jFileChooser.setDialogTitle("Image selection");
 
-                if (jFileChooser.showOpenDialog(parent) == JFileChooser.APPROVE_OPTION) {
+                if (jFileChooser.showOpenDialog(parentosshalamayamosHOERA) == JFileChooser.APPROVE_OPTION) {
                     try {
                         file[0] = jFileChooser.getSelectedFile();
                         filePath[0] = new URL("file://" + file[0].getCanonicalPath());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    // handle cancelled
                 }
 
                 return JSValue.createUndefined();
@@ -71,10 +72,13 @@ public class NewQuizWindow extends JFrame implements QuestionWindow, Window {
 
         browser.registerFunction("createQuiz", new BrowserFunction() {
             public JSValue invoke(JSValue... args) {
-
                 String name = args[0].getString();
                 String description = args[1].getString();
                 Integer newQuiz = null;
+
+                browser.dispose();
+                parent.setVisible(false);
+                parent.dispose();
 
                 URL imagePath = null;
                 try {
@@ -90,9 +94,6 @@ public class NewQuizWindow extends JFrame implements QuestionWindow, Window {
                 } catch (UserNoPermissionException e) {
                     e.printStackTrace();
                 }
-                browser.dispose();
-                parent.setVisible(false);
-                parent.dispose();
                 return JSValue.createUndefined();
             }
         });

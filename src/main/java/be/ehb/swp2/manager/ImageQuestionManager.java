@@ -12,72 +12,74 @@ import org.hibernate.Transaction;
  */
 public class ImageQuestionManager {
 
-        public SessionFactory factory;
+    public SessionFactory factory;
 
-        public ImageQuestionManager(SessionFactory factory) {this.factory = factory;}
-        // public ImageQuestionManager(){};
+    public ImageQuestionManager(SessionFactory factory) {
+        this.factory = factory;
+    }
+    // public ImageQuestionManager(){};
 
-        public Integer addImageQuestion( int parentQuestion, String link) {
+    public Integer addImageQuestion(int parentQuestion, String link) {
 
-            Session session = factory.openSession();
-            Transaction transaction = null;
-            Integer id = null;
+        Session session = factory.openSession();
+        Transaction transaction = null;
+        Integer id = null;
 
-            try {
-                transaction = session.beginTransaction();
-                ImageQuestion imagequestion = new ImageQuestion(parentQuestion, link);
-               id = (Integer) session.save(imagequestion);
-                transaction.commit();
-            } catch (HibernateException e) {
-                if (transaction != null)
-                    transaction.rollback();
-            } finally {
-                session.close();
-            }
-            return id;
+        try {
+            transaction = session.beginTransaction();
+            ImageQuestion imagequestion = new ImageQuestion(parentQuestion, link);
+            id = (Integer) session.save(imagequestion);
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+        } finally {
+            session.close();
         }
+        return id;
+    }
 
-        public void deleteImageQuestion(Integer id) {
-            Session session = factory.openSession();
-            Transaction transaction = null;
+    public void deleteImageQuestion(Integer id) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
 
-            try {
-                transaction = session.beginTransaction();
-                ImageQuestion imagequestion = session.get(ImageQuestion.class, id);
-                session.delete(imagequestion);
-                transaction.commit(); //
-            } catch (HibernateException e) {
-                if (transaction != null)
-                    transaction.rollback();
+        try {
+            transaction = session.beginTransaction();
+            ImageQuestion imagequestion = session.get(ImageQuestion.class, id);
+            session.delete(imagequestion);
+            transaction.commit(); //
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
 
-                e.printStackTrace();
-            } finally {
-                session.close();
-            }
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
+    }
 
 
-        public void updateImageQuestion( int id, String link, int parentQuestion) {
-            Session session = factory.openSession();
-            Transaction transaction = null;
+    public void updateImageQuestion(int id, String link, int parentQuestion) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
 
-            try {
-                transaction = session.beginTransaction();
-                ImageQuestion imagequestion = session.get(ImageQuestion.class,id);
-                imagequestion.setLink(link);
-                imagequestion.setParentQuestion(parentQuestion);
-                session.update(imagequestion);
-                transaction.commit();
-            } catch (HibernateException e) {
+        try {
+            transaction = session.beginTransaction();
+            ImageQuestion imagequestion = session.get(ImageQuestion.class, id);
+            imagequestion.setLink(link);
+            imagequestion.setParentId(parentQuestion);
+            session.update(imagequestion);
+            transaction.commit();
+        } catch (HibernateException e) {
 
-                if (transaction != null)
-                    transaction.rollback();
+            if (transaction != null)
+                transaction.rollback();
 
-                e.printStackTrace();
-            } finally {
-                session.close();
-            }
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
+    }
 
 
    /* public static void main (String [] args)

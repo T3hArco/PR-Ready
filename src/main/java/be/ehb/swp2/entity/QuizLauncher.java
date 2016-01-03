@@ -39,140 +39,34 @@ public class QuizLauncher implements Window {
 
     public void initComponents() {
 
-            System.out.println("test test");
-            if (windows.get(increment).getClass().getSimpleName().equals("TextWindow")) {
-                TextWindow t = (TextWindow) windows.get(increment);
-                System.out.println(increment);
 
-                switch (t.getChoice()) {
-                    case 1:
-                        increment++;
-                        break;
-                    case 2:
-                        increment--;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            if (windows.get(increment).getClass().getSimpleName().equals("ImageWindow")) {
-                ImageWindow p = (ImageWindow) windows.get(increment);
-                System.out.println(increment);
-                switch (p.getChoice()) {
-                    case 1:
-                        increment++;
-                        break;
-                    case 2:
-                        increment--;
-                        break;
-                    default:
-                        break;
-                }
-
-            }
-
-            if (windows.get(increment).getClass().getSimpleName().equals("VideoWindow")) {
-                VideoWindow v = (VideoWindow) windows.get(increment);
-                System.out.println(increment);
-                switch (v.getChoice()) {
-                    case 1:
-                        increment++;
-                        break;
-                    case 2:
-                        increment--;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            if (windows.get(increment).getClass().getSimpleName().equals("AudioWindow")) {
-                AudioWindow a = (AudioWindow) windows.get(increment);
-                System.out.println(increment);
-                switch (a.getChoice()) {
-                    case 1:
-                        increment++;
-                        break;
-                    case 2:
-                        increment--;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            if (increment > windows.size())
-                running = false;
     }
 
-    public void windowChoice(){
+    public void windowChoice() {
 
         System.out.println("test test");
         if (windows.get(increment) instanceof TextWindow) {
             TextWindow t = (TextWindow) windows.get(increment);
             t.initComponents();
             System.out.println("textwindow");
-
-            /*switch (t.getChoice()) {
-                case 1:
-                    increment++;
-                    break;
-                case 2:
-                    increment--;
-                    break;
-                default:
-                    break;
-            }*/
         }
 
         if (windows.get(increment) instanceof ImageWindow) {
             ImageWindow p = (ImageWindow) windows.get(increment);
             p.initComponents();
             System.out.println("Imagewindow");
-            /*switch (p.getChoice()) {
-                case 1:
-                    increment++;
-                    break;
-                case 2:
-                    increment--;
-                    break;
-                default:
-                    break;
-            }*/
-
         }
 
         if (windows.get(increment) instanceof VideoWindow) {
             VideoWindow v = (VideoWindow) windows.get(increment);
             v.initComponents();
             System.out.println("Videowindow");
-            /*switch (v.getChoice()) {
-                case 1:
-                    increment++;
-                    break;
-                case 2:
-                    increment--;
-                    break;
-                default:
-                    break;
-            }*/
         }
 
         if (windows.get(increment) instanceof AudioWindow) {
             AudioWindow a = (AudioWindow) windows.get(increment);
             a.initComponents();
             System.out.println("Audiowindow");
-           /* switch (a.getChoice()) {
-                case 1:
-                    increment++;
-                    break;
-                case 2:
-                    increment--;
-                    break;
-                default:
-                    break;
-            }*/
         }
     }
 
@@ -191,7 +85,8 @@ public class QuizLauncher implements Window {
     public void setRunning(boolean running) {
         this.running = running;
     }
-    public int getWindowsSize(){
+
+    public int getWindowsSize() {
         return windows.size();
     }
 }

@@ -4,15 +4,12 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 
-
 <hibernate-mapping>
     <class name="be.ehb.swp2.entity.Answer" table="Answer">
         <meta attribute="class-description">
             This class contains all the users
         </meta>
-        <id name="id" type="int" column="id">
-            <generator class="native"/>
-        </id>
-        <property name="answerId" column="answerId" type="int"/>
+        <id name="answerId" column="answerId" type="int"/>
+        <property name="text" type="string" column="text" not-null="true"/>
     </class>
 </hibernate-mapping>
