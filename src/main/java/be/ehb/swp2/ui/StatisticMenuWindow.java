@@ -34,7 +34,7 @@ public class StatisticMenuWindow {
     }
 
 
-    public void initComponents() {
+    public static void initComponents() {
 
         final Browser browser = new Browser();
         JFrame parent = new JFrame();
@@ -95,6 +95,9 @@ public class StatisticMenuWindow {
         browser.registerFunction("createColumnChart", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
                 ColumnData[] dataColumn = new ColumnData[3];
                 double[] data = new double[2];
                 data[0] = 60.00;
@@ -105,9 +108,7 @@ public class StatisticMenuWindow {
                 dataColumn[1] = new ColumnData("column2", data);
                 dataColumn[2] = new ColumnData("column3", data);
                 StatisticWindow.printColumn(dataColumn, title, subtitle);
-                browser.dispose();
-                dialog.setVisible(false);
-                dialog.dispose();
+
                 return JSValue.createUndefined();
             }
         });
