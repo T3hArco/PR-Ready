@@ -86,7 +86,7 @@ public class AudioWindow implements QuestionWindow {
                 dialog.dispose();
             }
         });
-//666888
+
         browser.registerFunction("nextQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
