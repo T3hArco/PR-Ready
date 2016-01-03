@@ -5,6 +5,7 @@ import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.ui.LoginWindow;
 import be.ehb.swp2.ui.OverviewWindow;
 import be.ehb.swp2.util.ConfigurationHandler;
+import be.ehb.swp2.util.PieChartData;
 import com.teamdev.jxbrowser.chromium.LoggerProvider;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -121,5 +122,10 @@ public class Quiz {
             logger.log(Level.SEVERE, "\"Fout tijdens het aanmaken van de afbeelding\"");
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args){
+        Quiz q = new Quiz();
+        q.doDbTest();
     }
 }
