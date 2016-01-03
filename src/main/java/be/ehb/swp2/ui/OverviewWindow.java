@@ -135,14 +135,7 @@ public class OverviewWindow extends JFrame implements Window {
         browser.registerFunction("launchQuiz", new BrowserFunction() {
             public JSValue invoke(JSValue... jsValues) {
 
-
-
                 QuizLauncher ql = new QuizLauncher(factory);
-
-
-                browser.dispose();
-                dialog.setVisible(false);
-                dialog.dispose();
 
                 return JSValue.createUndefined();
             }
