@@ -23,7 +23,7 @@ public class OpenQuestion extends Question {
     private AnswerType answerType;
 
     public OpenQuestion(String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, ArrayList<String> answers) {
-        super(title, text, answerType, answerMediaType, 1);
+        super(title, text, answerType, answerMediaType, 1, 1);
         this.answers = answers;
         this.answerType = AnswerType.OPEN;
     }

@@ -60,7 +60,7 @@ public class AudioWindow implements QuestionWindow {
                     String audioUrl = "http://www.youtube.com/embed/" + url + "?enablejsapi=1&amp;fs=0&amp;rel=0&amp;showinfo=0&amp;modestbranding=1&amp;iv_load_policy=3&amp;controls=0&amp;autoplay=0&amp;loop=0";
 
                     DOMDocument document = event.getBrowser().getDocument();
-                    DOMNode root = document.findElement(By.id("audio"));
+                    DOMNode root = document.findElement(By.id("audioo.hbm.xml"));
                     DOMElement iframe = document.createElement("iframe");
                     iframe.setAttribute("width", "250");
                     iframe.setAttribute("height", "250");

@@ -9,5 +9,6 @@ import be.ehb.swp2.application.Quiz;
 public class Runner {
     public static void main(String[] args) {
         Quiz quiz = new Quiz();
+        quiz.doDbTest();
     }
 }
