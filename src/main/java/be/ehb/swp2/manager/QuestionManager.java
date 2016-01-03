@@ -37,7 +37,7 @@ public class QuestionManager {
 
         try {
             transaction = session.beginTransaction(); // start een transactie op
-            Question question = new Question(title, text, questionType, answerMediaType, 1);
+            Question question = new Question(title, text, questionType, answerMediaType, 1, 1);
             questionId = (Integer) session.save(question); // geef de ID van de gebruiker weer
             transaction.commit(); // persist in de database
         } catch (HibernateException e) {

@@ -65,7 +65,7 @@ public class ImageQuestionManager {
                 transaction = session.beginTransaction();
                 ImageQuestion imagequestion = session.get(ImageQuestion.class,id);
                 imagequestion.setLink(link);
-                imagequestion.setParentQuestion(parentQuestion);
+                imagequestion.setParentId(parentQuestion);
                 session.update(imagequestion);
                 transaction.commit();
             } catch (HibernateException e) {

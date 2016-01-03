@@ -288,6 +288,31 @@ public class UserManager {
         return user;
     }
 
+
+    public User getUserByUsername(String username) throws UserNotFoundException
+    {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+        User user = new User();
+
+        try {
+            transaction = session.beginTransaction();
+            user = session.get(User.class, username); // haal de user op via ID
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        if (user == null)
+            throw new UserNotFoundException();
+
+        return user;
+    }
+
     /**
      * Deze methode zal doormiddel van de gebruikersiD het wachtwoord van de gebruiker veranderen.
      *

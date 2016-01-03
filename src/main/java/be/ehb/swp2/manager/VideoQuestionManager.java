@@ -62,7 +62,7 @@ public class VideoQuestionManager {
             transaction = session.beginTransaction();
             VideoQuestion videoquestion = session.get(VideoQuestion.class,id);
             videoquestion.setLink(link);
-            videoquestion.setParentQuestion(parentQuestion);
+            videoquestion.setParentId(parentQuestion);
             session.update(videoquestion);
             transaction.commit();
         } catch (HibernateException e) {

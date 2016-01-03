@@ -1,5 +1,6 @@
 package be.ehb.swp2.util;
 
+
 import org.jsoup.Jsoup;
 import org.jsoup.examples.HtmlToPlainText;
 
