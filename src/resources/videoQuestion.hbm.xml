@@ -5,13 +5,13 @@
 
 <hibernate-mapping>
     <class name="be.ehb.swp2.entity.question.VideoQuestion" table="VideoQuestion">
-    <meta attribute="class-description">
-        This class contains all the users
-    </meta>
+        <meta attribute="class-description">
+            This class contains all the users
+        </meta>
 
         <id name="id" type="int" column="Id">
-        <generator class="native"/>
-    </id>
+            <generator class="native"/>
+        </id>
 
         <property name="link" column="link" type="string" length="300"/>
 
@@ -19,6 +19,6 @@
         <many-to-one name="parentId" column="parentId" class="be.ehb.swp2.entity.Question"/> -->
 
         <property name="parentId" column="parentId"/>
-</class>
+    </class>
 </hibernate-mapping>
 

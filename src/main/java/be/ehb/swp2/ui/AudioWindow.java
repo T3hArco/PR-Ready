@@ -1,6 +1,6 @@
 package be.ehb.swp2.ui;
 
-import be.ehb.swp2.application.Quiz;
+import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.QuizLauncher;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
@@ -18,7 +18,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import be.ehb.swp2.entity.Question;
 
 /**
  * Created by domienhennion on 3/12/15.
@@ -94,7 +93,7 @@ public class AudioWindow implements QuestionWindow {
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
-                quizLauncher.setIncrement(quizLauncher.getIncrement()+1);
+                quizLauncher.setIncrement(quizLauncher.getIncrement() + 1);
                 quizLauncher.windowChoice();
                 return JSValue.createUndefined();
             }

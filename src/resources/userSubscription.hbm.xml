@@ -10,8 +10,8 @@
         </meta>
 
         <composite-id>
-            <key-property name="userId" column="userId" type="integer" />
-            <key-property name="quizId" column="quizId" type="integer" />
+            <key-property name="userId" column="userId" type="integer"/>
+            <key-property name="quizId" column="quizId" type="integer"/>
         </composite-id>
 
     </class>

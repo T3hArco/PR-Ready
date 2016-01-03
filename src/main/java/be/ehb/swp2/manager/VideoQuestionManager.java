@@ -12,10 +12,12 @@ import org.hibernate.Transaction;
 public class VideoQuestionManager {
     public SessionFactory factory;
 
-    public VideoQuestionManager(SessionFactory factory) {this.factory = factory;}
+    public VideoQuestionManager(SessionFactory factory) {
+        this.factory = factory;
+    }
     // public VideoQuestionManager(){};
 
-    public Integer addVideoQuestion( int parentQuestion, String link) {
+    public Integer addVideoQuestion(int parentQuestion, String link) {
 
         Session session = factory.openSession();
         Transaction transaction = null;
@@ -54,13 +56,13 @@ public class VideoQuestionManager {
         }
     }
 
-    public void updateVideoQuestion( int id, String link, int parentQuestion) {
+    public void updateVideoQuestion(int id, String link, int parentQuestion) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
-            VideoQuestion videoquestion = session.get(VideoQuestion.class,id);
+            VideoQuestion videoquestion = session.get(VideoQuestion.class, id);
             videoquestion.setLink(link);
             videoquestion.setParentId(parentQuestion);
             session.update(videoquestion);

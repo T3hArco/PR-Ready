@@ -12,7 +12,8 @@ import java.io.Serializable;
 
 /**
  * This class defines an answer by a user.
- * @deprecated  ?
+ *
+ * @deprecated ?
  */
 public class UserAnswer implements Serializable {
     /**

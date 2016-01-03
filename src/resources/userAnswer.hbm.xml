@@ -9,8 +9,8 @@
             This class contains all the users
         </meta>
         <composite-id>
-           <key-property name="userId" column="userId" type="int"  />
-            <key-property name="questionId" column="questionId" type="int" />
+            <key-property name="userId" column="userId" type="int"/>
+            <key-property name="questionId" column="questionId" type="int"/>
         </composite-id>
         <property name="answer" column="answer" type="string"/>
     </class>
