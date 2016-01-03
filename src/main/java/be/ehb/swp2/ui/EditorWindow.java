@@ -27,22 +27,17 @@ import java.util.List;
  * Created by domienhennion on 10/12/15.
  */
 public class EditorWindow extends JFrame implements Window {
+    //answers
+    static List<Answer> newAnswers = new ArrayList<Answer>();
+    //question answers
+    static List<QuestionAnswer> newQuestionAnswers = new ArrayList<QuestionAnswer>();
     private SessionFactory factory;
     private QuizManager quizManager;
     private Integer quizId;
-
     private List<Question> newQuestions = new ArrayList<Question>();
     private List<MediaURL> newVideoURLs = new ArrayList<MediaURL>();
     private List<MediaURL> newAudioURLs = new ArrayList<MediaURL>();
     private List<MediaURL> newImgURLs = new ArrayList<MediaURL>();
-
-    //answers
-    static List<Answer> newAnswers = new ArrayList<Answer>();
-
-    //question answers
-    static List<QuestionAnswer> newQuestionAnswers = new ArrayList<QuestionAnswer>();
-
-
     private AnswerType currentAnswerType = null;
     private AnswerMediaType currenMediaType = null;
 
@@ -104,15 +99,12 @@ public class EditorWindow extends JFrame implements Window {
                 currentQuestion.setAnswerType(currentAnswerType);
                 currentQuestion.setAnswerMediaType(currenMediaType);
 
-                if(mediaURL.isNull())
-                {
-                    System.out.println("no url needed for question " +(int)questionNumber.getNumber());
-                }
-                else if(mediaURL.toString() != null){
+                if (mediaURL.isNull()) {
+                    System.out.println("no url needed for question " + (int) questionNumber.getNumber());
+                } else if (mediaURL.toString() != null) {
                     getUrlFromWeb((int) questionNumber.getNumber(), mediaURL.getString());
-                }
-                else{
-                    System.out.println("Error: url for question " + (int)questionNumber.getNumber() + " is empty.");
+                } else {
+                    System.out.println("Error: url for question " + (int) questionNumber.getNumber() + " is empty.");
                 }
 
                 //add the new question to the "new questions" list
@@ -133,11 +125,11 @@ public class EditorWindow extends JFrame implements Window {
 
                 //fill in answer
                 Answer newAnswer = new Answer();
-                newAnswer.setAnswerId((int)answerNumber.getNumber());
+                newAnswer.setAnswerId((int) answerNumber.getNumber());
                 newAnswer.setText(answertext.getString());
 
 
-                QuestionAnswer newQuestionAnswer = new QuestionAnswer((int)questionNumber.getNumber(), (int)answerNumber.getNumber());
+                QuestionAnswer newQuestionAnswer = new QuestionAnswer((int) questionNumber.getNumber(), (int) answerNumber.getNumber());
 
                 newAnswers.add(newAnswer);
                 newQuestionAnswers.add(newQuestionAnswer);
@@ -159,12 +151,12 @@ public class EditorWindow extends JFrame implements Window {
                 JSValue iscorret = args[3];
 
                 Answer newAnswer = new Answer();
-                newAnswer.setAnswerId((int)answerNumber.getNumber());
+                newAnswer.setAnswerId((int) answerNumber.getNumber());
                 newAnswer.setText(answertext.getString());
 
                 System.out.println("with boolean");
                 boolean bIscorret = iscorret.getBoolean();
-                QuestionAnswer newQuestionAnswer = new QuestionAnswer((int)questionNumber.getNumber(), (int)answerNumber.getNumber(), bIscorret);
+                QuestionAnswer newQuestionAnswer = new QuestionAnswer((int) questionNumber.getNumber(), (int) answerNumber.getNumber(), bIscorret);
 
                 newAnswers.add(newAnswer);
                 newQuestionAnswers.add(newQuestionAnswer);
