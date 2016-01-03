@@ -10,6 +10,10 @@ import be.ehb.swp2.util.ConfigurationHandler;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
+import com.teamdev.jxbrowser.chromium.dom.By;
+import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
+import com.teamdev.jxbrowser.chromium.dom.DOMElement;
+import com.teamdev.jxbrowser.chromium.dom.DOMNode;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.hibernate.SessionFactory;
 
@@ -86,24 +90,32 @@ public class LoginWindow implements Window {
                 LoginManager lm = new LoginManager(factory);
                 UserManager um = new UserManager(factory);
 
+                DOMDocument document = browser.getDocument();
+                DOMNode resultDiv = document.findElement(By.id("result"));
+
+                DOMElement result2 = document.createElement("div");
+
                 try {
                     result.set(user = lm.authenticate(username, password));
                     String token = um.setToken(user.getId());
                     configurationHandler.setSetting("user", "token", token);
 
-                    JOptionPane.showMessageDialog(null, "Inloggen is gelukt: " + username + ", Token: " + token, "PR-Ready", JOptionPane.INFORMATION_MESSAGE);
+                    //JOptionPane.showMessageDialog(null, "Inloggen is gelukt: " + username + ", Token: " + token, "PR-Ready", JOptionPane.INFORMATION_MESSAGE);
                     browser.dispose();
                     dialog.setVisible(false);
                     dialog.dispose();
                     OverviewWindow ow = new OverviewWindow(factory);
                 } catch (BadLoginException e) {
-                    JOptionPane.showMessageDialog(null, "Gebruikersnaam of wachtwoord incorrect.", "PR-Ready", JOptionPane.ERROR_MESSAGE);
+                    //JOptionPane.showMessageDialog(null, "Gebruikersnaam of wachtwoord incorrect.", "PR-Ready", JOptionPane.ERROR_MESSAGE);
+                    result2.setAttribute("class", "alert alert-danger");
+                    result2.setInnerText("Gebruikersnaam of wachtwoord incorrect.");
                     e.printStackTrace();
                 }
 
                 if (user != null)
                     dialog.setVisible(false);
 
+                resultDiv.appendChild(result2);
                 return JSValue.createUndefined();
             }
         });
@@ -116,19 +128,32 @@ public class LoginWindow implements Window {
 
                 UserManager um = new UserManager(factory);
 
+                DOMDocument document = browser.getDocument();
+                DOMNode resultDiv = document.findElement(By.id("result"));
+
+                DOMElement result2 = document.createElement("div");
+
                 try {
                     Integer userId = um.addUser(username, password);
                     user = um.getUserById(userId);
 
+                    result2.setAttribute("class", "alert alert-success");
+                    result2.setInnerText("Registratie volbracht! U kan nu inloggen.");
+
                     result.set(user);
                 } catch (DuplicateUserException e) {
-                    JOptionPane.showMessageDialog(null, "De gebruikersnaam die u probeert te gebruiken is al in gebruik!", "PR-Ready", JOptionPane.ERROR_MESSAGE);
+                    //JOptionPane.showMessageDialog(null, "De gebruikersnaam die u probeert te gebruiken is al in gebruik!", "PR-Ready", JOptionPane.ERROR_MESSAGE);
+                    result2.setAttribute("class", "alert alert-danger");
+                    result2.setInnerText("De gebruikersnaam die u probeert te gebruiken is al in gebruik!");
                     e.printStackTrace();
                 } catch (UserNotFoundException e) {
-                    JOptionPane.showMessageDialog(null, "De gebruiker die aangemaakt werd in de databank kon niet teruggevonden worden!", "PR-Ready", JOptionPane.ERROR_MESSAGE);
+                    //JOptionPane.showMessageDialog(null, "De gebruiker die aangemaakt werd in de databank kon niet teruggevonden worden!", "PR-Ready", JOptionPane.ERROR_MESSAGE);
+                    result2.setAttribute("class", "alert alert-danger");
+                    result2.setInnerText("De gebruiker die aangemaakt werd in de databank kon niet teruggevonden worden!");
                     e.printStackTrace();
                 }
 
+                resultDiv.appendChild(result2);
                 return JSValue.createUndefined();
             }
         });
@@ -138,7 +163,7 @@ public class LoginWindow implements Window {
          */
         SecureRandom random = new SecureRandom();
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/?" + new BigInteger(130, random));
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/?50" + new BigInteger(130, random));
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
