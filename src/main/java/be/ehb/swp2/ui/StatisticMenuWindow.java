@@ -2,19 +2,12 @@ package be.ehb.swp2.ui;
 
 import be.ehb.swp2.util.ColumnData;
 import be.ehb.swp2.util.LineChartData;
+import be.ehb.swp2.util.PieChartData;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
-import com.teamdev.jxbrowser.chromium.dom.By;
-import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
-import com.teamdev.jxbrowser.chromium.dom.DOMElement;
-import com.teamdev.jxbrowser.chromium.dom.DOMNode;
-import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
-import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.hibernate.SessionFactory;
-import java.util.ArrayList;
-import be.ehb.swp2.util.PieChartData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,9 +21,8 @@ public class StatisticMenuWindow {
     private SessionFactory session;
 
 
-
-    public StatisticMenuWindow(){
-     this.initComponents();
+    public StatisticMenuWindow() {
+        initComponents();
     }
 
 
@@ -114,8 +106,6 @@ public class StatisticMenuWindow {
         });
 
 
-
-
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
         dialog.setResizable(false);
@@ -125,7 +115,7 @@ public class StatisticMenuWindow {
         dialog.setVisible(true);
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         StatisticMenuWindow st = new StatisticMenuWindow();
     }
 }

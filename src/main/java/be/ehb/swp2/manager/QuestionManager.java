@@ -2,12 +2,12 @@ package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.AnswerMediaType;
 import be.ehb.swp2.entity.AnswerType;
+import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.exception.DuplicateQuestionException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import be.ehb.swp2.entity.Question;
 
 /**
  * Created by arnaudcoel on 26/11/15.

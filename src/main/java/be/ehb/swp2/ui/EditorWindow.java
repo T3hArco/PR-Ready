@@ -58,10 +58,8 @@ public class EditorWindow extends JFrame implements Window {
         this.factory = factory;
         this.quizManager = new QuizManager(factory);
         this.quizId = quizId;
-        System.out.println("nog 2 stappen");
         if (!PermissionHandler.currentUserHasPermission(factory, UserRole.ADMINISTRATOR))
             throw new UserNoPermissionException();
-        System.out.println("bijna");
         this.initComponents();
     }
 
@@ -69,7 +67,6 @@ public class EditorWindow extends JFrame implements Window {
      * Initialize the GUI components
      */
     public void initComponents() {
-        System.out.println("in de buurt");
         final Browser browser = new Browser();
         final JFrame parent = this;
         final JDialog dialog = new JDialog(parent, "Editor", true);
@@ -102,7 +99,7 @@ public class EditorWindow extends JFrame implements Window {
                 //add new question in java
                 Question currentQuestion = new Question();
 
-                currentQuestion.setId((int)questionNumber.getNumber());
+                currentQuestion.setId((int) questionNumber.getNumber());
                 currentQuestion.setText(questionText.getString());
                 currentQuestion.setAnswerType(currentAnswerType);
                 currentQuestion.setAnswerMediaType(currenMediaType);
@@ -121,7 +118,7 @@ public class EditorWindow extends JFrame implements Window {
                 //add the new question to the "new questions" list
                 newQuestions.add(currentQuestion);
 
-                return  JSValue.createUndefined();
+                return JSValue.createUndefined();
             }
         });
 
@@ -206,7 +203,7 @@ public class EditorWindow extends JFrame implements Window {
 
 
                 DOMElement logo = document.createElement("img");
-               logo.setAttribute("src", "data:image/png;base64," + base64);
+                logo.setAttribute("src", "data:image/png;base64," + base64);
                 logoDiv.appendChild(logo);
             }
         });
@@ -221,47 +218,49 @@ public class EditorWindow extends JFrame implements Window {
         dialog.setAlwaysOnTop(true);
     }
 
-    public void getAnswerTypeFromWeb(String stringFromWeb)
-    {
-        if (stringFromWeb.equals("Choice")){
+    public void getAnswerTypeFromWeb(String stringFromWeb) {
+        if (stringFromWeb.equals("Choice")) {
             currentAnswerType = AnswerType.MULTIPLE_CHOICE;
         }
-        if(stringFromWeb.equals("String")){
+        if (stringFromWeb.equals("String")) {
             currentAnswerType = AnswerType.KEYWORD;
         }
     }
 
-    public void getMediaTypeFromWeb(String stringFromWeb)
-    {
-        if (stringFromWeb.equals("Audio")){
+    public void getMediaTypeFromWeb(String stringFromWeb) {
+        if (stringFromWeb.equals("Audio")) {
             currenMediaType = AnswerMediaType.AUDIO;
         }
-        if(stringFromWeb.equals("Video")){
+        if (stringFromWeb.equals("Video")) {
             currenMediaType = AnswerMediaType.VIDEO;
         }
-        if(stringFromWeb.equals("IMG")){
+        if (stringFromWeb.equals("IMG")) {
             currenMediaType = AnswerMediaType.IMAGE;
         }
-        if(stringFromWeb.equals("None")){
+        if (stringFromWeb.equals("None")) {
             currenMediaType = AnswerMediaType.EMPTY;
         }
     }
 
-    public void getUrlFromWeb(int id, String url){
+    public void getUrlFromWeb(int id, String url) {
         MediaURL newMediaUrl = new MediaURL(id, url);
 
         switch (currenMediaType) {
             case AUDIO:
                 newAudioURLs.add(newMediaUrl);
                 break;
+
             case VIDEO:
                 newVideoURLs.add(newMediaUrl);
                 break;
+
             case IMAGE:
                 newImgURLs.add(newMediaUrl);
                 break;
+
             case EMPTY:
                 break;
+
             default:
                 System.out.println("default");
                 break;

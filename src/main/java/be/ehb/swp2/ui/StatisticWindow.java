@@ -1,28 +1,21 @@
 package be.ehb.swp2.ui;
 
+import be.ehb.swp2.util.ColumnData;
+import be.ehb.swp2.util.LineChartData;
+import be.ehb.swp2.util.PieChartData;
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserFunction;
+import com.teamdev.jxbrowser.chromium.JSValue;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
-import com.teamdev.jxbrowser.chromium.BrowserFunction;
-import com.teamdev.jxbrowser.chromium.JSValue;
-
-import be.ehb.swp2.util.ColumnData;
-import be.ehb.swp2.util.LineChartData;
-import be.ehb.swp2.util.PieChartData;
-import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.swing.BrowserView;
-import org.hibernate.SessionFactory;
-import org.jboss.jandex.Main;
-
-import javax.swing.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigInteger;
-import java.security.SecureRandom;
-import java.util.List;
-import java.util.TreeSet;
 
 /**
  * Created by Chris on 26/11/2015.
@@ -31,7 +24,8 @@ public class StatisticWindow {
     static final JFrame parent = new JFrame();
     static final JDialog dialog = new JDialog(parent, "Overview", true);
     static final Browser browser = new Browser();
-    public static void printPie(PieChartData[] DataArr, String title){
+
+    public static void printPie(PieChartData[] DataArr, String title) {
         final File temp;
         String absolutePath = null;
         String tempFilePath = null;
@@ -39,7 +33,7 @@ public class StatisticWindow {
         try {
             temp = File.createTempFile("temp", Long.toString(System.nanoTime()));
             absolutePath = temp.getAbsolutePath();
-            tempFilePath = absolutePath.substring(0,absolutePath.lastIndexOf(File.separator));
+            tempFilePath = absolutePath.substring(0, absolutePath.lastIndexOf(File.separator));
             System.out.println("Temp file path : " + tempFilePath);
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -65,7 +59,7 @@ public class StatisticWindow {
                     "            plotBorderWidth: null,\n" +
                     "            plotShadow: false,\n" +
                     "            type: 'pie'\n" +
-                    "        },\n"  +
+                    "        },\n" +
                     "        title: {\n" +
                     "            text: '" + title + "'\n" +
                     "        },\n" +
@@ -90,8 +84,8 @@ public class StatisticWindow {
                     " colorByPoint: true, \n" +
                     " data:[");
             for (int i = 0; i < DataArr.length; i++) {
-                html.println( "{ name: \"" + DataArr[i].getName() +"\", y: " + DataArr[i].getPercentage() + "}");
-                if (i != DataArr.length-1){
+                html.println("{ name: \"" + DataArr[i].getName() + "\", y: " + DataArr[i].getPercentage() + "}");
+                if (i != DataArr.length - 1) {
                     html.println(", ");
                 }
             }
@@ -151,10 +145,10 @@ public class StatisticWindow {
 
     }
 
-    public static void printLine(LineChartData[] DataArr, String title, String subtitle, String titleLeft, String[] categories){
+    public static void printLine(LineChartData[] DataArr, String title, String subtitle, String titleLeft, String[] categories) {
         int longestData = 0;
-        for (int i = 0; i<DataArr.length; i++){
-            if(DataArr[i].getData().length > longestData){
+        for (int i = 0; i < DataArr.length; i++) {
+            if (DataArr[i].getData().length > longestData) {
                 longestData = DataArr[i].getData().length;
             }
         }
@@ -165,7 +159,7 @@ public class StatisticWindow {
         try {
             temp = File.createTempFile("temp", Long.toString(System.nanoTime()));
             absolutePath = temp.getAbsolutePath();
-            tempFilePath = absolutePath.substring(0,absolutePath.lastIndexOf(File.separator));
+            tempFilePath = absolutePath.substring(0, absolutePath.lastIndexOf(File.separator));
             System.out.println("Temp file path : " + tempFilePath);
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -191,14 +185,14 @@ public class StatisticWindow {
                             "x: -20 //center \n" +
                             "},\n" +
                             "subtitle: {\n" +
-                            "text: '" + subtitle +"',\n" +
+                            "text: '" + subtitle + "',\n" +
                             "x: -20\n" +
                             "},\n" +
                             "xAxis: {\n" +
                             "categories: [");
-            for (int i=0;i<categories.length;i++){
-                html.println("'"+categories[i]+"'");
-                if(i<categories.length-1){
+            for (int i = 0; i < categories.length; i++) {
+                html.println("'" + categories[i] + "'");
+                if (i < categories.length - 1) {
                     html.println(",");
                 }
             }
@@ -226,15 +220,15 @@ public class StatisticWindow {
                     "},\n" +
                     "series: [{\n");
             for (int i = 0; i < DataArr.length; i++) {
-                html.println( "name: \"" + DataArr[i].getName() +"\",\n data: [");
-                for (int j=0; j<DataArr[i].getData().length; j++){
+                html.println("name: \"" + DataArr[i].getName() + "\",\n data: [");
+                for (int j = 0; j < DataArr[i].getData().length; j++) {
                     html.println(DataArr[i].getData()[j]);
-                    if(DataArr[i].getData()[j] != DataArr[i].getData()[DataArr[i].getData().length-1]){
+                    if (DataArr[i].getData()[j] != DataArr[i].getData()[DataArr[i].getData().length - 1]) {
                         html.println(",");
                     }
                 }
                 html.println("]}");
-                if(DataArr[i] != DataArr[DataArr.length-1]){
+                if (DataArr[i] != DataArr[DataArr.length - 1]) {
                     html.println(", {\n");
                 }
             }
@@ -294,7 +288,7 @@ public class StatisticWindow {
 
     }
 
-    public static void printColumn(ColumnData[] DataArr, String title, String subtitle){
+    public static void printColumn(ColumnData[] DataArr, String title, String subtitle) {
 
         final File temp;
         String absolutePath = null;
@@ -302,7 +296,7 @@ public class StatisticWindow {
         try {
             temp = File.createTempFile("temp", Long.toString(System.nanoTime()));
             absolutePath = temp.getAbsolutePath();
-            tempFilePath = absolutePath.substring(0,absolutePath.lastIndexOf(File.separator));
+            tempFilePath = absolutePath.substring(0, absolutePath.lastIndexOf(File.separator));
             System.out.println("Temp file path : " + tempFilePath);
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -311,17 +305,17 @@ public class StatisticWindow {
         try {
             PrintWriter html = new PrintWriter(tempFilePath + "/statisticsColumn.html");
             html.println(
-                    "<!DOCTYPE HTML>\n"+
+                    "<!DOCTYPE HTML>\n" +
                             "\t<html>\n" +
                             "\t\t<head>\n" +
-                            "\t\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"> \n"+
+                            "\t\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"> \n" +
                             "\t\t<title>Highcharts Example</title> \n" +
                             "\t\t<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js\"></script> \n" +
                             "\t\t<style type=\"text/css\"> \n" +
                             "#container, #sliders { \n" +
                             "min-width: 310px; \n" +
                             "max-width: 800px; \n" +
-                            "margin: 0 auto;\n"+
+                            "margin: 0 auto;\n" +
                             "}\n" +
                             "#container {\n" +
                             "height: 400px; \n" +
@@ -335,18 +329,18 @@ public class StatisticWindow {
                             "type: 'column',\n" +
                             "margin: 75,\n" +
                             "options3d: {\n" +
-                            "enabled: true,\n"+
+                            "enabled: true,\n" +
                             "alpha: 15,\n" +
                             "beta: 15,\n" +
                             "depth: 50,\n" +
-                            "viewDistance: 25\n"+
+                            "viewDistance: 25\n" +
                             "}\n" +
                             "},\n" +
                             "title: {\n" +
                             "text: '" + title + "'\n" +
                             "},\n" +
                             "subtitle: {\n" +
-                            "text: '"+ subtitle +"'\n"+
+                            "text: '" + subtitle + "'\n" +
                             "},\n" +
                             "plotOptions: {\n" +
                             "column: {\n" +
@@ -355,15 +349,15 @@ public class StatisticWindow {
                             "},\n" +
                             "series: [{\n");
             for (int i = 0; i < DataArr.length; i++) {
-                html.println( "name: \"" + DataArr[i].getName() +"\",\n data: [");
-                for (int j=0; j<DataArr[i].getData().length; j++){
+                html.println("name: \"" + DataArr[i].getName() + "\",\n data: [");
+                for (int j = 0; j < DataArr[i].getData().length; j++) {
                     html.println(DataArr[i].getData()[j]);
-                    if(DataArr[i].getData()[j] != DataArr[i].getData()[DataArr[i].getData().length-1]){
+                    if (DataArr[i].getData()[j] != DataArr[i].getData()[DataArr[i].getData().length - 1]) {
                         html.println(",");
                     }
                 }
                 html.println("]}");
-                if(DataArr[i] != DataArr[DataArr.length-1]){
+                if (DataArr[i] != DataArr[DataArr.length - 1]) {
                     html.println(", {\n");
                 }
             }
@@ -375,10 +369,10 @@ public class StatisticWindow {
                             "$('#R0-value').html(chart.options.chart.options3d.alpha);\n" +
                             "$('#R1-value').html(chart.options.chart.options3d.beta);\n" +
                             "}\n" +
-                            "$('#R0').on('change', function () {\n"+
+                            "$('#R0').on('change', function () {\n" +
                             "chart.options.chart.options3d.alpha = this.value; \n" +
                             "showValues();\n" +
-                            "chart.redraw(false);\n"+
+                            "chart.redraw(false);\n" +
                             "});\n" +
                             "$('#R1').on('change', function () {\n" +
                             "chart.options.chart.options3d.beta = this.value;\n" +
@@ -436,7 +430,6 @@ public class StatisticWindow {
         });
 
 
-
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
         dialog.setResizable(false);
@@ -446,27 +439,28 @@ public class StatisticWindow {
         dialog.setVisible(true);
 
     }
-/*
-    public static void main(String [ ] args)
-    {
-        PieChartData[] Pie = new PieChartData[] { new PieChartData("Quiz1", 27.0), new PieChartData("Quiz2", 73.0) };
 
-        printPie(Pie, "Test");
-        double[] dat1 = {70.0,50.0,30.0};
-        double[] dat2 = {20.0,75.0,80.0};
-        String[] cats = {"Try1", "Try2", "Try3"};
+    /*
+        public static void main(String [ ] args)
+        {
+            PieChartData[] Pie = new PieChartData[] { new PieChartData("Quiz1", 27.0), new PieChartData("Quiz2", 73.0) };
+
+            printPie(Pie, "Test");
+            double[] dat1 = {70.0,50.0,30.0};
+            double[] dat2 = {20.0,75.0,80.0};
+            String[] cats = {"Try1", "Try2", "Try3"};
 
 
-        LineChartData[] Line = new LineChartData[] {new LineChartData("Quiz1Scores", dat1), new LineChartData("Quiz2scores", dat2)};
+            LineChartData[] Line = new LineChartData[] {new LineChartData("Quiz1Scores", dat1), new LineChartData("Quiz2scores", dat2)};
 
-        printLine(Line, "Test", "Dat Testing though", "Percentage", cats);
+            printLine(Line, "Test", "Dat Testing though", "Percentage", cats);
 
-        ColumnData[] columns = new ColumnData[] {new ColumnData("Column1", dat1)};
-        printColumn(columns, "Das Title", "wasub");
+            ColumnData[] columns = new ColumnData[] {new ColumnData("Column1", dat1)};
+            printColumn(columns, "Das Title", "wasub");
 
-    }
-    */
-    public static void printPdf(){
+        }
+        */
+    public static void printPdf() {
 
     }
 }

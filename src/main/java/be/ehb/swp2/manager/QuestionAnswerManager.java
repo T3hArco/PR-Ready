@@ -1,4 +1,5 @@
 package be.ehb.swp2.manager;
+
 import be.ehb.swp2.entity.question.QuestionAnswer;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -11,9 +12,12 @@ import org.hibernate.Transaction;
 public class QuestionAnswerManager {
 
     public SessionFactory factory;
-    public QuestionAnswerManager(SessionFactory factory) {this.factory = factory;}
 
-    public  Integer addQuestionAnswer(int questionId, int answerId, boolean correct) {
+    public QuestionAnswerManager(SessionFactory factory) {
+        this.factory = factory;
+    }
+
+    public Integer addQuestionAnswer(int questionId, int answerId, boolean correct) {
 
         Session session = factory.openSession();
         Transaction transaction = null;
@@ -56,14 +60,14 @@ public class QuestionAnswerManager {
     }
 
 
-    public void updateQuestionAnswer( int questionId, int answerId, boolean correct) {
+    public void updateQuestionAnswer(int questionId, int answerId, boolean correct) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
             QuestionAnswer qa1 = new QuestionAnswer(questionId, answerId);
-            QuestionAnswer questionanswer = session.get(QuestionAnswer.class,qa1);
+            QuestionAnswer questionanswer = session.get(QuestionAnswer.class, qa1);
             questionanswer.setQuestionId(questionId);
             questionanswer.setAnswerId(answerId);
             questionanswer.setCorrect(correct);

@@ -1,7 +1,6 @@
 package be.ehb.swp2.entity;
 
 import be.ehb.swp2.exception.DuplicateUserException;
-import be.ehb.swp2.exception.UserNotFoundException;
 import be.ehb.swp2.manager.UserManager;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -10,7 +9,7 @@ import org.junit.Test;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 /**
  * Created by arnaudcoel on 22/10/15.
