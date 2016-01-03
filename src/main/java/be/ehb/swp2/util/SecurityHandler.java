@@ -1,5 +1,6 @@
 package be.ehb.swp2.util;
 
+
 import org.jsoup.Jsoup;
 import org.jsoup.examples.HtmlToPlainText;
 
@@ -14,6 +15,7 @@ public class SecurityHandler {
      * @param input Unescaped
      * @return Escaped tags
      */
+
     public static String stripTags(String input) {
         if (input == null)
             return input;

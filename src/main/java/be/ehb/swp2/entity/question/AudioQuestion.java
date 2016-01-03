@@ -1,10 +1,12 @@
 package be.ehb.swp2.entity.question;
 
+import java.util.List;
+
 /**
  * Created by arnaudcoel on 10/12/15.
  */
 public class AudioQuestion {
-    private int id, parentQuestion;
+    private int id, parentId;
     private String link;
 
     /**
@@ -13,14 +15,16 @@ public class AudioQuestion {
     public AudioQuestion() {
     }
 
+    private List<AudioQuestion> audioQuestions;
+
     /**
      * Constructor foor dingenejsdngkjzqdjk:gjeklzghkljsdhcklghsdjlfghiwdkluhfgj;:hwdfh,vflnxd;vbgj,ds
      *
-     * @param parentQuestion fuck mijn leven
+     * @param parentId fuck mijn leven
      * @param link           help mij
      */
-    public AudioQuestion(int parentQuestion, String link) {
-        this.parentQuestion = parentQuestion;
+    public AudioQuestion(String link, int parentId) {
+        this.parentId = parentId;
         this.link = link;
     }
 
@@ -65,16 +69,22 @@ public class AudioQuestion {
      *
      * @return integer
      */
-    public int getParentQuestion() {
-        return parentQuestion;
+    public int getParentId() {
+        return parentId;
     }
 
     /**
      * sets the integer for the parent question
      *
-     * @param parentQuestion
+     * @param parentId
      */
-    public void setParentQuestion(int parentQuestion) {
-        this.parentQuestion = parentQuestion;
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
     }
+
+
+    public void addAudioQuestion(AudioQuestion audioQuestion) {
+        this.audioQuestions.add(audioQuestion);
+    }
+
 }

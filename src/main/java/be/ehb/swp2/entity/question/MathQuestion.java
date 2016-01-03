@@ -19,7 +19,7 @@ public class MathQuestion extends Question {
     private AnswerType answerType;
 
     public MathQuestion(String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, double answer) {
-        super(title, text, answerType, answerMediaType, 1);
+        super(title, text, answerType, answerMediaType, 1, 1);
         this.answer = answer;
         this.answerType = AnswerType.MATH;
     }
