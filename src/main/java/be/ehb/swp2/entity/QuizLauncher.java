@@ -42,7 +42,7 @@ public class QuizLauncher implements Window {
 
     }
 
-    public void windowChoice(){
+    public void windowChoice() {
 
         System.out.println("test test");
         if (windows.get(increment) instanceof TextWindow) {
@@ -85,7 +85,8 @@ public class QuizLauncher implements Window {
     public void setRunning(boolean running) {
         this.running = running;
     }
-    public int getWindowsSize(){
+
+    public int getWindowsSize() {
         return windows.size();
     }
 }

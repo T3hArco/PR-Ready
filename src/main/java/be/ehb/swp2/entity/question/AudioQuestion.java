@@ -8,6 +8,7 @@ import java.util.List;
 public class AudioQuestion {
     private int id, parentId;
     private String link;
+    private List<AudioQuestion> audioQuestions;
 
     /**
      * The default constructor for audio
@@ -15,13 +16,11 @@ public class AudioQuestion {
     public AudioQuestion() {
     }
 
-    private List<AudioQuestion> audioQuestions;
-
     /**
      * Constructor foor dingenejsdngkjzqdjk:gjeklzghkljsdhcklghsdjlfghiwdkluhfgj;:hwdfh,vflnxd;vbgj,ds
      *
      * @param parentId fuck mijn leven
-     * @param link           help mij
+     * @param link     help mij
      */
     public AudioQuestion(String link, int parentId) {
         this.parentId = parentId;

@@ -1,6 +1,7 @@
 package be.ehb.swp2.ui;
 
 
+import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.QuizLauncher;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
@@ -12,7 +13,6 @@ import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.hibernate.SessionFactory;
-import be.ehb.swp2.entity.Question;
 
 import javax.swing.*;
 import java.awt.*;
@@ -73,7 +73,6 @@ public class TextWindow implements QuestionWindow {
         });
 
 
-
         browser.registerFunction("nextQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
@@ -103,7 +102,6 @@ public class TextWindow implements QuestionWindow {
 
 
         });
-
 
 
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

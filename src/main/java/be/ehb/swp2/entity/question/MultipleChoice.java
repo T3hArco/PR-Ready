@@ -15,6 +15,7 @@ import java.util.ArrayList;
  */
 public class MultipleChoice extends Question {
     private ArrayList<String> answers = new ArrayList<String>();
+
     public MultipleChoice(String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, String answer) {
         super(title, text, answerType, answerMediaType, 1, 1);
         this.answers = answers;

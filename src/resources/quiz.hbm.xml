@@ -15,7 +15,8 @@
         <property name="description" column="description" type="string"/>
         <property name="logo" column="logo" type="text"/>
         <list name="questions" cascade="all">
-            <key column="QuizId"/> <!-- In wijziging Christophe zou dit parrentQuizID moeten zijn -->
+            <key column="QuizId"/>
+            <!-- In wijziging Christophe zou dit parrentQuizID moeten zijn -->
             <list-index column="idx"/>
             <one-to-many class="be.ehb.swp2.entity.Question"/>
         </list>
