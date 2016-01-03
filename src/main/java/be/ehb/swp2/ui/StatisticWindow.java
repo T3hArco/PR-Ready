@@ -5,6 +5,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import com.teamdev.jxbrowser.chromium.BrowserFunction;
+import com.teamdev.jxbrowser.chromium.JSValue;
 
 import be.ehb.swp2.util.ColumnData;
 import be.ehb.swp2.util.LineChartData;
@@ -104,8 +106,11 @@ public class StatisticWindow {
                     "<script src=\"http://dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/highcharts.js\"></script>\n" +
                     "<script src=\"http://dtprojecten.ehb.be/~PR-Ready/StatisticsJS/js/modules/exporting.js\"></script>\n" +
                     "\n" +
-                    "<div id=\"container\" style=\"min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto\"></div>\n" +
+                    "<div id=\"container\" style=\"min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto\">\n" +
+                    "</div>\n" +
                     "\n" +
+                    "<button onclick=\"exit();\" style=\" margin: auto; padding: 1em; float: right;\">exit</button>\n" +
+                    "<script> function exit(){ closeStat() } </script>\n" +
                     "\t</body>\n" +
                     "</html>");
             html.close();
@@ -120,6 +125,19 @@ public class StatisticWindow {
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
+            }
+        });
+
+        browser.registerFunction("closeStat", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+
+                StatisticMenuWindow.initComponents();
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+
+                return JSValue.createUndefined();
             }
         });
 
@@ -233,6 +251,8 @@ public class StatisticWindow {
                     "\n" +
                     "<div id=\"container\" style=\"min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto\"></div>\n" +
                     "\n" +
+                    "<button onclick=\"exit();\" style=\" margin: auto; padding: 1em; float: right;\">exit</button>\n" +
+                    "<script> function exit(){ closeStat() } </script>\n" +
                     "\t</body>\n" +
                     "</html>");
             html.close();
@@ -248,6 +268,19 @@ public class StatisticWindow {
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
+            }
+        });
+
+        browser.registerFunction("closeStat", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+
+                StatisticMenuWindow.initComponents();
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+
+                return JSValue.createUndefined();
             }
         });
 
@@ -366,6 +399,8 @@ public class StatisticWindow {
                             "<tr><td>Alpha Angle</td><td><input id=\"R0\" type=\"range\" min=\"0\" max=\"45\" value=\"15\"/> <span id=\"R0-value\" class=\"value\"></span></td></tr>\n" +
                             "<tr><td>Beta Angle</td><td><input id=\"R1\" type=\"range\" min=\"0\" max=\"45\" value=\"15\"/> <span id=\"R1-value\" class=\"value\"></span></td></tr>\n" +
                             "</table>\n" +
+                            "<button onclick=\"exit();\" style=\" margin: auto; padding: 1em; float: right;\">exit</button>\n" +
+                            "<script> function exit(){ closeStat() } </script>\n" +
                             "</div>\n" +
                             "</body>\n" +
                             "</html>\n" +
@@ -375,6 +410,21 @@ public class StatisticWindow {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        browser.registerFunction("closeStat", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+
+
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+                StatisticMenuWindow.initComponents();
+                return JSValue.createUndefined();
+            }
+        });
+
+
         browser.loadURL("file://" + tempFilePath + "/statisticsColumn.html");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
@@ -385,6 +435,8 @@ public class StatisticWindow {
             }
         });
 
+
+
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
         dialog.setResizable(false);
@@ -394,7 +446,7 @@ public class StatisticWindow {
         dialog.setVisible(true);
 
     }
-
+/*
     public static void main(String [ ] args)
     {
         PieChartData[] Pie = new PieChartData[] { new PieChartData("Quiz1", 27.0), new PieChartData("Quiz2", 73.0) };
@@ -411,6 +463,10 @@ public class StatisticWindow {
 
         ColumnData[] columns = new ColumnData[] {new ColumnData("Column1", dat1)};
         printColumn(columns, "Das Title", "wasub");
+
+    }
+    */
+    public static void printPdf(){
 
     }
 }

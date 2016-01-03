@@ -1,12 +1,13 @@
 package be.ehb.swp2.application;
 
 import be.ehb.swp2.exception.QuizNotFoundException;
-import be.ehb.swp2.manager.AnswerManager;
-import be.ehb.swp2.manager.QuestionAnswerManager;
 import be.ehb.swp2.manager.QuizManager;
+import be.ehb.swp2.ui.LoadingWindow;
 import be.ehb.swp2.ui.LoginWindow;
 import be.ehb.swp2.ui.OverviewWindow;
 import be.ehb.swp2.util.ConfigurationHandler;
+import be.ehb.swp2.util.LoadingThread;
+import be.ehb.swp2.util.PieChartData;
 import com.teamdev.jxbrowser.chromium.LoggerProvider;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -35,7 +36,8 @@ public class Quiz {
      */
     public Quiz() {
         logger = Logger.getLogger(Quiz.class.getName());
-
+        Thread loadingWindow = new Thread(new LoadingThread());
+        loadingWindow.start();
         this.initialize();
     }
 
@@ -87,12 +89,8 @@ public class Quiz {
         long end = System.currentTimeMillis();
         long totalTime = end - start;
         logger.info("Initialization took " + totalTime + " milliseconds!");
-
-        this.doDbTest();
-
-        //LoadingWindow load = new LoadingWindow(factory);
         LoginWindow lw = new LoginWindow(factory);
-        OverviewWindow ow = new OverviewWindow(factory);
+        //OverviewWindow ow = new OverviewWindow(factory);
     }
 
     /**
@@ -101,24 +99,7 @@ public class Quiz {
      * @deprecated To be deprecated and never used in production!
      */
     public void doDbTest() {
-        System.out.println("Tesing DB");
 
-        QuestionAnswerManager questionAnswerManager = new QuestionAnswerManager(factory);
-        questionAnswerManager.updateQuestionAnswer(1,1, false);
-
-        AnswerManager newAnswerManager = new AnswerManager(factory);
-        newAnswerManager.addAnswer(4,"Brussel");
-
-
-       /* AudioQuestionManager audioQuestionManager = new AudioQuestionManager(factory);
-        audioQuestionManager.addAudioQuestion(1,"TEST AUDIO 3");*/
-
-        //SecureRandom random = new SecureRandom();
-        //int id = audioQuestionManager.addAudioQuestion(3,"TEST");
-
-
-       /*AudioQuestionManager aqm = new AudioQuestionManager(factory);
-        aqm.addAudioQuestion(3,"TEST");*/
     }
 
     public void imageSaveTest() {
@@ -144,11 +125,8 @@ public class Quiz {
         }
     }
 
-    public static void main (String [] args)
-    {
-        Quiz q3 = new Quiz();
-        q3.doDbTest();
+    public static void main(String[] args){
+        Quiz q = new Quiz();
+        q.doDbTest();
     }
-
-
 }

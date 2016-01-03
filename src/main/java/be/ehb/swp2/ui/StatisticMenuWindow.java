@@ -34,18 +34,11 @@ public class StatisticMenuWindow {
     }
 
 
-    public void initComponents() {
+    public static void initComponents() {
 
         final Browser browser = new Browser();
         JFrame parent = new JFrame();
         final JDialog dialog = new JDialog(parent, "QUIZ", true);
-
-        /*dataArr.add(new PieChartData("first", 30));
-        dataArr.add(new PieChartData("second", 50));
-        dataArr.add(new PieChartData("third", 20));*/
-
-
-
 
         browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/StatMenuWindow.html?851951951951951");
         dialog.addWindowListener(new WindowAdapter() {
@@ -102,6 +95,9 @@ public class StatisticMenuWindow {
         browser.registerFunction("createColumnChart", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
                 ColumnData[] dataColumn = new ColumnData[3];
                 double[] data = new double[2];
                 data[0] = 60.00;
@@ -112,9 +108,7 @@ public class StatisticMenuWindow {
                 dataColumn[1] = new ColumnData("column2", data);
                 dataColumn[2] = new ColumnData("column3", data);
                 StatisticWindow.printColumn(dataColumn, title, subtitle);
-                browser.dispose();
-                dialog.setVisible(false);
-                dialog.dispose();
+
                 return JSValue.createUndefined();
             }
         });

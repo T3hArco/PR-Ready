@@ -2,8 +2,9 @@ package be.ehb.swp2.ui;
 
 import be.ehb.swp2.entity.User;
 import be.ehb.swp2.entity.UserRole;
-import be.ehb.swp2.exception.UserNoPermissionException;
+import be.ehb.swp2.exception.*;
 import be.ehb.swp2.manager.QuizManager;
+import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.util.PermissionHandler;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
@@ -19,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -27,6 +29,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class AdminMenuWindow extends JFrame {
     private SessionFactory factory;
     private QuizManager quizManager;
+    private UserManager userManager;
 
     public AdminMenuWindow(SessionFactory factory) throws UserNoPermissionException {
         this.factory = factory;
@@ -35,6 +38,7 @@ public class AdminMenuWindow extends JFrame {
             throw new UserNoPermissionException();
 
         this.quizManager = new QuizManager(factory);
+        this.userManager = new UserManager(factory);
         this.initComponents();
     }
 
@@ -42,6 +46,92 @@ public class AdminMenuWindow extends JFrame {
         final JFrame parent = this;
         final AtomicReference<User> result = new AtomicReference<User>();
         final Browser browser = new Browser();
+
+        browser.registerFunction("onCreateUser", new BrowserFunction() {
+            public JSValue invoke(JSValue... args) {
+                System.out.println("create user");
+
+                String username = args[0].getString();
+                String password = args[1].getString();
+
+                try {
+                    userManager.addUser(username, password);
+                } catch (DuplicateUserException e) {
+                    e.printStackTrace();
+                }
+
+                return JSValue.createUndefined();
+            }
+        });
+
+        browser.registerFunction("onDeleteUser", new BrowserFunction() {
+            public JSValue invoke(JSValue... args) {
+                System.out.println("delete user");
+                String username = args[0].getString();
+                int id;
+
+                try {
+                    id = userManager.getUserByUsername(username);
+                    userManager.deleteUser(id);
+                } catch (UserNotFoundException e) {
+                    e.printStackTrace();
+                } catch (TokenNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                return JSValue.createUndefined();
+            }
+        });
+
+        browser.registerFunction("onEditUser", new BrowserFunction() {
+            public JSValue invoke(JSValue... args) {
+                System.out.println("edit user");
+                String username = args[0].getString();
+                String password = args[1].getString();
+
+                try {
+                    int id = userManager.getUserByUsername(username);
+                    userManager.updatePassword(id, password);
+                    userManager.updateUserName(id, username);
+                } catch (UserNotFoundException e) {
+                    e.printStackTrace();
+                } catch (TokenNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                return JSValue.createUndefined();
+            }
+        });
+
+        browser.registerFunction("onDeleteQuiz", new BrowserFunction() {
+            public JSValue invoke(JSValue... args) {
+                System.out.println("delete quiz");
+                String quiz = args[0].getString();
+                return JSValue.createUndefined();
+            }
+        });
+
+        browser.registerFunction("onEditQuiz", new BrowserFunction() {
+            public JSValue invoke(JSValue... args) {
+                System.out.println("edit quiz");
+                String quiz = args[0].getString();
+                return JSValue.createUndefined();
+            }
+        });
+
+        browser.registerFunction("onShowStats", new BrowserFunction() {
+
+            public JSValue invoke(JSValue... jsValues) {
+                System.out.println("show stats");
+                String quiz = jsValues[0].getString();
+                browser.dispose();
+                parent.setVisible(false);
+                parent.dispose();
+                StatisticMenuWindow smw = new StatisticMenuWindow();
+                return JSValue.createUndefined();
+            }
+
+        });
 
         browser.registerFunction("onExit", new BrowserFunction() {
 
