@@ -2,7 +2,10 @@ package be.ehb.swp2.ui;
 
 import be.ehb.swp2.entity.User;
 import be.ehb.swp2.entity.UserRole;
-import be.ehb.swp2.exception.*;
+import be.ehb.swp2.exception.DuplicateUserException;
+import be.ehb.swp2.exception.TokenNotFoundException;
+import be.ehb.swp2.exception.UserNoPermissionException;
+import be.ehb.swp2.exception.UserNotFoundException;
 import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.util.PermissionHandler;
@@ -16,11 +19,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -127,7 +125,7 @@ public class AdminMenuWindow extends JFrame {
                 browser.dispose();
                 parent.setVisible(false);
                 parent.dispose();
-                StatisticMenuWindow smw = new StatisticMenuWindow();
+                StatisticMenuWindow smw = new StatisticMenuWindow(factory);
                 return JSValue.createUndefined();
             }
 

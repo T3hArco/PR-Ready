@@ -1,6 +1,7 @@
 package be.ehb.swp2.ui;
 
 import be.ehb.swp2.entity.*;
+import be.ehb.swp2.entity.question.QuestionAnswer;
 import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.exception.UserNoPermissionException;
 import be.ehb.swp2.manager.QuizManager;
@@ -19,21 +20,24 @@ import org.hibernate.SessionFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by domienhennion on 10/12/15.
  */
 public class EditorWindow extends JFrame implements Window {
+    //answers
+    static List<Answer> newAnswers = new ArrayList<Answer>();
+    //question answers
+    static List<QuestionAnswer> newQuestionAnswers = new ArrayList<QuestionAnswer>();
     private SessionFactory factory;
     private QuizManager quizManager;
     private Integer quizId;
-
-    private List<Question> newQuestions = null;
-    private List<MediaURL> newVideoURLs = null;
-    private List<MediaURL> newAudioURLs = null;
-    private List<MediaURL> newImgURLs = null;
-
+    private List<Question> newQuestions = new ArrayList<Question>();
+    private List<MediaURL> newVideoURLs = new ArrayList<MediaURL>();
+    private List<MediaURL> newAudioURLs = new ArrayList<MediaURL>();
+    private List<MediaURL> newImgURLs = new ArrayList<MediaURL>();
     private AnswerType currentAnswerType = null;
     private AnswerMediaType currenMediaType = null;
 
@@ -49,10 +53,8 @@ public class EditorWindow extends JFrame implements Window {
         this.factory = factory;
         this.quizManager = new QuizManager(factory);
         this.quizId = quizId;
-        System.out.println("nog 2 stappen");
         if (!PermissionHandler.currentUserHasPermission(factory, UserRole.ADMINISTRATOR))
             throw new UserNoPermissionException();
-        System.out.println("bijna");
         this.initComponents();
     }
 
@@ -60,7 +62,6 @@ public class EditorWindow extends JFrame implements Window {
      * Initialize the GUI components
      */
     public void initComponents() {
-        System.out.println("in de buurt");
         final Browser browser = new Browser();
         final JFrame parent = this;
         final JDialog dialog = new JDialog(parent, "Editor", true);
@@ -79,7 +80,6 @@ public class EditorWindow extends JFrame implements Window {
 
         browser.registerFunction("saveQuestionToJava", new BrowserFunction() {
             public JSValue invoke(JSValue... args) {
-
                 //read web info current question
                 JSValue questionNumber = args[0];
                 JSValue questionText = args[1];
@@ -94,29 +94,88 @@ public class EditorWindow extends JFrame implements Window {
                 //add new question in java
                 Question currentQuestion = new Question();
 
-                currentQuestion.setId((int)questionNumber.getNumber());
+                currentQuestion.setId((int) questionNumber.getNumber());
                 currentQuestion.setText(questionText.getString());
                 currentQuestion.setAnswerType(currentAnswerType);
                 currentQuestion.setAnswerMediaType(currenMediaType);
 
+                if (mediaURL.isNull()) {
+                    System.out.println("no url needed for question " + (int) questionNumber.getNumber());
+                } else if (mediaURL.toString() != null) {
+                    getUrlFromWeb((int) questionNumber.getNumber(), mediaURL.getString());
+                } else {
+                    System.out.println("Error: url for question " + (int) questionNumber.getNumber() + " is empty.");
+                }
+
                 //add the new question to the "new questions" list
                 newQuestions.add(currentQuestion);
 
-                return  JSValue.createUndefined();
+                return JSValue.createUndefined();
             }
         });
 
-        browser.registerFunction("saveAnswerToJava", new BrowserFunction() {
+        browser.registerFunction("saveFillInAnswerToJava", new BrowserFunction() {
             public JSValue invoke(JSValue... args) {
+                System.out.println("saveAnswerToJava Function is invoked!");
+
+                //get vars
+                JSValue questionNumber = args[0];
+                JSValue answerNumber = args[1];
+                JSValue answertext = args[2];
+
+                //fill in answer
+                Answer newAnswer = new Answer();
+                newAnswer.setAnswerId((int) answerNumber.getNumber());
+                newAnswer.setText(answertext.getString());
+
+
+                QuestionAnswer newQuestionAnswer = new QuestionAnswer((int) questionNumber.getNumber(), (int) answerNumber.getNumber());
+
+                newAnswers.add(newAnswer);
+                newQuestionAnswers.add(newQuestionAnswer);
+
+
+                return JSValue.create("saveAnswerToJava!");
+            }
+        });
+
+
+        browser.registerFunction("saveChoiceAnswerToJava", new BrowserFunction() {
+            public JSValue invoke(JSValue... args) {
+                System.out.println();
+                System.out.println("saveAnswerToJava Function is invoked!");
 
                 JSValue questionNumber = args[0];
-                JSValue answer = args[1];
+                JSValue answerNumber = args[1];
+                JSValue answertext = args[2];
+                JSValue iscorret = args[3];
 
-                // DISPOSE MAG PAS BIJ DE LAATSTE VRAAG? WANT DEZE FUNCTIE WORDT PER VRAAG AANGEROEPEN
-//            	browser.dispose();
-//                dialog.setVisible(false);
-//                dialog.dispose();
-                return JSValue.createUndefined();
+                Answer newAnswer = new Answer();
+                newAnswer.setAnswerId((int) answerNumber.getNumber());
+                newAnswer.setText(answertext.getString());
+
+                System.out.println("with boolean");
+                boolean bIscorret = iscorret.getBoolean();
+                QuestionAnswer newQuestionAnswer = new QuestionAnswer((int) questionNumber.getNumber(), (int) answerNumber.getNumber(), bIscorret);
+
+                newAnswers.add(newAnswer);
+                newQuestionAnswers.add(newQuestionAnswer);
+
+                return JSValue.create("saveAnswerToJava!");
+            }
+        });
+
+
+        browser.registerFunction("SavingDone", new BrowserFunction() {
+            public JSValue invoke(JSValue... args) {
+                System.out.println("SavingDone");
+
+                System.out.println("newQuestions.toString() = " + newQuestions.toString());
+                System.out.println("newAnswers.toString() = " + newAnswers.toString());
+                System.out.println("newQuestionAnswers.toString() = " + newQuestionAnswers.toString());
+
+
+                return JSValue.create("SavingDone!");
             }
         });
 
@@ -136,8 +195,7 @@ public class EditorWindow extends JFrame implements Window {
 
 
                 DOMElement logo = document.createElement("img");
-               // logo.setAttribute("src", "data:image/png;base64," + base64);
-                logo.setAttribute("src", "http://www.download-free-wallpaper.com/img85/nxxqigvaodaeivvvevms.png");
+                logo.setAttribute("src", "data:image/png;base64," + base64);
                 logoDiv.appendChild(logo);
             }
         });
@@ -152,64 +210,53 @@ public class EditorWindow extends JFrame implements Window {
         dialog.setAlwaysOnTop(true);
     }
 
-    public void getAnswerTypeFromWeb(String stringFromWeb)
-    {
-
-        if (stringFromWeb.equals("Choice")){
+    public void getAnswerTypeFromWeb(String stringFromWeb) {
+        if (stringFromWeb.equals("Choice")) {
             currentAnswerType = AnswerType.MULTIPLE_CHOICE;
         }
-        if(stringFromWeb.equals("String")){
+        if (stringFromWeb.equals("String")) {
             currentAnswerType = AnswerType.KEYWORD;
         }
-/*
-        switch (temp) {
-            case "Choice":
-                currentAnswerType = AnswerType.MULTIPLE_CHOICE;
-                break;
-            case "String":
-                currentAnswerType = AnswerType.KEYWORD;
-                break;
-            default:
-                break;
-        }
-*/
     }
 
-    public void getMediaTypeFromWeb(String stringFromWeb)
-    {
-
-        if (stringFromWeb.equals("Audio")){
+    public void getMediaTypeFromWeb(String stringFromWeb) {
+        if (stringFromWeb.equals("Audio")) {
             currenMediaType = AnswerMediaType.AUDIO;
         }
-        if(stringFromWeb.equals("Video")){
+        if (stringFromWeb.equals("Video")) {
             currenMediaType = AnswerMediaType.VIDEO;
         }
-        if(stringFromWeb.equals("IMG")){
+        if (stringFromWeb.equals("IMG")) {
             currenMediaType = AnswerMediaType.IMAGE;
         }
-        if(stringFromWeb.equals("None")){
+        if (stringFromWeb.equals("None")) {
             currenMediaType = AnswerMediaType.EMPTY;
         }
-
     }
 
-    public void getUrlFromWeb(int id, String url){
+    public void getUrlFromWeb(int id, String url) {
         MediaURL newMediaUrl = new MediaURL(id, url);
 
         switch (currenMediaType) {
             case AUDIO:
                 newAudioURLs.add(newMediaUrl);
                 break;
+
             case VIDEO:
                 newVideoURLs.add(newMediaUrl);
                 break;
+
             case IMAGE:
                 newImgURLs.add(newMediaUrl);
                 break;
+
             case EMPTY:
                 break;
+
             default:
+                System.out.println("default");
                 break;
         }
+
     }
 }

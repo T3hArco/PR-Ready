@@ -1,11 +1,12 @@
 package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.question.AudioQuestion;
-//import be.ehb.swp2.entity.Quiz;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+
+//import be.ehb.swp2.entity.Quiz;
 
 /**
  * Created by Ibrahim on 10-12-15.

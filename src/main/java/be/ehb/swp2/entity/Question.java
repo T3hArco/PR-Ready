@@ -18,31 +18,19 @@ public class Question {
      * This is the title of the question
      */
     private String title;
-
-    public int getQuizId() {
-        return quizId;
-    }
-
-    public void setQuizId(int quizId) {
-        this.quizId = quizId;
-    }
-
     /**
      * This is the body of the question
      */
     private String text;
-
     /**
      * This is the type of the question. This identifier is only used in the database and is used to point to the correct
      * sub-table
      */
     private AnswerType answerType;
-
     /**
      * The media type for the answer
      */
     private AnswerMediaType answerMediaType;
-
     private int parentId;
     private int quizId;
 
@@ -51,15 +39,14 @@ public class Question {
      */
     public Question() {
     }
-
     /**
      * The constructor for question
      *
      * @param title           The title of the question
      * @param text            The body of the question
-     * @param answerType    the type of the question.
+     * @param answerType      the type of the question.
      * @param answerMediaType the type of the media
-     * @param parentId ??? TODO
+     * @param parentId        ??? TODO
      */
     public Question(String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, int parentId, int quizId) {
         this.title = title;
@@ -77,6 +64,14 @@ public class Question {
         this.answerType = answerType;
         this.answerMediaType = answerMediaType;
         this.parentId = parentId;
+        this.quizId = quizId;
+    }
+
+    public int getQuizId() {
+        return quizId;
+    }
+
+    public void setQuizId(int quizId) {
         this.quizId = quizId;
     }
 

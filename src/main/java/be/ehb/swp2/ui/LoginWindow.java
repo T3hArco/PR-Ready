@@ -33,6 +33,7 @@ public class LoginWindow implements Window {
 
     /**
      * Main constructor for the login windows
+     *
      * @param factory the factory
      */
     public LoginWindow(SessionFactory factory) {

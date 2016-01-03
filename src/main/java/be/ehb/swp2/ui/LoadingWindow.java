@@ -2,7 +2,6 @@ package be.ehb.swp2.ui;
 
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
-import org.hibernate.SessionFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,6 +34,7 @@ public class LoadingWindow implements Window {
         dialog.setUndecorated(true);
         dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
         dialog.setLocationRelativeTo(parent);
-        dialog.setVisible(true);
+        dialog.setVisible(false);
+        dialog.setAlwaysOnTop(false);
     }
 }

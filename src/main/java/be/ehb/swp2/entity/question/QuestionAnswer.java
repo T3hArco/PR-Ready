@@ -23,9 +23,9 @@ public class QuestionAnswer implements Serializable {
      *
      * @param correct boolean
      */
-    public QuestionAnswer(int questionId, int answerId,boolean correct ) {
-       this.questionId = questionId;
-       this.answerId = answerId;
+    public QuestionAnswer(int questionId, int answerId, boolean correct) {
+        this.questionId = questionId;
+        this.answerId = answerId;
         this.correct = correct;
     }
 
