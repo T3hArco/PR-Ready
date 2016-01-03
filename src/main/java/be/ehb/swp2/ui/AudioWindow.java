@@ -28,6 +28,7 @@ public class AudioWindow implements QuestionWindow {
     private SessionFactory factory;
     private String url;
     private Question question;
+    private int choice;
     private QuizLauncher quizLauncher;
 
     /**
@@ -122,5 +123,23 @@ public class AudioWindow implements QuestionWindow {
         dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
+    }
+
+    /**
+     * Getter for the choice
+     *
+     * @return integer
+     */
+    public int getChoice() {
+        return choice;
+    }
+
+    /**
+     * sets the coice
+     *
+     * @param choice integer
+     */
+    public void setChoice(int choice) {
+        this.choice = choice;
     }
 }
