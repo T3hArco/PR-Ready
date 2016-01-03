@@ -7,6 +7,7 @@ package be.ehb.swp2.entity;
 /**
  * This class contains all data for a question
  */
+
 public class Question {
     /**
      * The identifier for this question in the database
@@ -17,6 +18,14 @@ public class Question {
      * This is the title of the question
      */
     private String title;
+
+    public int getQuizId() {
+        return quizId;
+    }
+
+    public void setQuizId(int quizId) {
+        this.quizId = quizId;
+    }
 
     /**
      * This is the body of the question
@@ -35,6 +44,7 @@ public class Question {
     private AnswerMediaType answerMediaType;
 
     private int parentId;
+    private int quizId;
 
     /**
      * The default constructor for Question
@@ -51,12 +61,23 @@ public class Question {
      * @param answerMediaType the type of the media
      * @param parentId ??? TODO
      */
-    public Question(String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, int parentId) {
+    public Question(String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, int parentId, int quizId) {
         this.title = title;
         this.text = text;
         this.answerType = answerType;
         this.answerMediaType = answerMediaType;
         this.parentId = parentId;
+        this.quizId = quizId;
+    }
+
+    public Question(int id, String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, int parentId, int quizId) {
+        this.id = id;
+        this.title = title;
+        this.text = text;
+        this.answerType = answerType;
+        this.answerMediaType = answerMediaType;
+        this.parentId = parentId;
+        this.quizId = quizId;
     }
 
     /**

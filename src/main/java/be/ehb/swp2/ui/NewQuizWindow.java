@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Created by domienhennion on 8/12/15.
- * Modified by Arnaud
+ * Modified by Arnaud..
  */
 public class NewQuizWindow extends JFrame implements QuestionWindow, Window {
     private SessionFactory factory;
@@ -71,6 +71,7 @@ public class NewQuizWindow extends JFrame implements QuestionWindow, Window {
 
         browser.registerFunction("createQuiz", new BrowserFunction() {
             public JSValue invoke(JSValue... args) {
+
                 String name = args[0].getString();
                 String description = args[1].getString();
                 Integer newQuiz = null;
@@ -84,22 +85,21 @@ public class NewQuizWindow extends JFrame implements QuestionWindow, Window {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                browser.dispose();
-                parent.setVisible(false);
-                parent.dispose();
                 try {
                     EditorWindow ew = new EditorWindow(factory, newQuiz);
                 } catch (UserNoPermissionException e) {
                     e.printStackTrace();
                 }
-                return  JSValue.createUndefined();
+                browser.dispose();
+                parent.setVisible(false);
+                parent.dispose();
+                return JSValue.createUndefined();
             }
         });
 
-        SecureRandom random = new SecureRandom();
+        //SecureRandom random = new SecureRandom();
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/newQuiz.html?" + new BigInteger(130, random));
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/newQuiz.html");
         parent.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {

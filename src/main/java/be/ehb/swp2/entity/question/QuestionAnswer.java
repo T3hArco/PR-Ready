@@ -12,7 +12,10 @@ public class QuestionAnswer implements Serializable {
     /**
      * The default constructor for questionAnswer
      */
-    public QuestionAnswer() {
+    public QuestionAnswer(int questionId, int answerId) {
+
+        this.questionId = questionId;
+        this.answerId = answerId;
     }
 
     /**
@@ -20,7 +23,9 @@ public class QuestionAnswer implements Serializable {
      *
      * @param correct boolean
      */
-    public QuestionAnswer(boolean correct) {
+    public QuestionAnswer(int questionId, int answerId,boolean correct ) {
+       this.questionId = questionId;
+       this.answerId = answerId;
         this.correct = correct;
     }
 

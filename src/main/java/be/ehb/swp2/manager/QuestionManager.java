@@ -2,12 +2,12 @@ package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.AnswerMediaType;
 import be.ehb.swp2.entity.AnswerType;
-import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.exception.DuplicateQuestionException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import be.ehb.swp2.entity.Question;
 
 /**
  * Created by arnaudcoel on 26/11/15.
@@ -37,7 +37,7 @@ public class QuestionManager {
 
         try {
             transaction = session.beginTransaction(); // start een transactie op
-            Question question = new Question(title, text, questionType, answerMediaType, 1);
+            Question question = new Question(title, text, questionType, answerMediaType, 1, 1);
             questionId = (Integer) session.save(question); // geef de ID van de gebruiker weer
             transaction.commit(); // persist in de database
         } catch (HibernateException e) {
