@@ -1,6 +1,7 @@
 package be.ehb.swp2.ui;
 
 
+import be.ehb.swp2.entity.QuizLauncher;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
@@ -26,6 +27,7 @@ public class TextWindow implements QuestionWindow {
     private SessionFactory session;
     private Question question;
     private int choice;
+    private QuizLauncher quizLauncher;
 
     /**
      * Constructor
@@ -33,12 +35,10 @@ public class TextWindow implements QuestionWindow {
      * @param session  question factory
      * @param question question parent
      */
-    public TextWindow(SessionFactory session, Question question) {
+    public TextWindow(SessionFactory session, Question question, QuizLauncher quizLauncher) {
         this.session = session;
         this.question = question;
-        this.choice = 1;
-
-        this.initComponents();
+        this.quizLauncher = quizLauncher;
     }
 
     /**
@@ -66,7 +66,6 @@ public class TextWindow implements QuestionWindow {
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                setChoice(1);
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
@@ -78,10 +77,12 @@ public class TextWindow implements QuestionWindow {
         browser.registerFunction("nextQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
-                setChoice(1);
+                System.out.println("next");
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
+                quizLauncher.setIncrement(quizLauncher.getIncrement() + 1);
+                quizLauncher.windowChoice();
                 return JSValue.createUndefined();
             }
 
@@ -91,11 +92,12 @@ public class TextWindow implements QuestionWindow {
         browser.registerFunction("previousQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
-
-                setChoice(2);
+                System.out.println("back");
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
+                quizLauncher.setIncrement(quizLauncher.getIncrement() + 1);
+                quizLauncher.windowChoice();
                 return JSValue.createUndefined();
             }
 
