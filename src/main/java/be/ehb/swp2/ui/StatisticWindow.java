@@ -394,7 +394,7 @@ public class StatisticWindow {
         dialog.setVisible(true);
 
     }
-
+/*
     public static void main(String [ ] args)
     {
         PieChartData[] Pie = new PieChartData[] { new PieChartData("Quiz1", 27.0), new PieChartData("Quiz2", 73.0) };
@@ -411,6 +411,10 @@ public class StatisticWindow {
 
         ColumnData[] columns = new ColumnData[] {new ColumnData("Column1", dat1)};
         printColumn(columns, "Das Title", "wasub");
+
+    }
+    */
+    public static void printPdf(){
 
     }
 }
