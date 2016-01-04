@@ -1,8 +1,5 @@
 package be.ehb.swp2.entity;
 
-import be.ehb.swp2.entity.question.AudioQuestion;
-import be.ehb.swp2.entity.question.MultipleChoice;
-import be.ehb.swp2.entity.question.TrueFalseQuestion;
 import be.ehb.swp2.manager.AudioQuestionManager;
 import be.ehb.swp2.manager.ImageQuestionManager;
 import be.ehb.swp2.manager.QuestionManager;
@@ -28,7 +25,12 @@ public class QuizLauncher implements Window {
         System.out.println("test1");
         QuestionManager qm = new QuestionManager(factory);
 
-        List<Question> questions = qm.getQuestionsByQuizId(6);
+        List<Question> questions = null;
+        try {
+            questions = qm.getQuestionsByQuizId(6);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         for (Question q : questions){
             System.out.println(q.getTitle());
             System.out.println(q.getAnswerMediaType());

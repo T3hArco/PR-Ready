@@ -10,6 +10,7 @@ import org.jboss.logging.Logger;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -93,7 +94,7 @@ public class QuizManager {
      * @param quizId
      * @param name
      */
-    public void updateUserName(Integer quizId, String name) {
+    public void updateQuizName(Integer quizId, String name) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
@@ -104,7 +105,32 @@ public class QuizManager {
             session.update(quiz); // zet de update klaar
             transaction.commit(); // TaDa
         } catch (HibernateException e) {
-            // TODO implementeer manier om doubles er uit te filteren
+            if (transaction != null)
+                transaction.rollback();
+
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Deze method zal de naam van een quiz updaten doormiddel van de quizId
+     *
+     * @param quizId    quizid
+     * @param questions questions
+     */
+    public void updateQuestions(Integer quizId, ArrayList<Question> questions) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            Quiz quiz = session.get(Quiz.class, quizId);
+            quiz.addAllQuestions(questions);
+            session.update(quiz);
+            transaction.commit();
+        } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
 
