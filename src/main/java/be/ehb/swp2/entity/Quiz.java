@@ -170,4 +170,8 @@ public class Quiz implements Comparable<Quiz> {
     public Question getQuestion(int id) {
         return this.questions.get(id);
     }
+
+    public void addAllQuestions(ArrayList<Question> questions) {
+        this.questions.addAll(questions);
+    }
 }
