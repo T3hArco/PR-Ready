@@ -1,8 +1,7 @@
-package be.ehb.swp2.ui;
+package be.ehb.swp2.ui.statistics;
 
+import be.ehb.swp2.ui.StatisticMenuWindow;
 import be.ehb.swp2.util.ColumnData;
-import be.ehb.swp2.util.LineChartData;
-import be.ehb.swp2.util.PieChartData;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
@@ -19,56 +18,55 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Created by Chris on 26/11/2015.
+ * Created by arnaudcoel on 03/01/16.
  */
-public class StatisticWindow implements Window {
-    static final JFrame parent = new JFrame();
-    static final JDialog dialog = new JDialog(parent, "Overview", true);
-    static final Browser browser = new Browser();
-    private static SessionFactory session;
+public class ColumnChartWindow implements be.ehb.swp2.ui.Window {
+    private SessionFactory factory;
+    private JFrame parent;
+    private JDialog dialog;
+    private Browser browser;
+    private ColumnData[] dataArr;
+    private String title, subtitle;
 
-    public StatisticWindow(SessionFactory session){
-        StatisticWindow.session = session;
+    public ColumnChartWindow(SessionFactory factory, ColumnData[] dataArr, String title, String subtitle) {
+        this.factory = factory;
+        this.parent = new JFrame();
+        this.dialog = new JDialog(parent, "Overview", true);
+        this.browser = new Browser();
+        this.dataArr = dataArr;
+        this.title = title;
+        this.subtitle = subtitle;
+
+        this.initComponents();
     }
 
-    public static void printPie(PieChartData[] DataArr, String title){
-
-
-    }
-
-    public static void printLine(LineChartData[] DataArr, String title, String subtitle, String titleLeft, String[] categories){
-
-
-    }
-
-    public static void printColumn(ColumnData[] DataArr, String title, String subtitle){
-
+    public void initComponents() {
         final File temp;
         String absolutePath = null;
         String tempFilePath = null;
+
         try {
             temp = File.createTempFile("temp", Long.toString(System.nanoTime()));
             absolutePath = temp.getAbsolutePath();
-            tempFilePath = absolutePath.substring(0,absolutePath.lastIndexOf(File.separator));
-            System.out.println("Temp file path : " + tempFilePath);
+            tempFilePath = absolutePath.substring(0, absolutePath.lastIndexOf(File.separator));
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
         try {
             PrintWriter html = new PrintWriter(tempFilePath + "/statisticsColumn.html");
             html.println(
-                    "<!DOCTYPE HTML>\n"+
+                    "<!DOCTYPE HTML>\n" +
                             "\t<html>\n" +
                             "\t\t<head>\n" +
-                            "\t\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"> \n"+
+                            "\t\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"> \n" +
                             "\t\t<title>Highcharts Example</title> \n" +
                             "\t\t<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js\"></script> \n" +
                             "\t\t<style type=\"text/css\"> \n" +
                             "#container, #sliders { \n" +
                             "min-width: 310px; \n" +
                             "max-width: 800px; \n" +
-                            "margin: 0 auto;\n"+
+                            "margin: 0 auto;\n" +
                             "}\n" +
                             "#container {\n" +
                             "height: 400px; \n" +
@@ -82,18 +80,18 @@ public class StatisticWindow implements Window {
                             "type: 'column',\n" +
                             "margin: 75,\n" +
                             "options3d: {\n" +
-                            "enabled: true,\n"+
+                            "enabled: true,\n" +
                             "alpha: 15,\n" +
                             "beta: 15,\n" +
                             "depth: 50,\n" +
-                            "viewDistance: 25\n"+
+                            "viewDistance: 25\n" +
                             "}\n" +
                             "},\n" +
                             "title: {\n" +
                             "text: '" + title + "'\n" +
                             "},\n" +
                             "subtitle: {\n" +
-                            "text: '"+ subtitle +"'\n"+
+                            "text: '" + subtitle + "'\n" +
                             "},\n" +
                             "plotOptions: {\n" +
                             "column: {\n" +
@@ -101,16 +99,16 @@ public class StatisticWindow implements Window {
                             "}\n" +
                             "},\n" +
                             "series: [{\n");
-            for (int i = 0; i < DataArr.length; i++) {
-                html.println( "name: \"" + DataArr[i].getName() +"\",\n data: [");
-                for (int j=0; j<DataArr[i].getData().length; j++){
-                    html.println(DataArr[i].getData()[j]);
-                    if(DataArr[i].getData()[j] != DataArr[i].getData()[DataArr[i].getData().length-1]){
+            for (int i = 0; i < dataArr.length; i++) {
+                html.println("name: \"" + dataArr[i].getName() + "\",\n data: [");
+                for (int j = 0; j < dataArr[i].getData().length; j++) {
+                    html.println(dataArr[i].getData()[j]);
+                    if (dataArr[i].getData()[j] != dataArr[i].getData()[dataArr[i].getData().length - 1]) {
                         html.println(",");
                     }
                 }
                 html.println("]}");
-                if(DataArr[i] != DataArr[DataArr.length-1]){
+                if (dataArr[i] != dataArr[dataArr.length - 1]) {
                     html.println(", {\n");
                 }
             }
@@ -122,10 +120,10 @@ public class StatisticWindow implements Window {
                             "$('#R0-value').html(chart.options.chart.options3d.alpha);\n" +
                             "$('#R1-value').html(chart.options.chart.options3d.beta);\n" +
                             "}\n" +
-                            "$('#R0').on('change', function () {\n"+
+                            "$('#R0').on('change', function () {\n" +
                             "chart.options.chart.options3d.alpha = this.value; \n" +
                             "showValues();\n" +
-                            "chart.redraw(false);\n"+
+                            "chart.redraw(false);\n" +
                             "});\n" +
                             "$('#R1').on('change', function () {\n" +
                             "chart.options.chart.options3d.beta = this.value;\n" +
@@ -154,7 +152,6 @@ public class StatisticWindow implements Window {
                             "\n");
             html.close();
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -164,7 +161,7 @@ public class StatisticWindow implements Window {
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
-                StatisticMenuWindow smw = new StatisticMenuWindow(session);
+                StatisticMenuWindow smw = new StatisticMenuWindow(factory);
 
                 return JSValue.createUndefined();
             }
@@ -182,7 +179,6 @@ public class StatisticWindow implements Window {
         });
 
 
-
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.add(new BrowserView(browser), BorderLayout.CENTER);
         dialog.setResizable(false);
@@ -190,10 +186,5 @@ public class StatisticWindow implements Window {
         dialog.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
-
-    }
-
-    public void initComponents() {
-
     }
 }
