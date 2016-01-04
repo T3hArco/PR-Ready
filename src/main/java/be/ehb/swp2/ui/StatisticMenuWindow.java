@@ -1,6 +1,9 @@
 package be.ehb.swp2.ui;
 
 import be.ehb.swp2.exception.UserNoPermissionException;
+import be.ehb.swp2.ui.statistics.ColumnChartWindow;
+import be.ehb.swp2.ui.statistics.LineChartWindow;
+import be.ehb.swp2.ui.statistics.PieChartWindow;
 import be.ehb.swp2.util.ColumnData;
 import be.ehb.swp2.util.LineChartData;
 import be.ehb.swp2.util.PieChartData;
@@ -23,6 +26,7 @@ public class StatisticMenuWindow {
 
     public StatisticMenuWindow(SessionFactory factory){
         StatisticMenuWindow.factory = factory;
+
         initComponents();
     }
 
@@ -53,8 +57,7 @@ public class StatisticMenuWindow {
                 dataArr[0] = new PieChartData("first", 30);
                 dataArr[1] = new PieChartData("second", 50);
                 dataArr[2] = new PieChartData("third", 20);
-                //StatisticWindow.printPie(dataArr, "test");
-                new PiechartWindow(factory, dataArr, "test");
+                new PieChartWindow(factory, dataArr, "test");
 
                 return JSValue.createUndefined();
             }
@@ -82,7 +85,7 @@ public class StatisticMenuWindow {
                 lineData[1] = new LineChartData("line2", data);
                 lineData[2] = new LineChartData("line3", data);
                 //StatisticWindow.printLine(lineData, title, subtitle, leftTitle, categories);
-                new LinechartWindow(factory, lineData, title, subtitle, leftTitle, categories);
+                new LineChartWindow(factory, lineData, title, subtitle, leftTitle, categories);
 
                 return JSValue.createUndefined();
             }
@@ -104,13 +107,12 @@ public class StatisticMenuWindow {
                 dataColumn[0] = new ColumnData("column1", data);
                 dataColumn[1] = new ColumnData("column2", data);
                 dataColumn[2] = new ColumnData("column3", data);
-                //StatisticWindow.printColumn(dataColumn, title, subtitle);
-                //new PiechartWindow(factory, dataColumn, title, subtitle);
+                new ColumnChartWindow(factory, dataColumn, title, subtitle);
+                //new PieChartWindow(factory, dataColumn, title, subtitle);
 
                 return JSValue.createUndefined();
             }
         });
-
 
         browser.registerFunction("onExit", new BrowserFunction() {
 

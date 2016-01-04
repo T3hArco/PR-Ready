@@ -1,5 +1,6 @@
-package be.ehb.swp2.ui;
+package be.ehb.swp2.ui.statistics;
 
+import be.ehb.swp2.ui.StatisticMenuWindow;
 import be.ehb.swp2.util.PieChartData;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
@@ -19,7 +20,7 @@ import java.io.PrintWriter;
 /**
  * Created by arnaudcoel on 03/01/16.
  */
-public class PiechartWindow implements Window {
+public class PieChartWindow implements be.ehb.swp2.ui.Window {
     private SessionFactory factory;
     private JFrame parent;
     private JDialog dialog;
@@ -27,7 +28,7 @@ public class PiechartWindow implements Window {
     private PieChartData[] dataArr;
     private String title;
 
-    public PiechartWindow(SessionFactory factory, PieChartData[] dataArr, String title) {
+    public PieChartWindow(SessionFactory factory, PieChartData[] dataArr, String title) {
         this.factory = factory;
         this.parent = new JFrame();
         this.dialog = new JDialog(parent, "Overview", true);
