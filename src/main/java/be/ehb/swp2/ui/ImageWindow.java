@@ -58,6 +58,7 @@ public class ImageWindow implements QuestionWindow {
             public void onFinishLoadingFrame(FinishLoadingEvent event) {
                 if (event.isMainFrame()) {
                     String imageURL = url;
+                    System.out.println(url);
                     DOMDocument document = event.getBrowser().getDocument();
                     DOMNode root = document.findElement(By.id("img"));
                     DOMElement img = document.createElement("img");
@@ -78,6 +79,7 @@ public class ImageWindow implements QuestionWindow {
                         p2.appendChild(a);
 
                     }
+
                 }
 
             }
@@ -85,7 +87,7 @@ public class ImageWindow implements QuestionWindow {
 
 
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/ImageFrame.html?851951951951951");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/ImageFrame.html?851951951951952");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {

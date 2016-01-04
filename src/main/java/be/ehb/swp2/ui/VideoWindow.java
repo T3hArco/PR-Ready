@@ -1,5 +1,6 @@
 package be.ehb.swp2.ui;
 
+import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.QuizLauncher;
 import com.teamdev.jxbrowser.chromium.Browser;
@@ -61,6 +62,27 @@ public class VideoWindow implements QuestionWindow {
                     DOMNode n = document.createTextNode(question.getText());
                     root2.appendChild(p);
                     p.appendChild(n);
+                    DOMNode answers = document.findElement(By.id("answers"));
+                    if (question.getAnswerType().equals(AnswerType.MULTIPLE_CHOICE)){
+                        System.out.println("check");
+                        DOMNode a = document.createTextNode("dit is een multiplechoice vraag");
+                        DOMElement p2 = document.createElement("p");
+                        answers.appendChild(p2);
+                        p2.appendChild(a);
+
+                    }
+                    if (question.getAnswerType().equals(AnswerType.TRUE_FALSE)){
+                    DOMNode form = document.createElement("form");
+                    DOMElement trueBox = document.createElement("input");
+                    trueBox.setAttribute("name", "tf");
+                    DOMNode dataTrue = document.createTextNode("dit is een multiplechoice vraag");
+                    trueBox.setInnerText("true");
+
+                    DOMElement falseBox = document.createElement("input");
+                    falseBox.setAttribute("name", "tf");
+                    falseBox.setInnerText("false");
+
+                }
                 }
             }
         });

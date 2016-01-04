@@ -61,7 +61,7 @@ public class TextWindow implements QuestionWindow {
                     DOMNode n = document.createTextNode(question.getText());
                     root.appendChild(n);
                     DOMNode answers = document.findElement(By.id("answers"));
-
+                    System.out.println("yes yes yes");
                     if (question.getAnswerType().equals(AnswerType.MULTIPLE_CHOICE)){
                         System.out.println("yes yes yes");
                         DOMNode na = document.createTextNode("chaise");
@@ -77,7 +77,7 @@ public class TextWindow implements QuestionWindow {
             }
         });
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/TextFrame.html");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/TextFrame.html?851951951951951");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {

@@ -98,6 +98,19 @@ public class NewQuizWindow extends JFrame implements QuestionWindow, Window {
             }
         });
 
+        browser.registerFunction("onBack", new BrowserFunction() {
+            public JSValue invoke(JSValue... args) {
+
+                browser.dispose();
+                parent.setVisible(false);
+                parent.dispose();
+
+                OverviewWindow ow = new OverviewWindow(factory);
+
+                return JSValue.createUndefined();
+            }
+        });
+
         //SecureRandom random = new SecureRandom();
 
         browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/newQuiz.html");
