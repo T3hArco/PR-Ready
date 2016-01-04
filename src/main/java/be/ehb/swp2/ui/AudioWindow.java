@@ -93,7 +93,7 @@ public class AudioWindow implements QuestionWindow {
                         falseBox.setAttribute("name", "tf");
                         falseBox.setInnerText("false");
                         form.appendChild(trueBox);
-                        form.appendChild(falseBox);
+                        form.appendChild(falseBox);//
                         answers.appendChild(form);
                     }
 
