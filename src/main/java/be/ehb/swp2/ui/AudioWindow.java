@@ -38,7 +38,7 @@ public class AudioWindow implements QuestionWindow {
      */
     public AudioWindow(SessionFactory factory, String url, Question question, QuizLauncher quizLauncher) {
         this.factory = factory;
-        this.url = url;
+        this.url = "u1I9ITfzqFs";
         this.question = question;
         this.quizLauncher = quizLauncher;
     }
@@ -77,7 +77,7 @@ public class AudioWindow implements QuestionWindow {
             }
         });
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/audioFrame.html");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/audioFrame.html?851951951951951");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
