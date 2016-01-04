@@ -53,4 +53,35 @@ public class QuestionManager {
         return questionId; // geeft de aangemaakte userAnswer weer
     }
 
+    /**
+     * https://www.youtube.com/watch?v=czmjOvR6O5E
+     *
+     * @param question https://www.youtube.com/watch?v=czmjOvR6O5E
+     * @return https://www.youtube.com/watch?v=czmjOvR6O5E
+     * @throws DuplicateQuestionException
+     */
+    public Integer addQuestion(Question question) throws DuplicateQuestionException {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+        Integer questionId = null;
+
+        try {
+            transaction = session.beginTransaction(); // start een transactie op
+            questionId = (Integer) session.save(question); // geef de ID van de gebruiker weer
+            transaction.commit(); // persist in de database
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback(); // maak de transactie ongedaan indien er een fout is
+
+            e.printStackTrace();
+        } finally {
+            session.close(); // we zijn klaar en sluiten onze sessie af
+        }
+
+        if (questionId == null)
+            throw new DuplicateQuestionException();
+
+        return questionId; // geeft de aangemaakte userAnswer weer
+    }
+
 }
