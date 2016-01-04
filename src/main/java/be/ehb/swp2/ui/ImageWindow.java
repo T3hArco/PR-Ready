@@ -71,8 +71,12 @@ public class ImageWindow implements QuestionWindow {
                     p.appendChild(n);
                     DOMNode answers = document.findElement(By.id("answers"));
                     if (question.getAnswerType().equals(AnswerType.MULTIPLE_CHOICE)){
+                        System.out.println("check");
                         DOMNode a = document.createTextNode("dit is een multiplechoice vraag");
-                        answers.appendChild(a);
+                        DOMElement p2 = document.createElement("p");
+                        answers.appendChild(p2);
+                        p2.appendChild(a);
+
                     }
                 }
 

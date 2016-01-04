@@ -38,7 +38,7 @@ public class AudioWindow implements QuestionWindow {
      */
     public AudioWindow(SessionFactory factory, String url, Question question, QuizLauncher quizLauncher) {
         this.factory = factory;
-        this.url = url;
+        this.url = "u1I9ITfzqFs";
         this.question = question;
         this.quizLauncher = quizLauncher;
     }
@@ -56,7 +56,7 @@ public class AudioWindow implements QuestionWindow {
             public void onFinishLoadingFrame(FinishLoadingEvent event) {
                 if (event.isMainFrame()) {
 
-                    String audioUrl = url;
+                    String audioUrl = "http://www.youtube.com/embed/" + url + "?enablejsapi=1&amp;fs=0&amp;rel=0&amp;showinfo=0&amp;modestbranding=1&amp;iv_load_policy=3&amp;controls=0&amp;autoplay=0&amp;loop=0";
 
                     DOMDocument document = event.getBrowser().getDocument();
                     DOMNode root = document.findElement(By.id("audioo.hbm.xml"));
@@ -77,7 +77,7 @@ public class AudioWindow implements QuestionWindow {
             }
         });
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/audioFrame.html");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/audioFrame.html?851951951951951");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {

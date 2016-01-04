@@ -108,12 +108,12 @@ public class Quiz {
         qa.addQuestionAnswer(1, 1, true);
         qa.addQuestionAnswer(1, 2, false);
         qa.addQuestionAnswer(1, 3, false);*/
-        QuestionManager qm = new QuestionManager(factory);
+        /*QuestionManager qm = new QuestionManager(factory);
         try {
             qm.addQuestion("question6","????", AnswerType.MULTIPLE_CHOICE, null,1);
         } catch (DuplicateQuestionException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public void imageSaveTest() {
