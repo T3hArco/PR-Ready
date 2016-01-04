@@ -1,9 +1,12 @@
 package be.ehb.swp2.manager;
+
 import be.ehb.swp2.entity.Answer;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import java.util.List;
+import org.hibernate.*;
 //import org.hibernate.sql.ordering.antlr.Factory;
 
 /**
@@ -11,10 +14,13 @@ import org.hibernate.Transaction;
  */
 public class AnswerManager {
 
-    public  SessionFactory factory;
-    public AnswerManager(SessionFactory factory) {this.factory = factory;}
+    public SessionFactory factory;
 
-    public  Integer addAnswer( int answerId, String text) {
+    public AnswerManager(SessionFactory factory) {
+        this.factory = factory;
+    }
+
+    public Integer addAnswer(int answerId, String text) {
 
         Session session = factory.openSession();
         Transaction transaction = null;
@@ -33,6 +39,30 @@ public class AnswerManager {
         }
         return id;
     }
+
+
+    public List<String> getAnswerByQuestionId(Integer questionId){
+        Session session = factory.openSession();
+        Transaction transaction = null;
+        List answers = null;
+
+        try {
+            transaction = session.beginTransaction();
+            Query fetchQuestions = session.createQuery("From Answer join QuestionAnswer on Answer.answerId == QuestionAnswer.answerId where QuestionAnswer.questionId == " + questionId + "");
+            answers = fetchQuestions.list();
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return answers;
+    }
+
+
 
     public void deleteAnswer(Integer id) {
         Session session = factory.openSession();
@@ -54,13 +84,13 @@ public class AnswerManager {
     }
 
 
-    public void updateAnswer( int id, int answerId) {
+    public void updateAnswer(int id, int answerId) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
-            Answer answer = session.get(Answer.class,id);
+            Answer answer = session.get(Answer.class, id);
             answer.setAnswerId(answerId);
             session.update(answer);
             transaction.commit();
@@ -74,7 +104,6 @@ public class AnswerManager {
             session.close();
         }
     }
-
 
 
 }

@@ -1,6 +1,6 @@
 package be.ehb.swp2.ui;
 
-import be.ehb.swp2.application.Quiz;
+import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.QuizLauncher;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
@@ -18,7 +18,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import be.ehb.swp2.entity.Question;
 
 /**
  * Created by domienhennion on 3/12/15.
@@ -39,7 +38,7 @@ public class AudioWindow implements QuestionWindow {
      */
     public AudioWindow(SessionFactory factory, String url, Question question, QuizLauncher quizLauncher) {
         this.factory = factory;
-        this.url = url;
+        this.url = "u1I9ITfzqFs";
         this.question = question;
         this.quizLauncher = quizLauncher;
     }
@@ -78,7 +77,7 @@ public class AudioWindow implements QuestionWindow {
             }
         });
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/audioFrame.html");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/audioFrame.html?851951951951951");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -87,14 +86,14 @@ public class AudioWindow implements QuestionWindow {
                 dialog.dispose();
             }
         });
-//666888
+
         browser.registerFunction("nextQuestion", new BrowserFunction() {
 
             public JSValue invoke(JSValue... jsValues) {
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
-                quizLauncher.setIncrement(quizLauncher.getIncrement()+1);
+                quizLauncher.setIncrement(quizLauncher.getIncrement() + 1);
                 quizLauncher.windowChoice();
                 return JSValue.createUndefined();
             }

@@ -9,13 +9,12 @@ import be.ehb.swp2.exception.UserNoPermissionException;
 import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.manager.UserManager;
 import be.ehb.swp2.util.PermissionHandler;
+import be.ehb.swp2.util.SecurityHandler;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.hibernate.SessionFactory;
-import be.ehb.swp2.entity.Question;
-import be.ehb.swp2.util.SecurityHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +42,7 @@ public class OverviewWindow extends JFrame implements Window {
      * Constructor voor Overviewwindow
      *
      * @param factory de SQL sessie
-*/
+     */
     public OverviewWindow(SessionFactory factory) {
         this.factory = factory;
         this.quizSet = new TreeSet<Quiz>();
@@ -129,7 +128,7 @@ public class OverviewWindow extends JFrame implements Window {
                 dialog.setVisible(false);
                 dialog.dispose();
 
-                return  JSValue.createUndefined();
+                return JSValue.createUndefined();
             }
         });
 
@@ -151,7 +150,7 @@ public class OverviewWindow extends JFrame implements Window {
                 dialog.dispose();
                 LoginWindow lw = new LoginWindow(factory);
 
-                return  JSValue.createUndefined();
+                return JSValue.createUndefined();
             }
         });
 
@@ -167,7 +166,7 @@ public class OverviewWindow extends JFrame implements Window {
                 dialog.setVisible(false);
                 dialog.dispose();
 
-                return  JSValue.createUndefined();
+                return JSValue.createUndefined();
             }
 
 

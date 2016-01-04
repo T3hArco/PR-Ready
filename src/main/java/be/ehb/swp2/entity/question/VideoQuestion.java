@@ -10,13 +10,14 @@ public class VideoQuestion {
     /**
      * Default constructor for video
      */
-    public VideoQuestion() {}
+    public VideoQuestion() {
+    }
 
     /**
      * The constructor for questions
      *
      * @param parentId integer
-     * @param link           string
+     * @param link     string
      */
     public VideoQuestion(int parentId, String link) {
         this.parentId = parentId;
