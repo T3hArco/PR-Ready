@@ -1,6 +1,7 @@
 package be.ehb.swp2.ui;
 
 
+import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.QuizLauncher;
 import com.teamdev.jxbrowser.chromium.Browser;
@@ -58,6 +59,12 @@ public class TextWindow implements QuestionWindow {
                     DOMNode root = document.findElement(By.id("text"));
                     DOMNode n = document.createTextNode(question.getText());
                     root.appendChild(n);
+
+                    DOMNode answers = document.findElement(By.id("answers"));
+                    if (question.getAnswerType().equals(AnswerType.MULTIPLE_CHOICE)){
+                        DOMNode a = document.createTextNode("dit is een multiplechoice vraag");
+                        answers.appendChild(a);
+                    }
                 }
             }
         });

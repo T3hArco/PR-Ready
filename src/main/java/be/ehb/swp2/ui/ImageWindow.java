@@ -1,5 +1,7 @@
 package be.ehb.swp2.ui;
 
+import be.ehb.swp2.entity.AnswerMediaType;
+import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.QuizLauncher;
 import com.teamdev.jxbrowser.chromium.Browser;
@@ -67,9 +69,17 @@ public class ImageWindow implements QuestionWindow {
                     DOMNode n = document.createTextNode(question.getText());
                     root2.appendChild(p);
                     p.appendChild(n);
+                    DOMNode answers = document.findElement(By.id("answers"));
+                    if (question.getAnswerType().equals(AnswerType.MULTIPLE_CHOICE)){
+                        DOMNode a = document.createTextNode("dit is een multiplechoice vraag");
+                        answers.appendChild(a);
+                    }
                 }
+
             }
         });
+
+
 
         browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/ImageFrame.html?851951951951951");
         dialog.addWindowListener(new WindowAdapter() {
@@ -118,6 +128,8 @@ public class ImageWindow implements QuestionWindow {
         dialog.setLocationRelativeTo(parent);
         dialog.setVisible(true);
     }
+
+
 
     /**
      * Getter for the choice
