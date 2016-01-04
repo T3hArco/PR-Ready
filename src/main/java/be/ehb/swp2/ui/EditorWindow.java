@@ -2,9 +2,10 @@ package be.ehb.swp2.ui;
 
 import be.ehb.swp2.entity.*;
 import be.ehb.swp2.entity.question.QuestionAnswer;
+import be.ehb.swp2.exception.DuplicateQuestionException;
 import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.exception.UserNoPermissionException;
-import be.ehb.swp2.manager.QuizManager;
+import be.ehb.swp2.manager.*;
 import be.ehb.swp2.util.PermissionHandler;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
@@ -55,6 +56,7 @@ public class EditorWindow extends JFrame implements Window {
         this.quizId = quizId;
         if (!PermissionHandler.currentUserHasPermission(factory, UserRole.ADMINISTRATOR))
             throw new UserNoPermissionException();
+
         this.initComponents();
     }
 
@@ -170,10 +172,47 @@ public class EditorWindow extends JFrame implements Window {
             public JSValue invoke(JSValue... args) {
                 System.out.println("SavingDone");
 
+                JOptionPane.showMessageDialog(parent, "Saving Done!");
                 System.out.println("newQuestions.toString() = " + newQuestions.toString());
                 System.out.println("newAnswers.toString() = " + newAnswers.toString());
                 System.out.println("newQuestionAnswers.toString() = " + newQuestionAnswers.toString());
 
+                for (Question q : newQuestions) {
+                    QuestionManager quiz = new QuestionManager(factory);
+                    try {
+                        q.setTitle("Quiz");
+                        q.setQuizId(quizId);
+                        q.setParentId(quizId);
+                        quiz.addQuestion(q);
+                    } catch (DuplicateQuestionException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                for (Answer a : newAnswers) {
+                    AnswerManager answerManager = new AnswerManager(factory);
+                    answerManager.addAnswer(a.getAnswerId(), a.getText());
+                }
+
+                for (QuestionAnswer qa : newQuestionAnswers) {
+                    QuestionAnswerManager questionAnswerManager = new QuestionAnswerManager(factory);
+                    questionAnswerManager.addQuestionAnswer(qa.getQuestionId(), qa.getAnswerId(), qa.isCorrect());
+                }
+
+                for (MediaURL mu : newVideoURLs) {
+                    VideoQuestionManager videoQuestionManager = new VideoQuestionManager(factory);
+                    videoQuestionManager.addVideoQuestion(mu.getId(), mu.getUrl());
+                }
+
+                for (MediaURL mu : newAudioURLs) {
+                    AudioQuestionManager audioQuestionManager = new AudioQuestionManager(factory);
+                    audioQuestionManager.addAudioQuestion(mu.getId(), mu.getUrl());
+                }
+
+                for (MediaURL mu : newImgURLs) {
+                    ImageQuestionManager imageQuestionManager = new ImageQuestionManager(factory);
+                    imageQuestionManager.addImageQuestion(mu.getId(), mu.getUrl());
+                }
 
                 return JSValue.create("SavingDone!");
             }
