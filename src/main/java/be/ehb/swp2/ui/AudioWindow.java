@@ -1,5 +1,6 @@
 package be.ehb.swp2.ui;
 
+import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.QuizLauncher;
 import com.teamdev.jxbrowser.chromium.Browser;
@@ -38,7 +39,7 @@ public class AudioWindow implements QuestionWindow {
      */
     public AudioWindow(SessionFactory factory, String url, Question question, QuizLauncher quizLauncher) {
         this.factory = factory;
-        this.url = "u1I9ITfzqFs";
+        this.url = url;
         this.question = question;
         this.quizLauncher = quizLauncher;
     }
@@ -59,7 +60,7 @@ public class AudioWindow implements QuestionWindow {
                     String audioUrl = "http://www.youtube.com/embed/" + url + "?enablejsapi=1&amp;fs=0&amp;rel=0&amp;showinfo=0&amp;modestbranding=1&amp;iv_load_policy=3&amp;controls=0&amp;autoplay=0&amp;loop=0";
 
                     DOMDocument document = event.getBrowser().getDocument();
-                    DOMNode root = document.findElement(By.id("audioo.hbm.xml"));
+                    DOMNode root = document.findElement(By.id("audio"));
                     DOMElement iframe = document.createElement("iframe");
                     iframe.setAttribute("width", "250");
                     iframe.setAttribute("height", "250");
@@ -72,12 +73,35 @@ public class AudioWindow implements QuestionWindow {
                     DOMNode n = document.createTextNode(question.getText());
                     root2.appendChild(p);
                     p.appendChild(n);
+                    DOMNode answers = document.findElement(By.id("answers"));
+                    if (question.getAnswerType().equals(AnswerType.MULTIPLE_CHOICE)){
+                        System.out.println("check");
+                        DOMNode a = document.createTextNode("dit is een multiplechoice vraag");
+                        DOMElement p2 = document.createElement("p");
+                        answers.appendChild(p2);
+                        p2.appendChild(a);
+
+                    }
+                    if (question.getAnswerType().equals(AnswerType.TRUE_FALSE)) {
+                        DOMNode form = document.createElement("form");
+                        DOMElement trueBox = document.createElement("input");
+                        trueBox.setAttribute("name", "tf");
+                        DOMNode dataTrue = document.createTextNode("dit is een multiplechoice vraag");
+                        trueBox.setInnerText("true");
+
+                        DOMElement falseBox = document.createElement("input");
+                        falseBox.setAttribute("name", "tf");
+                        falseBox.setInnerText("false");
+                        form.appendChild(trueBox);
+                        form.appendChild(falseBox);//
+                        answers.appendChild(form);
+                    }
 
                 }
             }
         });
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/audioFrame.html?851951951951951");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/audioFrame.html?851951951951954");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
