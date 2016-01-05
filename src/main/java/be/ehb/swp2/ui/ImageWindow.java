@@ -79,6 +79,26 @@ public class ImageWindow implements QuestionWindow {
                         p2.appendChild(a);
 
                     }
+                    if (question.getAnswerType().equals(AnswerType.TRUE_FALSE)) {
+                        DOMNode form = document.createElement("form");
+                        DOMElement trueBox = document.createElement("input");
+                        trueBox.setAttribute("type", "radio");
+                        trueBox.setAttribute("name", "tf");
+                        DOMNode dataTrue = document.createTextNode("true");
+                        DOMElement labeltrue = document.createElement("label");
+                        labeltrue.appendChild(dataTrue);
+                        DOMElement falseBox = document.createElement("input");
+                        DOMNode dataFalse = document.createTextNode("false");
+                        DOMElement labelFalse = document.createElement("label");
+                        labelFalse.appendChild(dataFalse);
+                        falseBox.setAttribute("type", "radio");
+                        falseBox.setAttribute("name", "tf");
+                        form.appendChild(labeltrue);
+                        form.appendChild(trueBox);
+                        form.appendChild(labelFalse);
+                        form.appendChild(falseBox);//
+                        answers.appendChild(form);
+                    }
 
                 }
 
@@ -87,7 +107,7 @@ public class ImageWindow implements QuestionWindow {
 
 
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/ImageFrame.html?851951951951952");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/ImageFrame.html?853954951951959");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {

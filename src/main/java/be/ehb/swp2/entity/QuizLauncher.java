@@ -46,18 +46,18 @@ public class QuizLauncher implements Window {
                 if (q.getAnswerMediaType().equals(AnswerMediaType.AUDIO)){
 
                     AudioQuestionManager aqm = new AudioQuestionManager(factory);
-                    String url = aqm.getUrlById(4);
+                    String url = aqm.getUrlById(q.getId());
                     windows.add(new AudioWindow(factory, url , q, this));
 
                 }
                 if(q.getAnswerMediaType().equals(AnswerMediaType.IMAGE)){
                     ImageQuestionManager iqm = new ImageQuestionManager(factory);
-                    String url = iqm.getUrlById(5);
+                    String url = iqm.getUrlById(q.getId());
                     windows.add(new ImageWindow(factory, url, q, this));
                 }
                 if (q.getAnswerMediaType().equals(AnswerMediaType.VIDEO)){
                     VideoQuestionManager vqm = new VideoQuestionManager(factory);
-                    String url = vqm.getUrlById(42);
+                    String url = vqm.getUrlById(q.getId());
                     windows.add(new VideoWindow(factory, url, q, this));
                 }
         }
