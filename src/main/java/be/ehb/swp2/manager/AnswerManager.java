@@ -5,6 +5,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import java.util.List;
+import org.hibernate.*;
 //import org.hibernate.sql.ordering.antlr.Factory;
 
 /**
@@ -37,6 +39,30 @@ public class AnswerManager {
         }
         return id;
     }
+
+
+    public List<String> getAnswerByQuestionId(Integer questionId){
+        Session session = factory.openSession();
+        Transaction transaction = null;
+        List answers = null;
+
+        try {
+            transaction = session.beginTransaction();
+            Query fetchQuestions = session.createQuery("From Answer join QuestionAnswer on Answer.answerId == QuestionAnswer.answerId where QuestionAnswer.questionId == " + questionId + "");
+            answers = fetchQuestions.list();
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return answers;
+    }
+
+
 
     public void deleteAnswer(Integer id) {
         Session session = factory.openSession();

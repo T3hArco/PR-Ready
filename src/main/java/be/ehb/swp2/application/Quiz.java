@@ -1,6 +1,11 @@
 package be.ehb.swp2.application;
 
+import be.ehb.swp2.entity.AnswerType;
+import be.ehb.swp2.entity.Question;
+import be.ehb.swp2.exception.DuplicateQuestionException;
 import be.ehb.swp2.exception.QuizNotFoundException;
+import be.ehb.swp2.manager.QuestionAnswerManager;
+import be.ehb.swp2.manager.QuestionManager;
 import be.ehb.swp2.manager.QuizManager;
 import be.ehb.swp2.ui.LoadingWindow;
 import be.ehb.swp2.ui.LoginWindow;
@@ -99,7 +104,16 @@ public class Quiz {
      * @deprecated To be deprecated and never used in production!
      */
     public void doDbTest() {
-
+       /* QuestionAnswerManager qa = new QuestionAnswerManager(factory);
+        qa.addQuestionAnswer(1, 1, true);
+        qa.addQuestionAnswer(1, 2, false);
+        qa.addQuestionAnswer(1, 3, false);*/
+        /*QuestionManager qm = new QuestionManager(factory);
+        try {
+            qm.addQuestion("question6","????", AnswerType.MULTIPLE_CHOICE, null,1);
+        } catch (DuplicateQuestionException e) {
+            e.printStackTrace();
+        }*/
     }
 
     public void imageSaveTest() {

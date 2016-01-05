@@ -1,5 +1,6 @@
 package be.ehb.swp2.ui;
 
+import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.QuizLauncher;
 import com.teamdev.jxbrowser.chromium.Browser;
@@ -61,11 +62,51 @@ public class VideoWindow implements QuestionWindow {
                     DOMNode n = document.createTextNode(question.getText());
                     root2.appendChild(p);
                     p.appendChild(n);
+                    DOMNode answers = document.findElement(By.id("answers"));
+                    if (question.getAnswerType().equals(AnswerType.MULTIPLE_CHOICE)){
+                        System.out.println("check");
+                        DOMNode a = document.createTextNode("dit is een multiplechoice vraag");
+
+                        answers.appendChild(a);
+
+                    }
+                    if (question.getAnswerType().equals(AnswerType.TRUE_FALSE)){
+                        DOMNode form = document.createElement("form");
+                        DOMElement trueBox = document.createElement("input");
+                        trueBox.setAttribute("name", "tf");
+                        DOMNode dataTrue = document.createTextNode("dit is een multiplechoice vraag");
+                        trueBox.setInnerText("true");
+
+                        DOMElement falseBox = document.createElement("input");
+                        falseBox.setAttribute("name", "tf");
+                        falseBox.setInnerText("false");
+
+                }
+                    if (question.getAnswerType().equals(AnswerType.TRUE_FALSE)) {
+                        DOMNode form = document.createElement("form");
+                        DOMElement trueBox = document.createElement("input");
+                        trueBox.setAttribute("type", "radio");
+                        trueBox.setAttribute("name", "tf");
+                        DOMNode dataTrue = document.createTextNode("true");
+                        DOMElement labeltrue = document.createElement("label");
+                        labeltrue.appendChild(dataTrue);
+                        DOMElement falseBox = document.createElement("input");
+                        DOMNode dataFalse = document.createTextNode("false");
+                        DOMElement labelFalse = document.createElement("label");
+                        labelFalse.appendChild(dataFalse);
+                        falseBox.setAttribute("type", "radio");
+                        falseBox.setAttribute("name", "tf");
+                        form.appendChild(labeltrue);
+                        form.appendChild(trueBox);
+                        form.appendChild(labelFalse);
+                        form.appendChild(falseBox);//
+                        answers.appendChild(form);
+                    }
                 }
             }
         });
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/videoFrame.html");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/videoFrame.html?853954951951959");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
