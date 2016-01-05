@@ -1,12 +1,9 @@
 package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.Answer;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import java.util.List;
 import org.hibernate.*;
+
+import java.util.List;
 //import org.hibernate.sql.ordering.antlr.Factory;
 
 /**
@@ -34,6 +31,7 @@ public class AnswerManager {
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
+                e.printStackTrace();
         } finally {
             session.close();
         }
