@@ -39,14 +39,16 @@ public class AnswerManager {
     }
 
 
-    public List<String> getAnswerByQuestionId(Integer questionId){
+    public List<Answer> getAnswersByQuestionId(Integer questionId) {
         Session session = factory.openSession();
         Transaction transaction = null;
         List answers = null;
 
         try {
             transaction = session.beginTransaction();
-            Query fetchQuestions = session.createQuery("From Answer join QuestionAnswer on Answer.answerId == QuestionAnswer.answerId where QuestionAnswer.questionId == " + questionId + "");
+            Query fetchQuestions = session.createQuery("From Answer where id = :questionId")
+                    .setInteger("questionId", questionId);
+
             answers = fetchQuestions.list();
         } catch (HibernateException e) {
             if (transaction != null)
