@@ -7,9 +7,11 @@
 <hibernate-mapping>
     <class name="be.ehb.swp2.entity.Answer" table="Answer">
         <meta attribute="class-description">
-            This class contains all the users
+            This class contains all the answers
         </meta>
-        <id name="answerId" column="answerId" type="int"/>
+        <id name="answerId" column="answerId" type="int">
+            <generator class="native"/>
+        </id>
         <property name="text" type="string" column="text" not-null="true"/>
     </class>
 </hibernate-mapping>

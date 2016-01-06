@@ -71,6 +71,7 @@ public class ImageHandler {
             base64 = Base64.getEncoder().encodeToString(byteArrayOutputStream.toByteArray());
             byteArrayOutputStream.close();
         } catch (IOException e) {
+            e.printStackTrace();
             throw new BadFileException("Failed to convert");
         }
 
