@@ -42,6 +42,8 @@ public class EditorWindow extends JFrame implements Window {
     private AnswerType currentAnswerType = null;
     private AnswerMediaType currenMediaType = null;
 
+    private ArrayList<Integer> questionDatabaseIDs = new ArrayList<Integer>();
+    private ArrayList<Integer> answerDatabaseIDs = new ArrayList<Integer>();
 
     /**
      * Constructor for Editor Window
@@ -177,40 +179,84 @@ public class EditorWindow extends JFrame implements Window {
                 System.out.println("newAnswers.toString() = " + newAnswers.toString());
                 System.out.println("newQuestionAnswers.toString() = " + newQuestionAnswers.toString());
 
+                int newDatabaseID =0;
+
+                //add questions to the database
+                QuestionManager quizManager = new QuestionManager(factory);
                 for (Question q : newQuestions) {
-                    QuestionManager quiz = new QuestionManager(factory);
                     try {
                         q.setTitle("Quiz");
                         q.setQuizId(quizId);
                         q.setParentId(quizId);
-                        quiz.addQuestion(q);
+
+                        newDatabaseID =  quizManager.addQuestion(q);
+                        System.out.println("Question added to the database, it's ID is now: " + newDatabaseID);
+                        questionDatabaseIDs.add(newDatabaseID);
                     } catch (DuplicateQuestionException e) {
                         e.printStackTrace();
                     }
                 }
 
+                //add answers to the database
+                AnswerManager answerManager = new AnswerManager(factory);
                 for (Answer a : newAnswers) {
-                    AnswerManager answerManager = new AnswerManager(factory);
-                    answerManager.addAnswer(a.getAnswerId(), a.getText());
+                    newDatabaseID = answerManager.addAnswer(a);
+
+                    System.out.println("Answer added to the database, it's ID is now: " + newDatabaseID);
+                    answerDatabaseIDs.add(newDatabaseID);
                 }
 
+
+                //this is where the magic happens
+                //the id's inside each question_answer have to be updated befor being pushed inside the database.
+                //Let's do this!
+
+                int correspondingQuestion = 0;
+                int currentQuestionAnswer = 0;
                 for (QuestionAnswer qa : newQuestionAnswers) {
-                    QuestionAnswerManager questionAnswerManager = new QuestionAnswerManager(factory);
-                    questionAnswerManager.addQuestionAnswer(qa.getQuestionId(), qa.getAnswerId(), qa.isCorrect());
+                    //Update QuestonID
+                    //-----------------
+                    //to what question does this question_answer belong
+                    // - 1 !!! QuestionId 1 is 0 in the arrayList
+                    correspondingQuestion = qa.getQuestionId()- 1;
+                    //update the ID
+                    qa.setQuestionId(questionDatabaseIDs.get(correspondingQuestion));
+
+                    //Update AnswerID
+                    //-----------------
+                    //for each question_answer there is a question so no need to check corresponding, just change the id's
+                    //to what question does this question_answer belong
+
+                    qa.setAnswerId(answerDatabaseIDs.get(currentQuestionAnswer));
+                    ++currentQuestionAnswer;
+
+                    System.out.println("converting question answer " + currentQuestionAnswer);
                 }
 
+                System.out.println("conversion done");
+
+                //add question_questions to the database
+                QuestionAnswerManager questionAnswerManager = new QuestionAnswerManager(factory);
+                for (QuestionAnswer qa : newQuestionAnswers) {
+
+                    System.out.println("before");
+                    questionAnswerManager.addQuestionAnswer(qa.getQuestionId(), qa.getAnswerId(), qa.isCorrect());
+                    System.out.println("after");
+                    System.out.println("QuestionAnswer added to the database, it's ID is now: " + newDatabaseID);
+                }
+
+                VideoQuestionManager videoQuestionManager = new VideoQuestionManager(factory);
                 for (MediaURL mu : newVideoURLs) {
-                    VideoQuestionManager videoQuestionManager = new VideoQuestionManager(factory);
                     videoQuestionManager.addVideoQuestion(mu.getId(), mu.getUrl());
                 }
 
+                AudioQuestionManager audioQuestionManager = new AudioQuestionManager(factory);
                 for (MediaURL mu : newAudioURLs) {
-                    AudioQuestionManager audioQuestionManager = new AudioQuestionManager(factory);
                     audioQuestionManager.addAudioQuestion(mu.getId(), mu.getUrl());
                 }
 
+                ImageQuestionManager imageQuestionManager = new ImageQuestionManager(factory);
                 for (MediaURL mu : newImgURLs) {
-                    ImageQuestionManager imageQuestionManager = new ImageQuestionManager(factory);
                     imageQuestionManager.addImageQuestion(mu.getId(), mu.getUrl());
                 }
 

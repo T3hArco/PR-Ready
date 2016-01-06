@@ -1,5 +1,6 @@
 package be.ehb.swp2.ui;
 
+import be.ehb.swp2.entity.Answer;
 import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.QuizLauncher;
@@ -20,7 +21,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Created by domienhennion on 3/12/15.
@@ -65,29 +66,25 @@ public class VideoWindow implements QuestionWindow {
                     root2.appendChild(p);
                     p.appendChild(n);
                     DOMNode answers = document.findElement(By.id("answers"));
-                    if (question.getAnswerType().equals(AnswerType.MULTIPLE_CHOICE)){
-
-
-                        AnswerManager am = new AnswerManager(session);
-                        java.util.List<String> ans = am.getAnswersByQuestionId(question.getId());
-
+                    if (question.getAnswerType().equals(AnswerType.MULTIPLE_CHOICE)) {
                         DOMNode form = document.createElement("form");
-                        for (String str : ans){
-                            DOMElement answer = document.createElement("input");
-                            answer.setAttribute("type", "radio");
-                            answer.setAttribute("name", "mc");
-                            DOMNode dataTrue = document.createTextNode(str);
+
+                        AnswerManager answerManager = new AnswerManager(session);
+                        ArrayList<Answer> answerList = new ArrayList<Answer>(answerManager.getAnswersByQuestionId(question.getId()));
+
+                        for (Answer answer : answerList) {
+                            DOMElement trueBox = document.createElement("input");
+                            trueBox.setAttribute("type", "radio");
+                            trueBox.setAttribute("name", "tf");
+                            DOMNode dataTrue = document.createTextNode(answer.getText());
                             DOMElement labeltrue = document.createElement("label");
                             labeltrue.appendChild(dataTrue);
+
                             form.appendChild(labeltrue);
-                            form.appendChild(answer);
-                            DOMElement br = document.createElement("br");
-                            form.appendChild(br);//
-
+                            form.appendChild(trueBox);
                         }
+
                         answers.appendChild(form);
-
-
                     }
                     if (question.getAnswerType().equals(AnswerType.TRUE_FALSE)) {
                         DOMNode form = document.createElement("form");
@@ -104,12 +101,11 @@ public class VideoWindow implements QuestionWindow {
                         falseBox.setAttribute("type", "radio");
                         falseBox.setAttribute("name", "tf");
                         form.appendChild(labeltrue);
-                        form.appendChild(trueBox);///
-                        DOMElement br = document.createElement("br");
-                        form.appendChild(br);
+                        form.appendChild(trueBox);
                         form.appendChild(labelFalse);
                         form.appendChild(falseBox);//
                         answers.appendChild(form);
+
                     }
                 }
             }

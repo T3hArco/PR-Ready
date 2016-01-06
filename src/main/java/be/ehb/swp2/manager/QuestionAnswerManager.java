@@ -5,7 +5,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import java.util.List;
 
 /**
  * Created by Ibrahim on 10-12-15.
@@ -33,6 +32,7 @@ public class QuestionAnswerManager {
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
+            e.printStackTrace();
         } finally {
             session.close();
         }
