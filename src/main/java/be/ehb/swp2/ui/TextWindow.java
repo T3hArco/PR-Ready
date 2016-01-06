@@ -4,6 +4,7 @@ package be.ehb.swp2.ui;
 import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.QuizLauncher;
+import be.ehb.swp2.manager.AnswerManager;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
@@ -20,6 +21,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.*;
 
 
 /**
@@ -64,14 +66,30 @@ public class TextWindow implements QuestionWindow {
                     root.appendChild(p);
                     p.appendChild(n);
                     DOMNode answers = document.findElement(By.id("answers"));
-                    System.out.println("yes yes yes");
+
                     if (question.getAnswerType().equals(AnswerType.MULTIPLE_CHOICE)){
 
-                        DOMNode a = document.createTextNode("dit is een multiplechoice vraag");
-                        DOMElement p2 = document.createElement("p");
-                        answers.appendChild(p2);
-                        p2.appendChild(a);
-                        System.out.println("check");
+
+                        AnswerManager am = new AnswerManager(session);
+                        java.util.List<String> ans = am.getAnswersByQuestionId(question.getId());
+
+                        DOMNode form = document.createElement("form");
+                        for (String str : ans){
+                            DOMElement answer = document.createElement("input");
+                            answer.setAttribute("type", "radio");
+                            answer.setAttribute("name", "mc");
+                            DOMNode dataTrue = document.createTextNode(str);
+                            DOMElement labeltrue = document.createElement("label");
+                            labeltrue.appendChild(dataTrue);
+                            form.appendChild(labeltrue);
+                            form.appendChild(answer);
+                            DOMElement br = document.createElement("br");
+                            form.appendChild(br);
+
+                        }
+                        answers.appendChild(form);
+
+
                     }
                     if (question.getAnswerType().equals(AnswerType.TRUE_FALSE)) {
                         DOMNode form = document.createElement("form");
@@ -89,6 +107,8 @@ public class TextWindow implements QuestionWindow {
                         falseBox.setAttribute("name", "tf");
                         form.appendChild(labeltrue);
                         form.appendChild(trueBox);
+                        DOMElement br = document.createElement("br");
+                        form.appendChild(br);
                         form.appendChild(labelFalse);
                         form.appendChild(falseBox);//
                         answers.appendChild(form);

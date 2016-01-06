@@ -3,6 +3,7 @@ package be.ehb.swp2.ui;
 import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.QuizLauncher;
+import be.ehb.swp2.manager.AnswerManager;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
@@ -19,6 +20,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.*;
 
 /**
  * Created by domienhennion on 3/12/15.
@@ -77,9 +79,26 @@ public class AudioWindow implements QuestionWindow {
                     DOMNode answers = document.findElement(By.id("answers"));
                     if (question.getAnswerType().equals(AnswerType.MULTIPLE_CHOICE)){
 
-                        DOMNode a = document.createTextNode("dit is een multiplechoice vraag");
 
-                        answers.appendChild(a);
+                        AnswerManager am = new AnswerManager(factory);
+                        java.util.List<String> ans = am.getAnswersByQuestionId(question.getId());
+
+                        DOMNode form = document.createElement("form");
+                        for (String str : ans){
+                            DOMElement answer = document.createElement("input");
+                            answer.setAttribute("type", "radio");
+                            answer.setAttribute("name", "mc");
+                            DOMNode dataTrue = document.createTextNode(str);
+                            DOMElement labeltrue = document.createElement("label");
+                            labeltrue.appendChild(dataTrue);
+                            form.appendChild(labeltrue);
+                            form.appendChild(answer);
+                            DOMElement br = document.createElement("br");
+                            form.appendChild(br);
+
+                        }
+                        answers.appendChild(form);
+
 
                     }
                     if (question.getAnswerType().equals(AnswerType.TRUE_FALSE)) {
@@ -98,6 +117,8 @@ public class AudioWindow implements QuestionWindow {
                         falseBox.setAttribute("name", "tf");
                         form.appendChild(labeltrue);
                         form.appendChild(trueBox);
+                        DOMElement br = document.createElement("br");
+                        form.appendChild(br);
                         form.appendChild(labelFalse);
                         form.appendChild(falseBox);//
                         answers.appendChild(form);

@@ -4,6 +4,8 @@ import be.ehb.swp2.entity.AnswerMediaType;
 import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.QuizLauncher;
+import be.ehb.swp2.manager.AnswerManager;
+import be.ehb.swp2.entity.Answer;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
@@ -15,6 +17,7 @@ import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.hibernate.SessionFactory;
+import java.util.List;
 
 import javax.swing.*;
 import java.awt.*;
@@ -72,11 +75,27 @@ public class ImageWindow implements QuestionWindow {
                     p.appendChild(n);
                     DOMNode answers = document.findElement(By.id("answers"));
                     if (question.getAnswerType().equals(AnswerType.MULTIPLE_CHOICE)){
-                        System.out.println("check");
-                        DOMNode a = document.createTextNode("dit is een multiplechoice vraag");
-                        DOMElement p2 = document.createElement("p");
-                        answers.appendChild(p2);
-                        p2.appendChild(a);
+
+
+                        AnswerManager am = new AnswerManager(session);
+                        List<String> ans = am.getAnswersByQuestionId(question.getId());
+
+                        DOMNode form = document.createElement("form");
+                        for (String str : ans){
+                            DOMElement answer = document.createElement("input");
+                            answer.setAttribute("type", "radio");
+                            answer.setAttribute("name", "mc");
+                            DOMNode dataTrue = document.createTextNode(str);
+                            DOMElement labeltrue = document.createElement("label");
+                            labeltrue.appendChild(dataTrue);
+                            form.appendChild(labeltrue);
+                            form.appendChild(answer);
+                            DOMElement br = document.createElement("br");
+                            form.appendChild(br);
+
+                        }
+                        answers.appendChild(form);
+
 
                     }
                     if (question.getAnswerType().equals(AnswerType.TRUE_FALSE)) {
@@ -95,6 +114,8 @@ public class ImageWindow implements QuestionWindow {
                         falseBox.setAttribute("name", "tf");
                         form.appendChild(labeltrue);
                         form.appendChild(trueBox);
+                        DOMElement br = document.createElement("br");
+                        form.appendChild(br);
                         form.appendChild(labelFalse);
                         form.appendChild(falseBox);//
                         answers.appendChild(form);

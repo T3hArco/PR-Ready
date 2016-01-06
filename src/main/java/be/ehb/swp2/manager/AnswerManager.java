@@ -5,6 +5,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.*;
 //import org.hibernate.sql.ordering.antlr.Factory;
@@ -103,6 +105,28 @@ public class AnswerManager {
         } finally {
             session.close();
         }
+    }
+
+    public List<String> getAnswersByQuestionId(Integer questionId) {
+        String url;
+        Session session = factory.openSession();
+
+        Query query = session.createSQLQuery("select text From Answer a, QuestionAnswer q where a.answerId = q.answerId and q.questionId = :questionId");
+        query.setParameter("questionId", questionId);
+        List<String> answers = (List<String>) query.list();
+
+
+
+
+
+
+        // Check whether the list is empty, if so, no users are matched, thus return false
+        //String url = (String) linklist.get(0)[0];
+        //String url = linklist.get(0);
+        /*System.out.println("HOERA");
+        session.close();*/
+
+        return answers;
     }
 
 

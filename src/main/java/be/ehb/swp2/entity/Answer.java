@@ -7,6 +7,7 @@ public class Answer {
     private int answerId;
     private String text;
 
+
     public Answer() {
     }
 
