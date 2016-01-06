@@ -1,9 +1,11 @@
 package be.ehb.swp2.ui;
 
 
+import be.ehb.swp2.entity.Answer;
 import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.QuizLauncher;
+import be.ehb.swp2.manager.AnswerManager;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
 import com.teamdev.jxbrowser.chromium.JSValue;
@@ -20,6 +22,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 
 /**
@@ -58,26 +61,59 @@ public class TextWindow implements QuestionWindow {
                 if (event.isMainFrame()) {
                     DOMDocument document = event.getBrowser().getDocument();
                     DOMNode root = document.findElement(By.id("text"));
+                    DOMElement p = document.createElement("p");
+                    p.setAttribute("class", "text");
                     DOMNode n = document.createTextNode(question.getText());
-                    root.appendChild(n);
+                    root.appendChild(p);
+                    p.appendChild(n);
                     DOMNode answers = document.findElement(By.id("answers"));
-
+                    System.out.println("yes yes yes");
                     if (question.getAnswerType().equals(AnswerType.MULTIPLE_CHOICE)){
-                        System.out.println("yes yes yes");
-                        DOMNode na = document.createTextNode("chaise");
-                        root.appendChild(n);
-                        DOMNode a = document.createTextNode("dit is een multiplechoice vraag");
-                        DOMElement p2 = document.createElement("p");
-                        answers.appendChild(p2);
-                        p2.appendChild(a);
-                        System.out.println("check");
+                        DOMNode form = document.createElement("form");
+
+                        AnswerManager answerManager = new AnswerManager(session);
+                        ArrayList<Answer> answerList = new ArrayList<Answer>(answerManager.getAnswersByQuestionId(question.getId()));
+
+                        for (Answer answer : answerList) {
+                            DOMElement trueBox = document.createElement("input");
+                            trueBox.setAttribute("type", "radio");
+                            trueBox.setAttribute("name", "tf");
+                            DOMNode dataTrue = document.createTextNode(answer.getText());
+                            DOMElement labeltrue = document.createElement("label");
+                            labeltrue.appendChild(dataTrue);
+
+                            form.appendChild(labeltrue);
+                            form.appendChild(trueBox);
+                        }
+
+                        answers.appendChild(form);
+                    }
+                    if (question.getAnswerType().equals(AnswerType.TRUE_FALSE)) {
+                        DOMNode form = document.createElement("form");
+                        DOMElement trueBox = document.createElement("input");
+                        trueBox.setAttribute("type", "radio");
+                        trueBox.setAttribute("name", "tf");
+                        DOMNode dataTrue = document.createTextNode("true");
+                        DOMElement labeltrue = document.createElement("label");
+                        labeltrue.appendChild(dataTrue);
+                        DOMElement falseBox = document.createElement("input");
+                        DOMNode dataFalse = document.createTextNode("false");
+                        DOMElement labelFalse = document.createElement("label");
+                        labelFalse.appendChild(dataFalse);
+                        falseBox.setAttribute("type", "radio");
+                        falseBox.setAttribute("name", "tf");
+                        form.appendChild(labeltrue);
+                        form.appendChild(trueBox);
+                        form.appendChild(labelFalse);
+                        form.appendChild(falseBox);//
+                        answers.appendChild(form);
                     }
 
                 }
             }
         });
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/TextFrame.html");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/TextFrame.html?853954951951959");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
