@@ -71,11 +71,12 @@ public class OverviewWindow extends JFrame implements Window {
 
             html.println("<!DOCTYPE html><html><head><meta charset='utf-8'><title>OVERVIEW</title><link rel='stylesheet' href='overview.css'></head><body><div class='collection'>");
             for (Quiz quiz : quizSet) {
-                html.println("<div class='quiz'><div class='titel'><p>" + SecurityHandler.stripTags(quiz.getTitle()) + "</p></div>" +
+                html.println("<div class='quiz'><div class='titel'><p>" + SecurityHandler.stripTags("Quiz") + "</p></div>" +
                         "<div class='logo'><img src='data:image/png;base64," + quiz.getLogo() + "'/></div>" +
                         "<div class='desc'><p>" + SecurityHandler.stripTags(quiz.getDescription()) + "</p></div>" +
-                        "<div class='button'><button onclick='launchQ();'>launch</button></div></div>");
+                        "<div class='button'><button onclick='launchQuiz(" + quiz.getId() + ");'>launch</button></div></div>");
             }
+
             html.println("<button onclick='launchLog();' class='add'>Logout</button>");
 
             if (PermissionHandler.currentUserHasPermission(factory, UserRole.ADMINISTRATOR)) {
@@ -133,9 +134,10 @@ public class OverviewWindow extends JFrame implements Window {
         });
 
         browser.registerFunction("launchQuiz", new BrowserFunction() {
-            public JSValue invoke(JSValue... jsValues) {
+            public JSValue invoke(JSValue... args) {
+                JSValue quizId = args[0];
 
-                QuizLauncher ql = new QuizLauncher(factory);
+                QuizLauncher ql = new QuizLauncher(factory, (int) quizId.getNumber());
 
                 return JSValue.createUndefined();
             }
