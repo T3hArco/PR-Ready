@@ -17,20 +17,23 @@ public class QuizLauncher implements Window {
     private ArrayList<String> antwoorden;
     private int increment = 0;
     private boolean running = true;
+    private int quizId;
 
-    public QuizLauncher(SessionFactory factory) {
+    public QuizLauncher(SessionFactory factory, int quizId) {
         this.factory = factory;
-        windows = new ArrayList<QuestionWindow>();
-        antwoorden = new ArrayList<String>();
-        System.out.println("test1");
+        this.windows = new ArrayList<QuestionWindow>();
+        this.antwoorden = new ArrayList<String>();
+        this.quizId = quizId;
+
         QuestionManager qm = new QuestionManager(factory);
 
         List<Question> questions = null;
         try {
-            questions = qm.getQuestionsByQuizId(6);
+            questions = qm.getQuestionsByQuizId(quizId);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         for (Question q : questions){
             System.out.println(q.getTitle());
             System.out.println(q.getAnswerMediaType());
@@ -43,19 +46,22 @@ public class QuizLauncher implements Window {
                     windows.add(new TextWindow(factory, q, this));
 
                 }
-                if (q.getAnswerMediaType().equals(AnswerMediaType.AUDIO)){
+
+            if (q.getAnswerMediaType().equals(AnswerMediaType.AUDIO)){
 
                     AudioQuestionManager aqm = new AudioQuestionManager(factory);
                     String url = aqm.getUrlById(q.getId());
                     windows.add(new AudioWindow(factory, url , q, this));
 
                 }
-                if(q.getAnswerMediaType().equals(AnswerMediaType.IMAGE)){
+
+            if(q.getAnswerMediaType().equals(AnswerMediaType.IMAGE)){
                     ImageQuestionManager iqm = new ImageQuestionManager(factory);
                     String url = iqm.getUrlById(q.getId());
                     windows.add(new ImageWindow(factory, url, q, this));
                 }
-                if (q.getAnswerMediaType().equals(AnswerMediaType.VIDEO)){
+
+            if (q.getAnswerMediaType().equals(AnswerMediaType.VIDEO)){
                     VideoQuestionManager vqm = new VideoQuestionManager(factory);
                     String url = vqm.getUrlById(q.getId());
                     windows.add(new VideoWindow(factory, url, q, this));
@@ -87,8 +93,6 @@ public class QuizLauncher implements Window {
     }
 
     public void windowChoice() {
-
-        System.out.println("test test");
         if (windows.get(increment) instanceof TextWindow) {
             TextWindow t = (TextWindow) windows.get(increment);
             t.initComponents();
