@@ -10,23 +10,29 @@ import java.util.List;
  * Created by Ibrahim on 10-12-15.
  */
 public class AnswerManager {
-
-    public SessionFactory factory;
+    private SessionFactory factory;
 
     public AnswerManager(SessionFactory factory) {
         this.factory = factory;
     }
 
-    public Integer addAnswer(int answerId, String text) {
+    public Integer addAnswer(Answer answer) {
 
         Session session = factory.openSession();
         Transaction transaction = null;
         Integer id = null;
 
+        Answer newAnswer = new Answer();
+        newAnswer.setText(answer.getText());
+
+        if(newAnswer.getAnswerId() == 0)
+            newAnswer.setAnswerId(1);
+
         try {
             transaction = session.beginTransaction();
-            Answer answer = new Answer(answerId, text);
-            id = (Integer) session.save(answer);
+            System.out.println("newAnswer = " + newAnswer.toString());
+            id = (Integer) session.save(newAnswer);
+
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null)
