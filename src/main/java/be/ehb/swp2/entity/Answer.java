@@ -10,8 +10,7 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(int answerId, String text) {
-        this.answerId = answerId;
+    public Answer(String text) {
         this.text = text;
     }
 
@@ -29,5 +28,13 @@ public class Answer {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "answerId=" + answerId +
+                ", text='" + text + '\'' +
+                '}';
     }
 }
