@@ -16,12 +16,14 @@ import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.hibernate.SessionFactory;
+import java.util.List;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
+import java.util.*;
+
 
 /**
  * Created by Thomas on 3/12/2015.
@@ -76,24 +78,30 @@ public class ImageWindow implements QuestionWindow {
                     if (question.getAnswerType().equals(AnswerType.MULTIPLE_CHOICE)){
                         DOMNode form = document.createElement("form");
 
-                        AnswerManager answerManager = new AnswerManager(session);
-                        ArrayList<Answer> answerList = new ArrayList<Answer>(answerManager.getAnswersByQuestionId(question.getId()));
+                        AnswerManager am = new AnswerManager(session);
+                        System.out.println(question.getId());
+                       List<String> answerList = am.getAnswerByQuestionId(question.getId());
+                        System.out.println(answerList.size());
 
-                        for (Answer answer : answerList) {
+                        for (String answer : answerList) {
                             DOMElement trueBox = document.createElement("input");
                             trueBox.setAttribute("type", "radio");
                             trueBox.setAttribute("name", "tf");
-                            DOMNode dataTrue = document.createTextNode(answer.getText());
+                            DOMNode dataTrue = document.createTextNode(answer);
                             DOMElement labeltrue = document.createElement("label");
                             labeltrue.appendChild(dataTrue);
 
-                            form.appendChild(labeltrue);
+
                             form.appendChild(trueBox);
+                            form.appendChild(labeltrue);
+                            DOMElement br = document.createElement("br");
+                            form.appendChild(br);
                         }
 
                         answers.appendChild(form);
 
                     }
+
                     if (question.getAnswerType().equals(AnswerType.TRUE_FALSE)) {
                         DOMNode form = document.createElement("form");
                         DOMElement trueBox = document.createElement("input");
@@ -110,6 +118,8 @@ public class ImageWindow implements QuestionWindow {
                         falseBox.setAttribute("name", "tf");
                         form.appendChild(labeltrue);
                         form.appendChild(trueBox);
+                        DOMElement br = document.createElement("br");
+                        form.appendChild(br);
                         form.appendChild(labelFalse);
                         form.appendChild(falseBox);//
                         answers.appendChild(form);

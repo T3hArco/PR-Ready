@@ -16,12 +16,12 @@ import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.hibernate.SessionFactory;
+import java.util.List;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 
 /**
  * Created by domienhennion on 3/12/15.
@@ -45,6 +45,8 @@ public class AudioWindow implements QuestionWindow {
         this.url = url;
         this.question = question;
         this.quizLauncher = quizLauncher;
+
+
     }
 
     /**
@@ -81,19 +83,22 @@ public class AudioWindow implements QuestionWindow {
                     if (question.getAnswerType().equals(AnswerType.MULTIPLE_CHOICE)){
                         DOMNode form = document.createElement("form");
 
-                        AnswerManager answerManager = new AnswerManager(factory);
-                        ArrayList<Answer> answerList = new ArrayList<Answer>(answerManager.getAnswersByQuestionId(question.getId()));
+                        AnswerManager am = new AnswerManager(factory);
+                        List<String> answerList = am.getAnswerByQuestionId(question.getId());
 
-                        for (Answer answer : answerList) {
+                        for (String answer : answerList) {
                             DOMElement trueBox = document.createElement("input");
                             trueBox.setAttribute("type", "radio");
                             trueBox.setAttribute("name", "tf");
-                            DOMNode dataTrue = document.createTextNode(answer.getText());
+                            DOMNode dataTrue = document.createTextNode(answer);
                             DOMElement labeltrue = document.createElement("label");
                             labeltrue.appendChild(dataTrue);
 
                             form.appendChild(labeltrue);
                             form.appendChild(trueBox);
+                            form.appendChild(labeltrue);
+                            DOMElement br = document.createElement("br");
+                            form.appendChild(br);
                         }
 
                         answers.appendChild(form);
@@ -116,6 +121,8 @@ public class AudioWindow implements QuestionWindow {
                         falseBox.setAttribute("name", "tf");
                         form.appendChild(labeltrue);
                         form.appendChild(trueBox);
+                        DOMElement br = document.createElement("br");
+                        form.appendChild(br);
                         form.appendChild(labelFalse);
                         form.appendChild(falseBox);//
                         answers.appendChild(form);

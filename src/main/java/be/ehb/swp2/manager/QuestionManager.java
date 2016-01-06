@@ -103,7 +103,8 @@ public class QuestionManager {
 
         try {
             transaction = session.beginTransaction();
-            Query fetchQuestions = session.createQuery("From Question where QuizId = " + quizId + "");
+            Query fetchQuestions = session.createQuery("From Question where parentId = :parentId");
+            fetchQuestions.setParameter("parentId", quizId);
             questions = fetchQuestions.list();
         } catch (HibernateException e) {
             if (transaction != null)
