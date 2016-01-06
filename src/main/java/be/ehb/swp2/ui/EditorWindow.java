@@ -2,9 +2,10 @@ package be.ehb.swp2.ui;
 
 import be.ehb.swp2.entity.*;
 import be.ehb.swp2.entity.question.QuestionAnswer;
+import be.ehb.swp2.exception.DuplicateQuestionException;
 import be.ehb.swp2.exception.QuizNotFoundException;
 import be.ehb.swp2.exception.UserNoPermissionException;
-import be.ehb.swp2.manager.QuizManager;
+import be.ehb.swp2.manager.*;
 import be.ehb.swp2.util.PermissionHandler;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserFunction;
@@ -27,25 +28,22 @@ import java.util.List;
  * Created by domienhennion on 10/12/15.
  */
 public class EditorWindow extends JFrame implements Window {
+    //answers
+    static List<Answer> newAnswers = new ArrayList<Answer>();
+    //question answers
+    static List<QuestionAnswer> newQuestionAnswers = new ArrayList<QuestionAnswer>();
     private SessionFactory factory;
     private QuizManager quizManager;
     private Integer quizId;
-
     private List<Question> newQuestions = new ArrayList<Question>();
     private List<MediaURL> newVideoURLs = new ArrayList<MediaURL>();
     private List<MediaURL> newAudioURLs = new ArrayList<MediaURL>();
     private List<MediaURL> newImgURLs = new ArrayList<MediaURL>();
-
-    //answers
-    static List<Answer> newAnswers = new ArrayList<Answer>();
-
-    //question answers
-    static List<QuestionAnswer> newQuestionAnswers = new ArrayList<QuestionAnswer>();
-
-
     private AnswerType currentAnswerType = null;
     private AnswerMediaType currenMediaType = null;
 
+    private ArrayList<Integer> questionDatabaseIDs = new ArrayList<Integer>();
+    private ArrayList<Integer> answerDatabaseIDs = new ArrayList<Integer>();
 
     /**
      * Constructor for Editor Window
@@ -60,6 +58,7 @@ public class EditorWindow extends JFrame implements Window {
         this.quizId = quizId;
         if (!PermissionHandler.currentUserHasPermission(factory, UserRole.ADMINISTRATOR))
             throw new UserNoPermissionException();
+
         this.initComponents();
     }
 
@@ -104,15 +103,12 @@ public class EditorWindow extends JFrame implements Window {
                 currentQuestion.setAnswerType(currentAnswerType);
                 currentQuestion.setAnswerMediaType(currenMediaType);
 
-                if(mediaURL.isNull())
-                {
-                    System.out.println("no url needed for question " +(int)questionNumber.getNumber());
-                }
-                else if(mediaURL.toString() != null){
+                if (mediaURL.isNull()) {
+                    System.out.println("no url needed for question " + (int) questionNumber.getNumber());
+                } else if (mediaURL.toString() != null) {
                     getUrlFromWeb((int) questionNumber.getNumber(), mediaURL.getString());
-                }
-                else{
-                    System.out.println("Error: url for question " + (int)questionNumber.getNumber() + " is empty.");
+                } else {
+                    System.out.println("Error: url for question " + (int) questionNumber.getNumber() + " is empty.");
                 }
 
                 //add the new question to the "new questions" list
@@ -133,11 +129,11 @@ public class EditorWindow extends JFrame implements Window {
 
                 //fill in answer
                 Answer newAnswer = new Answer();
-                newAnswer.setAnswerId((int)answerNumber.getNumber());
+                newAnswer.setAnswerId((int) answerNumber.getNumber());
                 newAnswer.setText(answertext.getString());
 
 
-                QuestionAnswer newQuestionAnswer = new QuestionAnswer((int)questionNumber.getNumber(), (int)answerNumber.getNumber());
+                QuestionAnswer newQuestionAnswer = new QuestionAnswer((int) questionNumber.getNumber(), (int) answerNumber.getNumber());
 
                 newAnswers.add(newAnswer);
                 newQuestionAnswers.add(newQuestionAnswer);
@@ -159,12 +155,12 @@ public class EditorWindow extends JFrame implements Window {
                 JSValue iscorret = args[3];
 
                 Answer newAnswer = new Answer();
-                newAnswer.setAnswerId((int)answerNumber.getNumber());
+                newAnswer.setAnswerId((int) answerNumber.getNumber());
                 newAnswer.setText(answertext.getString());
 
                 System.out.println("with boolean");
                 boolean bIscorret = iscorret.getBoolean();
-                QuestionAnswer newQuestionAnswer = new QuestionAnswer((int)questionNumber.getNumber(), (int)answerNumber.getNumber(), bIscorret);
+                QuestionAnswer newQuestionAnswer = new QuestionAnswer((int) questionNumber.getNumber(), (int) answerNumber.getNumber(), bIscorret);
 
                 newAnswers.add(newAnswer);
                 newQuestionAnswers.add(newQuestionAnswer);
@@ -178,10 +174,91 @@ public class EditorWindow extends JFrame implements Window {
             public JSValue invoke(JSValue... args) {
                 System.out.println("SavingDone");
 
+                JOptionPane.showMessageDialog(parent, "Saving Done!");
                 System.out.println("newQuestions.toString() = " + newQuestions.toString());
                 System.out.println("newAnswers.toString() = " + newAnswers.toString());
                 System.out.println("newQuestionAnswers.toString() = " + newQuestionAnswers.toString());
 
+                int newDatabaseID =0;
+
+                //add questions to the database
+                QuestionManager quizManager = new QuestionManager(factory);
+                for (Question q : newQuestions) {
+                    try {
+                        q.setTitle("Quiz");
+                        q.setQuizId(quizId);
+                        q.setParentId(quizId);
+
+                        newDatabaseID =  quizManager.addQuestion(q);
+                        System.out.println("Question added to the database, it's ID is now: " + newDatabaseID);
+                        questionDatabaseIDs.add(newDatabaseID);
+                    } catch (DuplicateQuestionException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                //add answers to the database
+                AnswerManager answerManager = new AnswerManager(factory);
+                for (Answer a : newAnswers) {
+                    newDatabaseID = answerManager.addAnswer(a);
+
+                    System.out.println("Answer added to the database, it's ID is now: " + newDatabaseID);
+                    answerDatabaseIDs.add(newDatabaseID);
+                }
+
+
+                //this is where the magic happens
+                //the id's inside each question_answer have to be updated befor being pushed inside the database.
+                //Let's do this!
+
+                int correspondingQuestion = 0;
+                int currentQuestionAnswer = 0;
+                for (QuestionAnswer qa : newQuestionAnswers) {
+                    //Update QuestonID
+                    //-----------------
+                    //to what question does this question_answer belong
+                    // - 1 !!! QuestionId 1 is 0 in the arrayList
+                    correspondingQuestion = qa.getQuestionId()- 1;
+                    //update the ID
+                    qa.setQuestionId(questionDatabaseIDs.get(correspondingQuestion));
+
+                    //Update AnswerID
+                    //-----------------
+                    //for each question_answer there is a question so no need to check corresponding, just change the id's
+                    //to what question does this question_answer belong
+
+                    qa.setAnswerId(answerDatabaseIDs.get(currentQuestionAnswer));
+                    ++currentQuestionAnswer;
+
+                    System.out.println("converting question answer " + currentQuestionAnswer);
+                }
+
+                System.out.println("conversion done");
+
+                //add question_questions to the database
+                QuestionAnswerManager questionAnswerManager = new QuestionAnswerManager(factory);
+                for (QuestionAnswer qa : newQuestionAnswers) {
+
+                    System.out.println("before");
+                    questionAnswerManager.addQuestionAnswer(qa.getQuestionId(), qa.getAnswerId(), qa.isCorrect());
+                    System.out.println("after");
+                    System.out.println("QuestionAnswer added to the database, it's ID is now: " + newDatabaseID);
+                }
+
+                VideoQuestionManager videoQuestionManager = new VideoQuestionManager(factory);
+                for (MediaURL mu : newVideoURLs) {
+                    videoQuestionManager.addVideoQuestion(mu.getId(), mu.getUrl());
+                }
+
+                AudioQuestionManager audioQuestionManager = new AudioQuestionManager(factory);
+                for (MediaURL mu : newAudioURLs) {
+                    audioQuestionManager.addAudioQuestion(mu.getId(), mu.getUrl());
+                }
+
+                ImageQuestionManager imageQuestionManager = new ImageQuestionManager(factory);
+                for (MediaURL mu : newImgURLs) {
+                    imageQuestionManager.addImageQuestion(mu.getId(), mu.getUrl());
+                }
 
                 return JSValue.create("SavingDone!");
             }

@@ -1,10 +1,9 @@
 package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.question.AudioQuestion;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
+
+import java.util.List;
 
 //import be.ehb.swp2.entity.Quiz;
 
@@ -77,6 +76,49 @@ public class AudioQuestionManager {
         } finally {
             session.close();
         }
+
+
+    }
+
+    public String getUrlById(Integer questionId) {
+        String url;
+        Session session = factory.openSession();
+        System.out.println("HOERA");
+        Query query = session.createQuery("SELECT link from AudioQuestion where parentId = :parentId");
+                query.setParameter("parentId", questionId);
+        url = (String) query.uniqueResult();
+
+        System.out.println("HOERA");
+
+        // Check whether the list is empty, if so, no users are matched, thus return false
+        //String url = (String) linklist.get(0)[0];
+        //String url = linklist.get(0);
+        /*System.out.println("HOERA");
+        session.close();*/
+        System.out.println(url);
+        return url;
+    }
+
+
+    public AudioQuestion getAudioById(Integer QuestionId) {
+        Session session = factory.openSession();
+        Transaction transaction = null;
+        AudioQuestion aq = null;
+        Integer parentId = QuestionId;
+        try {
+            transaction = session.beginTransaction();
+            aq = session.get(AudioQuestion.class, parentId);
+
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return aq;
     }
 
 /*

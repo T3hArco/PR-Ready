@@ -1,11 +1,14 @@
 package be.ehb.swp2.entity;
 
-import be.ehb.swp2.entity.question.MultipleChoice;
-import be.ehb.swp2.entity.question.TrueFalseQuestion;
+import be.ehb.swp2.manager.AudioQuestionManager;
+import be.ehb.swp2.manager.ImageQuestionManager;
+import be.ehb.swp2.manager.QuestionManager;
+import be.ehb.swp2.manager.VideoQuestionManager;
 import be.ehb.swp2.ui.*;
 import org.hibernate.SessionFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class QuizLauncher implements Window {
@@ -14,25 +17,72 @@ public class QuizLauncher implements Window {
     private ArrayList<String> antwoorden;
     private int increment = 0;
     private boolean running = true;
+    private int quizId;
 
-    public QuizLauncher(SessionFactory factory) {
+    public QuizLauncher(SessionFactory factory, int quizId) {
         this.factory = factory;
-        windows = new ArrayList<QuestionWindow>();
-        antwoorden = new ArrayList<String>();
-        System.out.println("test1");
+        this.windows = new ArrayList<QuestionWindow>();
+        this.antwoorden = new ArrayList<String>();
+        this.quizId = quizId;
+
+        QuestionManager qm = new QuestionManager(factory);
+
+        List<Question> questions = null;
+        try {
+            questions = qm.getQuestionsByQuizId(quizId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        for (Question q : questions){
+            System.out.println(q.getTitle());
+            System.out.println(q.getAnswerMediaType());
+        }
+
+        for (Question q : questions){
+
+                if (q.getAnswerMediaType().equals(AnswerMediaType.EMPTY)) {
+
+                    windows.add(new TextWindow(factory, q, this));
+
+                }
+
+            if (q.getAnswerMediaType().equals(AnswerMediaType.AUDIO)){
+
+                    AudioQuestionManager aqm = new AudioQuestionManager(factory);
+                    String url = aqm.getUrlById(q.getId());
+                    windows.add(new AudioWindow(factory, url , q, this));
+
+                }
+
+            if(q.getAnswerMediaType().equals(AnswerMediaType.IMAGE)){
+                    ImageQuestionManager iqm = new ImageQuestionManager(factory);
+                    String url = iqm.getUrlById(q.getId());
+                    windows.add(new ImageWindow(factory, url, q, this));
+                }
+
+            if (q.getAnswerMediaType().equals(AnswerMediaType.VIDEO)){
+                    VideoQuestionManager vqm = new VideoQuestionManager(factory);
+                    String url = vqm.getUrlById(q.getId());
+                    windows.add(new VideoWindow(factory, url, q, this));
+                }
+        }
 
 
-        antwoorden.add("kraai");
-        antwoorden.add("twitter");
-        antwoorden.add("duif");
-        MultipleChoice mc = new MultipleChoice("title", "wat is this?", AnswerType.MULTIPLE_CHOICE, AnswerMediaType.EMPTY, antwoorden.get(1));
-        TrueFalseQuestion tc = new TrueFalseQuestion("title", "wat is that?", AnswerType.TRUE_FALSE, AnswerMediaType.EMPTY, 0, true);
 
-        windows.clear();
-        windows.add(new TextWindow(factory, mc, this));
+
+        for (QuestionWindow q : windows){
+            System.out.println("lol");
+            System.out.println(q.getClass().getSimpleName());
+
+        }
+
+       /* windows.add(new TextWindow(factory, mc, this));
         windows.add(new ImageWindow(factory, "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png", tc, this));
         windows.add(new VideoWindow(factory, "u1I9ITfzqFs", mc, this));
-        windows.add(new AudioWindow(factory, "u1I9ITfzqFs", tc, this));
+        windows.add(new AudioWindow(factory, "u1I9ITfzqFs", tc, this));*/
+
+
 
         this.windowChoice();
     }
@@ -43,8 +93,6 @@ public class QuizLauncher implements Window {
     }
 
     public void windowChoice() {
-
-        System.out.println("test test");
         if (windows.get(increment) instanceof TextWindow) {
             TextWindow t = (TextWindow) windows.get(increment);
             t.initComponents();
@@ -89,5 +137,7 @@ public class QuizLauncher implements Window {
     public int getWindowsSize() {
         return windows.size();
     }
+
+
 }
 

@@ -32,6 +32,7 @@ public class QuestionAnswerManager {
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
+            e.printStackTrace();
         } finally {
             session.close();
         }
@@ -83,4 +84,7 @@ public class QuestionAnswerManager {
             session.close();
         }
     }
+
+
+
 }

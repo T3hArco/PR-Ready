@@ -57,16 +57,6 @@ public class Question {
         this.quizId = quizId;
     }
 
-    public Question(int id, String title, String text, AnswerType answerType, AnswerMediaType answerMediaType, int parentId, int quizId) {
-        this.id = id;
-        this.title = title;
-        this.text = text;
-        this.answerType = answerType;
-        this.answerMediaType = answerMediaType;
-        this.parentId = parentId;
-        this.quizId = quizId;
-    }
-
     public int getQuizId() {
         return quizId;
     }
