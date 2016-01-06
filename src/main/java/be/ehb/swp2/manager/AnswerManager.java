@@ -1,39 +1,43 @@
 package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.Answer;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import java.util.List;
 import org.hibernate.*;
+
+import java.util.List;
 //import org.hibernate.sql.ordering.antlr.Factory;
 
 /**
  * Created by Ibrahim on 10-12-15.
  */
 public class AnswerManager {
-
-    public SessionFactory factory;
+    private SessionFactory factory;
 
     public AnswerManager(SessionFactory factory) {
         this.factory = factory;
     }
 
-    public Integer addAnswer(int answerId, String text) {
+    public Integer addAnswer(Answer answer) {
 
         Session session = factory.openSession();
         Transaction transaction = null;
         Integer id = null;
 
+        Answer newAnswer = new Answer();
+        newAnswer.setText(answer.getText());
+
+        if(newAnswer.getAnswerId() == 0)
+            newAnswer.setAnswerId(1);
+
         try {
             transaction = session.beginTransaction();
-            Answer answer = new Answer(answerId, text);
-            id = (Integer) session.save(answer);
+            System.out.println("newAnswer = " + newAnswer.toString());
+            id = (Integer) session.save(newAnswer);
+
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
+                e.printStackTrace();
         } finally {
             session.close();
         }
@@ -41,14 +45,16 @@ public class AnswerManager {
     }
 
 
-    public List<String> getAnswerByQuestionId(Integer questionId){
+    public List<Answer> getAnswersByQuestionId(Integer questionId) {
         Session session = factory.openSession();
         Transaction transaction = null;
         List answers = null;
 
         try {
             transaction = session.beginTransaction();
-            Query fetchQuestions = session.createQuery("From Answer join QuestionAnswer on Answer.answerId == QuestionAnswer.answerId where QuestionAnswer.questionId == " + questionId + "");
+            Query fetchQuestions = session.createQuery("From Answer where id = :questionId")
+                    .setInteger("questionId", questionId);
+
             answers = fetchQuestions.list();
         } catch (HibernateException e) {
             if (transaction != null)

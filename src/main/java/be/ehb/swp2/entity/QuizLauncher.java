@@ -87,8 +87,6 @@ public class QuizLauncher implements Window {
     }
 
     public void windowChoice() {
-
-        System.out.println("test test");
         if (windows.get(increment) instanceof TextWindow) {
             TextWindow t = (TextWindow) windows.get(increment);
             t.initComponents();

@@ -72,7 +72,7 @@ public class QuestionManager {
         if (questionId == null)
             throw new DuplicateQuestionException();
 
-        return questionId; // geeft de aangemaakte userAnswer weer
+        return questionId; // geeft de aangemaakte userAnswer ??? (moet dit niet database ID zijn ?? christophe) weer
     }
 
     public List<Question> getQuestions() {
