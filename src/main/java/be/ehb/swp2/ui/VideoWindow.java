@@ -104,7 +104,7 @@ public class VideoWindow implements QuestionWindow {
                         falseBox.setAttribute("type", "radio");
                         falseBox.setAttribute("name", "tf");
                         form.appendChild(labeltrue);
-                        form.appendChild(trueBox);//
+                        form.appendChild(trueBox);///
                         DOMElement br = document.createElement("br");
                         form.appendChild(br);
                         form.appendChild(labelFalse);
