@@ -29,4 +29,12 @@ public class MediaURL {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public String toString() {
+        return "MediaURL{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

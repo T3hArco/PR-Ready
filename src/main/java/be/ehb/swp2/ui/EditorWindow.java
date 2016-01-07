@@ -107,9 +107,8 @@ public class EditorWindow extends JFrame implements Window {
                     System.out.println("no url needed for question " + (int) questionNumber.getNumber());
                 } else if (mediaURL.toString() != null) {
                     //dit is de locale id nog
-                    //                    getUrlFromWeb((int) questionNumber.getNumber(), mediaURL.getString());
-
-                    getUrlFromWeb(10, mediaURL.getString());
+                    //straks bij het uploaden naar de database moet dit worden aangepast !
+                    getUrlFromWeb((int) questionNumber.getNumber(), mediaURL.getString());
                 } else {
                     System.out.println("Error: url for question " + (int) questionNumber.getNumber() + " is empty.");
                 }
@@ -183,7 +182,7 @@ public class EditorWindow extends JFrame implements Window {
                 System.out.println("newQuestionAnswers.toString() = " + newQuestionAnswers.toString());
 
                 int newDatabaseID =0;
-
+                int OriginalQuestionIDinEditor = 0;
                 //add questions to the database
                 QuestionManager quizManager = new QuestionManager(factory);
                 for (Question q : newQuestions) {
@@ -192,9 +191,48 @@ public class EditorWindow extends JFrame implements Window {
                         q.setQuizId(quizId);
                         q.setParentId(quizId);
 
+                        System.out.println("Original ID was: " + q.getId());
+                        OriginalQuestionIDinEditor = q.getId();
+
                         newDatabaseID =  quizManager.addQuestion(q);
                         System.out.println("Question added to the database, it's ID is now: " + newDatabaseID);
+                        System.out.println("Original ID is now: " + q.getId());
                         questionDatabaseIDs.add(newDatabaseID);
+
+                        //update reference  ID's for the  media ons
+                        // so they match the ID's in the Database
+                        //Audio
+                        for(MediaURL audio : newAudioURLs){
+                            System.out.println("updating audio");
+                            if(audio.getId() == OriginalQuestionIDinEditor)
+                            {
+                                System.out.println("audio updated");
+                                audio.setId(newDatabaseID);
+                            }
+                        }
+                        //Video
+                        for(MediaURL video : newVideoURLs){
+                            System.out.println("updating video");
+                            if(video.getId() == OriginalQuestionIDinEditor)
+                            {
+                                System.out.println("video updated");
+                                video.setId(newDatabaseID);
+                            }
+                        }
+                        //IMG
+                        for(MediaURL img : newImgURLs){
+                            System.out.println("updating img");
+                            if(img.getId() == OriginalQuestionIDinEditor)
+                            {
+                                System.out.println("image updated");
+                                img.setId(newDatabaseID);
+                            }
+                        }
+
+                        System.out.println("newAudioURLs is now = " + newAudioURLs.toString());
+                        System.out.println("newVideoURLs is now = " + newVideoURLs.toString());
+                        System.out.println("newImgURLs is now = " +   newImgURLs.toString());
+
                     } catch (DuplicateQuestionException e) {
                         e.printStackTrace();
                     }
