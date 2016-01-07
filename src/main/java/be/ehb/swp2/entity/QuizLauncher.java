@@ -20,6 +20,7 @@ public class QuizLauncher implements Window {
     private int quizId;
 
     public QuizLauncher(SessionFactory factory, int quizId) {
+        System.out.println(quizId);
         this.factory = factory;
         this.windows = new ArrayList<QuestionWindow>();
         this.antwoorden = new ArrayList<String>();

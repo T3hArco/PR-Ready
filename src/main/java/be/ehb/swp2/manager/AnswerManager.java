@@ -1,6 +1,15 @@
 package be.ehb.swp2.manager;
 
 import be.ehb.swp2.entity.Answer;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.*;
 
 import java.util.List;
@@ -45,7 +54,7 @@ public class AnswerManager {
     }
 
 
-    public List<Answer> getAnswersByQuestionId(Integer questionId) {
+   /* public List<Answer> getAnswersByQuestionId(Integer questionId) {
         Session session = factory.openSession();
         Transaction transaction = null;
         List answers = null;
@@ -66,7 +75,7 @@ public class AnswerManager {
         }
 
         return answers;
-    }
+    }*/
 
 
 
@@ -109,6 +118,29 @@ public class AnswerManager {
         } finally {
             session.close();
         }
+    }
+
+    public List<String> getAnswerByQuestionId(Integer questionId) {
+        String url;
+        Session session = factory.openSession();
+        System.out.println("check5");
+        Query query = session.createQuery("select a.text From Answer a, QuestionAnswer q where a.answerId = q.answerId and q.questionId = :questionId");
+        query.setParameter("questionId", questionId);
+        System.out.println("check6");
+        List<String> answers = (List<String>) query.list();
+        System.out.println("check1");
+
+        System.out.println(answers.size());
+
+
+
+        // Check whether the list is empty, if so, no users are matched, thus return false
+        //String url = (String) linklist.get(0)[0];
+        //String url = linklist.get(0);
+        /*System.out.println("HOERA");
+        session.close();*/
+
+        return answers;
     }
 
 
