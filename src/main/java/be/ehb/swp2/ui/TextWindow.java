@@ -1,7 +1,6 @@
 package be.ehb.swp2.ui;
 
 
-import be.ehb.swp2.entity.Answer;
 import be.ehb.swp2.entity.AnswerType;
 import be.ehb.swp2.entity.Question;
 import be.ehb.swp2.entity.QuizLauncher;
@@ -17,13 +16,13 @@ import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.hibernate.SessionFactory;
-import java.util.List;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -124,7 +123,7 @@ public class TextWindow implements QuestionWindow {
             }
         });
 
-        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/TextFrame.html?853954951951959");
+        browser.loadURL("http://dtprojecten.ehb.be/~PR-Ready/question/TextFrame.html?85395495155555951959");
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {

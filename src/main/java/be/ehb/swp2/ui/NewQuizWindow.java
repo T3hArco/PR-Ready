@@ -120,6 +120,8 @@ public class NewQuizWindow extends JFrame implements QuestionWindow, Window {
                 browser.dispose();
                 parent.setVisible(false);
                 parent.dispose();
+
+                OverviewWindow o = new OverviewWindow(factory);
             }
         });
 

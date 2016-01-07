@@ -106,7 +106,10 @@ public class EditorWindow extends JFrame implements Window {
                 if (mediaURL.isNull()) {
                     System.out.println("no url needed for question " + (int) questionNumber.getNumber());
                 } else if (mediaURL.toString() != null) {
-                    getUrlFromWeb((int) questionNumber.getNumber(), mediaURL.getString());
+                    //dit is de locale id nog
+                    //                    getUrlFromWeb((int) questionNumber.getNumber(), mediaURL.getString());
+
+                    getUrlFromWeb(10, mediaURL.getString());
                 } else {
                     System.out.println("Error: url for question " + (int) questionNumber.getNumber() + " is empty.");
                 }
@@ -259,6 +262,12 @@ public class EditorWindow extends JFrame implements Window {
                 for (MediaURL mu : newImgURLs) {
                     imageQuestionManager.addImageQuestion(mu.getId(), mu.getUrl());
                 }
+
+                browser.dispose();
+                dialog.setVisible(false);
+                dialog.dispose();
+
+                new OverviewWindow(factory);
 
                 return JSValue.create("SavingDone!");
             }

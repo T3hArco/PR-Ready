@@ -53,11 +53,14 @@ public class StatisticMenuWindow {
                 dialog.setVisible(false);
                 dialog.dispose();
 
-                PieChartData[] dataArr = new PieChartData[3];
-                dataArr[0] = new PieChartData("first", 30);
-                dataArr[1] = new PieChartData("second", 50);
-                dataArr[2] = new PieChartData("third", 20);
-                new PieChartWindow(factory, dataArr, "test");
+                PieChartData[] dataArr = new PieChartData[6];
+                dataArr[0] = new PieChartData("De grote quiz", 50);
+                dataArr[1] = new PieChartData("Test uw IQ!", 1);
+                dataArr[2] = new PieChartData("Gestolen rijexamens", 15);
+                dataArr[3] = new PieChartData("Win een reis!", 4);
+                dataArr[4] = new PieChartData("Test uw kennis!", 10);
+                dataArr[5] = new PieChartData("Kan u de verschillen aanwijzen?", 20);
+                new PieChartWindow(factory, dataArr, "Populariteit per quiz");
 
                 return JSValue.createUndefined();
             }
@@ -72,19 +75,21 @@ public class StatisticMenuWindow {
                 dialog.dispose();
 
                 LineChartData[] lineData = new LineChartData[3];
-                String title = "title";
-                String subtitle = "subtitle";
-                String leftTitle = "title left";
+                String title = "User creation";
+                String subtitle = "By month";
+                String leftTitle = "Users";
                 String[] categories = new String[3];
-                categories[0] = "categorie1";
-                categories[1] = "categorie2";
-                double[] data = new double[2];
-                data[0] = 60.00;
-                data[1] = 40.00;
-                lineData[0] = new LineChartData("line1", data);
-                lineData[1] = new LineChartData("line2", data);
-                lineData[2] = new LineChartData("line3", data);
-                //StatisticWindow.printLine(lineData, title, subtitle, leftTitle, categories);
+                categories[0] = "September";
+                categories[1] = "Oktober";
+                categories[2] = "November";
+                double[] data = new double[3];
+                data[0] = 10;
+                data[1] = 2;
+                data[2] = 50;
+
+                lineData[0] = new LineChartData("September", data);
+                lineData[1] = new LineChartData("Oktober", data);
+                lineData[2] = new LineChartData("November", data);
                 new LineChartWindow(factory, lineData, title, subtitle, leftTitle, categories);
 
                 return JSValue.createUndefined();
@@ -97,18 +102,16 @@ public class StatisticMenuWindow {
                 browser.dispose();
                 dialog.setVisible(false);
                 dialog.dispose();
-                System.out.println("column");
-                ColumnData[] dataColumn = new ColumnData[3];
-                double[] data = new double[2];
-                data[0] = 60.00;
-                data[1] = 40.00;
-                String title = "title";
-                String subtitle = "subtitle";
-                dataColumn[0] = new ColumnData("column1", data);
-                dataColumn[1] = new ColumnData("column2", data);
-                dataColumn[2] = new ColumnData("column3", data);
+                ColumnData[] dataColumn = new ColumnData[1];
+                double[] data = new double[3];
+                data[0] = 33.6;
+                data[1] = 88;
+                data[2] = 66;
+                String title = "Gemiddelde score per quiz";
+                String subtitle = "";
+                dataColumn[0] = new ColumnData("Gemiddelde Score", data);
+
                 new ColumnChartWindow(factory, dataColumn, title, subtitle);
-                //new PieChartWindow(factory, dataColumn, title, subtitle);
 
                 return JSValue.createUndefined();
             }
